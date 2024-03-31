@@ -13,7 +13,7 @@ const Header1 = () => {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <Link to="/" className="navbar-brand">
+            <Link to="/" className="navbar-brand" >
               Ceylon Green Cleaning Service
               </Link >
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
