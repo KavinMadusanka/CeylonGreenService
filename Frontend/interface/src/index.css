@@ -36,6 +36,9 @@
   font-family: "roboto", sans-serif;
   letter-spacing: 3px;
 }
+.nav-item {
+  padding-left: 20px;
+}
 
 /* ====================================Header============================== */
 .navbar {

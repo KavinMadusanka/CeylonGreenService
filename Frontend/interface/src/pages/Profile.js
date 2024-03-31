@@ -1,11 +1,11 @@
 import React from 'react'
-import Layout from '../components/Layout/Layout';
+import Layout1 from './../components/Layout/Layout1';
 
 const Profile = () => {
   return (
-    <Layout>
+    <Layout1>
         <h1>Profile page</h1>
-    </Layout>
+    </Layout1>
   )
 }
 
