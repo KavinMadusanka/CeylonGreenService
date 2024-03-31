@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink,Link} from 'react-router-dom';
 
 
-const Header1 = () => {
+const Header2 = () => {
   return (
     <>
     <div className='header'>
@@ -22,13 +22,23 @@ const Header1 = () => {
                 </NavLink >
               </li>
               <li className="nav-item">
-                <NavLink to="/service" className="nav-link">
-                  Service
+                <NavLink to="/product" className="nav-link">
+                  Product
                 </NavLink >
               </li>
               <li className="nav-item">
-                <NavLink to="/about" className="nav-link" href="#">
-                  About Us
+                <NavLink to="/shoppingcart" className="nav-link" href="#">
+                  Shopping cart
+                </NavLink >
+              </li>
+              <li className="nav-item">
+                <NavLink to="/kaddcard" className="nav-link" href="#">
+                  Payment
+                </NavLink >
+              </li>
+              <li className="nav-item">
+                <NavLink to="/shippingaddress" className="nav-link" href="#">
+                  Shipping Address
                 </NavLink >
               </li>
               <li className="nav-item">
@@ -50,4 +60,4 @@ const Header1 = () => {
   )
 }
 
-export default Header1;
+export default Header2;
