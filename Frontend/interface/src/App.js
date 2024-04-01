@@ -18,6 +18,7 @@ function App() {
       <Route path='/About' element={<About/>} />
       <Route path='/profile' element={<Profile/>} />
       <Route path='/kaddcard' element={<KAddcard/>} />
+
       <Route path='*' element={<Pagenotfound/>} />
       
 
