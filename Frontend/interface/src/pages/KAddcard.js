@@ -5,9 +5,17 @@ const KAddcard = () => {
   return (
     <Layout2>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <div>
             Card Details
 =======
+=======
+        <div>
+            Card Details
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         <div className='KAboarder'>
             <h1 className='text-center'>Provide further information</h1>
             <div className='KApayment'><IoShieldCheckmark/> Your payment information is safe with us</div>
@@ -21,8 +29,17 @@ const KAddcard = () => {
                   </li>
                 </ul>
             </div>
+<<<<<<< Updated upstream
             <div>
             </div>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+            <div>              
+            </div>
+            </div>
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         </div>
     </Layout2>
