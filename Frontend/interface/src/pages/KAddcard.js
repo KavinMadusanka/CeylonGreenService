@@ -23,6 +23,9 @@ const KAddcard = () => {
                   </li>
                 </ul>
             </div>
+            <div>
+              
+            </div>
             <div>     
             </div>
             <div>
@@ -32,7 +35,7 @@ const KAddcard = () => {
             </div>
         </div>
         </div>
-    </div>
+      </div>
     </Layout2>
   )
 }
