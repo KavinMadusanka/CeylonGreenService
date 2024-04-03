@@ -8,11 +8,8 @@ import KAddcard from './KAddcard';
 const KAddcard = () => {
   return (
     <Layout2>
-<<<<<<< Updated upstream
-=======
         <div>
             Card Details
->>>>>>> Stashed changes
         <div className='KAboarder'>
             <h1 className='text-center'>Provide further information</h1>
             <div className='KApayment'><IoShieldCheckmark/> Your payment information is safe with us</div>
@@ -26,18 +23,16 @@ const KAddcard = () => {
                   </li>
                 </ul>
             </div>
-<<<<<<< Updated upstream
             <div>     
             </div>
-=======
             <div>
               
             </div>
             <div>     
             </div>
         </div>
->>>>>>> Stashed changes
         </div>
+    </div>
     </Layout2>
   )
 }
