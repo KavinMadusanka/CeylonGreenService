@@ -1,0 +1,30 @@
+/* ==============================Kavin IT22572042================================================ */
+
+.KAboarder {
+    margin: 10px;
+    border: 1px solid ;
+    padding-top: 10px;
+    border-radius: 10px;
+  }
+  .KApayment{
+    text-align: center;
+    color:#416D19;
+  }
+  .KAbar{
+    background-color: #BFEA7C;
+    padding-bottom:0px;
+    padding-top: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .KAbarIn{
+    margin-left: 20px;
+    display: inline;
+  }
+  .KAbarInn{
+    list-style: none;
+  }
+  
+  
+  /* ============================================================================================== */
+  
