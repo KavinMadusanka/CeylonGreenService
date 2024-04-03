@@ -28,8 +28,14 @@ const KAddcard = () => {
             </div>
             <div>     
             </div>
+            <div>
+              
+            </div>
+            <div>     
+            </div>
         </div>
         </div>
+      </div>
     </Layout2>
   )
 }
