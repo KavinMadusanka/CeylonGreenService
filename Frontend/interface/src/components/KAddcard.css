@@ -70,9 +70,6 @@
     grid-area: yy;
     width: 100%;
 }
-#item4 input {
-
-}
 .item5{
     grid-area: mm;
     /* margin-left: 10px; */
