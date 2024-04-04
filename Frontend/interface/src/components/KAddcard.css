@@ -32,11 +32,13 @@
 #table {
   width: 100%;
 }
+#table td {
+  padding-left: calc(2%);
+  padding-right: calc(2%);
+}
 
-#table input {
-  width: 90%;
-  margin-left: 9px;
-  margin-right: 9px;
+#table td input {
+  width: 100%;
 }
 .texting {
   padding-left: 5%;
@@ -59,22 +61,32 @@
 }
 .item3{
     grid-area: table;
-    padding-left: 10px;
-    padding-right: 10px;
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
     width: 100%;
+    
+}
+#item4 {
+    grid-area: yy;
+    width: 100%;
+}
+#item4 input {
+
 }
 .item5{
     grid-area: mm;
-    padding-left: 10px;
-    padding-right: 10px;
+    /* margin-left: 10px; */
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
     width: 100%;
 }
 .item9{
   grid-area: button;
-  position: absolute;
-  padding: 100px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* left: 40%;
+  transform: translate(0%, -50%); */
 }
 .item9 button:hover {
   background-color: #9BCF53;
@@ -87,6 +99,10 @@
     'addnew addnew addnew addnew addnew addnew addnew addnew addnew addnew'
     'table table table table table table table table table table'
     'mm mm mm mm mm mm mm mm mm mm mm cvv'
+    'yy yy yy yy yy yy yy yy yy yy'
     'button button button button button button button button button button';
     gap: 0px;
+}
+form{
+  width: 100%;
 }

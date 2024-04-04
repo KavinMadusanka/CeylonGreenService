@@ -6,6 +6,7 @@ import Pagenotfound from './pages/Pagenotfound';
 import Profile from './pages/Profile';
 import KAddcard from './pages/KAddcard';
 import HomePage2 from './pages/HomePage2';
+import KAddaddress from './pages/KAddaddress';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Route path='/About' element={<About/>} />
       <Route path='/profile' element={<Profile/>} />
       <Route path='/kaddcard' element={<KAddcard/>} />
+      <Route path='/KAddaddress' element={<KAddaddress/>} />
 
       <Route path='*' element={<Pagenotfound/>} />
       
