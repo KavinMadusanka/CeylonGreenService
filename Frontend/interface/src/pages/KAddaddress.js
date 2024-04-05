@@ -52,9 +52,9 @@ const KAddaddress = () => {
                 <table id="table">
                   <tbody>
                   <tr>
-                      <td className='texting'>Month</td>
-                      <td className='texting'>Year</td>
-                      <td className='texting'>CVV Number</td></tr>
+                      <td className='texting'>Province</td>
+                      <td className='texting'>District</td>
+                      <td className='texting'>Postal Code</td></tr>
                     <tr>
                       <td><input type="text" /></td>
                       <td><input type="text" /></td>
