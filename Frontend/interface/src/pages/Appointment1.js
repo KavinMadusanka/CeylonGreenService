@@ -1,10 +1,10 @@
 import React from 'react';
-import Layout from './../components/Layout/Layout';
+import Layout1 from '../components/Layout/Layout1';
 import '../components/Appointment.css'
 
 const Appointment1 = () => {
   return (
-    <Layout>
+    <Layout1>
       <div className='border'>
         <form className="appointment-form">
       <h2>Appointment Form</h2>
@@ -41,7 +41,7 @@ const Appointment1 = () => {
       </div>
     </form>
     </div>
-    </Layout>
+    </Layout1>
   )
 }
 
