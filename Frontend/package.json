@@ -12,11 +12,14 @@
   "author": "Ceylonegreen",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "colors": "^1.4.0",
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
+    "express-formidable": "^1.2.0",
     "mongoose": "^8.2.2",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "slugify": "^1.6.6"
   }
 }
