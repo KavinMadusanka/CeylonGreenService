@@ -8,6 +8,8 @@ import KAddcard from './pages/KAddcard';
 import HomePage2 from './pages/HomePage2';
 import KAddaddress from './pages/KAddaddress';
 import Appointment1 from './pages/Appointment1';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
