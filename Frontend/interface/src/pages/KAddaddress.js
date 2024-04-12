@@ -6,7 +6,7 @@ import {}  from '../components/KAddcard.css'
 
 const KAddaddress = () => {
   return (
-    <Layout2>
+    <Layout2 title={'Add Adreess - Ceylon Green'}>
       
       <div className='grid-container'>
       <form>
