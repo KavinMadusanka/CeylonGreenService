@@ -31,7 +31,7 @@ const KAddaddress = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error('Somthing went wrong');
+      toast.error('Somthing went wrong!');
     }
   };
 

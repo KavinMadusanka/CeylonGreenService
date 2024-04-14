@@ -2,21 +2,36 @@ import React, {useState} from 'react';
 import Layout2 from '../components/Layout/Layout2';
 import { FaCreditCard } from "react-icons/fa6";
 import { IoShieldCheckmark } from "react-icons/io5";
-import {}  from '../components/KAddcard.css';
-import {toast} from "react-toastify";
+import {} from '../components/KAddcard.css';
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import toast from "react-hot-toast";
 
 const KAddcard = () => {
-  const [cdNumber,setNumber] = useState("");
+  const [cardNumber,setNumber] = useState("");
   const [name,setName] = useState("");
   const [cvv,setCvv] = useState("");
   const [month,setMonth] = useState("");
   const [year,setYear] = useState("");
+  const navigate = useNavigate()
 
   //form function
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(cdNumber, name, cvv, month, year);
-    toast.success("Card Added Successfully");
+    try {
+      const res = await axios.post('/api/v1/auth/KAddcard',
+        {name,cardNumber,cvv,month,year}
+      );
+      if(res && res.data.success){
+        toast.success(res.data.message);
+        navigate('/payment');
+      }else{
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Somthing went wrong!');
+    }
   };
   
   return (
@@ -51,7 +66,7 @@ const KAddcard = () => {
                     <tr><td>
                       <input 
                       type="text" 
-                      value={cdNumber}
+                      value={cardNumber}
                       onChange={(e) => setNumber(e.target.value)}
                       placeholder='Card Number'
                       required

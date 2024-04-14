@@ -3,7 +3,6 @@ import Footer from './Footer';
 import Header2 from './Header2';
 import {Helmet} from "react-helmet";
 import { Toaster } from "react-hot-toast";
-import 'react-toastify/dist/ReactToastify.css';
 
 const Layout2 = ({children, title, description, keywords, author }) => {
   return (
