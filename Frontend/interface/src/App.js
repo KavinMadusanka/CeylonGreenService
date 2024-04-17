@@ -18,11 +18,11 @@ function App() {
     <Routes>
       <Route path='/' element={<HomePage/>} />
       <Route path='/homepage2' element={<HomePage2/>} />
-      <Route path='/Service' element={<Service/>} />
-      <Route path='/About' element={<About/>} />
+      <Route path='/service' element={<Service/>} />
+      <Route path='/about' element={<About/>} />
       <Route path='/profile' element={<Profile/>} />
       <Route path='/kaddcard' element={<KAddcard/>} />
-      <Route path='/KAddaddress' element={<KAddaddress/>} />
+      <Route path='/kAddaddress' element={<KAddaddress/>} />
       <Route path='/appointment1' element={<Appointment1/>}/>
 
       <Route path='*' element={<Pagenotfound/>} />
