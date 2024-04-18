@@ -1,5 +1,7 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+
 
 * {
   margin: 0;
@@ -11,7 +13,7 @@
 /* font-family: "Playfair Display", serif; */
 
 /* //navbar css */
-.navbar{
+.navbar {
   font-family: "Poppins", sans-serif;
   font-size: 17px;
   line-height: 26px;
@@ -21,7 +23,7 @@
   border-bottom: 0.3px solid gray !important;
 }
 
-.nav-link{
+.nav-link {
   font-weight: 500 !important;
   color: #30540f;
 }
@@ -36,6 +38,7 @@
   font-family: "roboto", sans-serif;
   letter-spacing: 3px;
 }
+
 .nav-item {
   padding-left: 20px;
 }
@@ -45,6 +48,7 @@
   background: #0d1c00;
   padding: 0px;
 }
+
 .container-fluid {
   background: #9BCF53;
   padding: 8px;
@@ -56,13 +60,12 @@
   font-family: "Poppins", sans-serif;
   padding: 25px;
   background: #416D19;
-  background: -webkit-linear-gradient(
-    to right,
-    #30540f,
-    #0d1c00
-  );
+  background: -webkit-linear-gradient(to right,
+      #30540f,
+      #0d1c00);
   background: linear-gradient(to right, #30540f, #0d1c00);
 }
+
 #copy {
   font-size: 20px;
 }
@@ -110,6 +113,6 @@
   margin-top: 10px;
 
 
-  
+
 
 }
