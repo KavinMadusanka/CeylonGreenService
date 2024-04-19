@@ -8,13 +8,15 @@ import { Form, Formik } from 'formik'
 import * as Yup from 'yup';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/auth'
 
 function UserLogin() {
     const navigate = new useNavigate();
     const [formData, setFormData] = useState({
         userName: '',
         password: ''
-    })
+    });
+    const [auth,setAuth] = useAuth();
 
     function handleChange(e) {
         const target = e.target;
@@ -25,14 +27,20 @@ function UserLogin() {
         })
     }
 
-    function LoginUser() {
+    async function LoginUser() {
         if (formData.userName && formData.password) {
             const loginDetails = {
                 userName: formData.userName,
                 password: formData.password
             }
-            axios.post('/api/user/getLoginDetails', loginDetails).then((res) => {
+            await axios.post('/api/user/getLoginDetails', loginDetails).then((res) => {
                 if (formData.userName === res.data.loginDetails[0].email && formData.password === res.data.loginDetails[0].password) {
+                    setAuth({
+                        ...auth,
+                        user:res.data.user,
+                        token: res.data.token,
+                      });
+                      localStorage.setItem('auth',JSON.stringify(res.data));
                     navigate('/homepage2')
                 }
             })

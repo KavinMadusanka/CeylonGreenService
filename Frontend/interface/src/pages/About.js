@@ -1,12 +1,16 @@
 import React from 'react';
 import Layout from './../components/Layout/Layout';
+import bkImage from '../Images/about.jpg';
 
 
 const About = () => {
   return (
     <Layout title={'About us - Ceylon Green'}>
+      <img src={bkImage} alt="Person cleaning kitchen counter with eco-friendly products" 
+      style={{ height: 'auto', width: '100%', /*objectFit: 'cover', borderRadius: '8px', aspectRatio: '3/2',*/ }}
+              />
           <div className='privacy'>
-            {/* <img src="cleaning-scene.jpg" alt="Person cleaning kitchen counter with eco-friendly products" /> */}
+            {/* <img src="./../components/Image/about.jpg/" alt="Person cleaning kitchen counter with eco-friendly products" /> */}
             <section>
               <h2>Our Story</h2>
               <p>Ceylon Green was born from the vision of a cleaner, healthier future for both homes and the planet. We observed the disconnect between effective cleaning and eco-friendly solutions. Inspired by this, we built a comprehensive web application that empowers you to achieve a sparkling clean home while prioritizing sustainability.</p>

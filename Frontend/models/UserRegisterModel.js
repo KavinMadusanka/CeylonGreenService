@@ -26,6 +26,10 @@ const UserModel = new Schema(
         image: {
             type: String,
             required: true
+        },
+        role: {
+            type:Number,
+            default:0
         }
     }
 )
