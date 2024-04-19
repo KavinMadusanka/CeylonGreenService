@@ -1,28 +1,28 @@
 import KAcardmodel from "../models/KAcardmodel.js";
 import KAdeliveryaddress from "../models/KAdeliveryaddress.js";
-import JWT from "jsonwebtoken";
+
 
 export const cardController = async (req,res) => {
     try {
         const{year,month,email,cvv,cardNumber,name } =req.body
         //validation
         if(!name){
-            return res.send({error:'Name is Required'});
+            return res.send({message:'Name is Required'});
         }
         if(!year){
-            return res.send({error:'year is Required'});
+            return res.send({message:'year is Required'});
         }
         if(!month){
-            return res.send({error:'month is Required'});
+            return res.send({message:'month is Required'});
         }
         if(!email){
-            return res.send({error:'email is Required'});
+            return res.send({message:'email is Required'});
         }
         if(!cvv){
-            return res.send({error:'cvv is Required'});
+            return res.send({message:'cvv is Required'});
         }
         if(!cardNumber){
-            return res.send({error:'cardNumber is Required'});
+            return res.send({message:'cardNumber is Required'});
         }
 
         //check card
@@ -31,7 +31,7 @@ export const cardController = async (req,res) => {
         //exisit card
         if(exisitingCard){
             return res.status(200).send({
-                success:true,
+                success:false,
                 message:'This card is alradey added',
             });
         }
@@ -92,7 +92,7 @@ export const addressController = async (req,res) => {
 
         res.status(201).send({
             success:true,
-            message:'Address Entered Successfully',
+            message:'Address Addeded Successfully',
             card
         });
 
