@@ -8,6 +8,7 @@ import fileUpload from 'express-fileupload'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import UserRoutes from './routes/UserRegisterRoutes.js';
+import tokenRoutes from './routes/tokenRoutes.js';
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
@@ -36,6 +37,7 @@ app.use(morgan("dev"));
 
 //routes
 app.use('/api/v1/auth', authRoutes);
+app.use('api/v1/product',tokenRoutes);
 app.use('/api/user', UserRoutes);
 
 

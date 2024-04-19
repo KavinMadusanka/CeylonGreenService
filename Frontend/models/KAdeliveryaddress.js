@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     postalcode: {
         type:Number,
         required: true
+    },
+    email: {
+        type:String,
+        required: true
     }
 
 },{timestamps:true})
