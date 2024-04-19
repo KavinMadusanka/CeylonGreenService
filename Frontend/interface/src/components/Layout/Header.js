@@ -1,8 +1,9 @@
 import React from 'react';
-import {NavLink,Link} from 'react-router-dom';
-
+import { NavLink, Link } from 'react-router-dom';
+import { useAuth } from '../../context/auth';
 
 const Header = () => {
+  const [ auth,setAuth] = useAuth()
   return (
     <>
     <div className='header'>
@@ -15,30 +16,50 @@ const Header = () => {
             <Link to="/" className="navbar-brand">
               Ceylon Green Cleaning Service
               </Link >
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <NavLink to="/" className="nav-link">
+              <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              {
+                !auth.user ? (<>
+                <li className="nav-item">
+                  <NavLink to="/" className="nav-link">
+                    Home
+                  </NavLink >
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/userLogin" className="nav-link" href="#">
+                    Login
+                  </NavLink >
+                </li>
+                </>) : (<>
+                  <li className="nav-item">
+                <NavLink to="/homepage2" className="nav-link">
                   Home
                 </NavLink >
               </li>
               <li className="nav-item">
-                <NavLink to="/register" className="nav-link">
-                  Register
+                <NavLink to="/service" className="nav-link">
+                  Service
                 </NavLink >
               </li>
               <li className="nav-item">
-                <NavLink to="/login" className="nav-link" href="#">
-                  Login
+                <NavLink to="/about" className="nav-link" href="#">
+                  About Us
                 </NavLink >
               </li>
-              
-            </ul>
-            
+              <li className="nav-item">
+                <NavLink to="/profile" className="nav-link" href="#">
+                  Profile
+                </NavLink >
+              </li>
+                </>)
+              }
+
+              </ul>
+
+            </div>
           </div>
-        </div>
-      </nav>
-    </div>
-      
+        </nav>
+      </div>
+
 
 
     </>
