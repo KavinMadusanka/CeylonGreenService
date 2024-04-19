@@ -13,6 +13,7 @@ import UserLogin from './pages/UserLogin';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserManagement from './pages/UserManagement';
+import ContactUs from './pages/ContactUs';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path='/userRegister' element={<Register />} />
         <Route path='/userLogin' element={<UserLogin />} />
         <Route path='/userManagement' element={<UserManagement />} />
+        <Route path='/contactUs' element={<ContactUs />} />
 
         <Route path='*' element={<Pagenotfound />} />
       </Routes>

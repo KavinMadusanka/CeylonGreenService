@@ -10,6 +10,7 @@ import { dirname } from 'path';
 import UserRoutes from './routes/UserRegisterRoutes.js';
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import ContactRoutes from "./routes/ContactRoute.js";
 
 //configure env
 dotenv.config();
@@ -36,6 +37,7 @@ app.use(express.json());
 //routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/user', UserRoutes);
+app.use('/api/contact', ContactRoutes)
 
 
 //rest api
