@@ -1,6 +1,7 @@
 import UserModel from '../models/UserRegisterModel.js';
 import JWT from 'jsonwebtoken';
 
+
 //save a user
 export const AddUser = async (req, res) => {
     const {
