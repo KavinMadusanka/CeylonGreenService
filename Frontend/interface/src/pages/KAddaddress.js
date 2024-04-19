@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout2 from '../components/Layout/Layout2';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoShieldCheckmark } from "react-icons/io5";
@@ -6,6 +6,7 @@ import {}  from '../components/KAddcard.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
+import { useAuth } from '../context/auth';
 
 const KAddaddress = () => {
   const [cNumber,setNumber] = useState("");
@@ -14,14 +15,17 @@ const KAddaddress = () => {
   const [province,setProvince] = useState("");
   const [district,setDistrict] = useState("");
   const [postalcode,setPostalcode] = useState("");
-  const navigate = useNavigate()
+  const [clientToken, setClientToken] = useState("");
+  const [email,setEmail] = useState("");
+  const [auth,setAuth] = useAuth()
+  const navigate = useNavigate();
 
   //form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post('/api/v1/auth/KAddaddress',
-        {name,address,cNumber,province,district,postalcode}
+        {name,address,cNumber,province,district,postalcode,email}
       );
       if(res && res.data.success){
         toast.success(res.data.message);
@@ -35,9 +39,23 @@ const KAddaddress = () => {
     }
   };
 
+  // const getToken = async () => {
+  //   try {
+  //     const { data } = await axios.get("/api/v1/product/braintree/token");
+  //     setClientToken(data?.clientToken);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getToken();
+  //   setEmail(auth?.email);
+  // }, [auth?.token]);
+
   return (
     <Layout2 title={'Add Adreess - Ceylon Green'}>
-      
+      <pre>{JSON.stringify(auth,null,4)}</pre>
       <div className='grid-container'>
       <form onSubmit={handleSubmit}>
         <div className='KAboarder'>
