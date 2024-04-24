@@ -56,7 +56,7 @@ export const cardController = async (req,res) => {
 
 export const addressController = async (req,res) => {
     try {
-        const{name,address,cNumber,province,district,postalcode,email } =req.body
+        const{name,address,cNumber,province,district,postalcode, email } =req.body
         //validation
         if(!name){
             return res.send({message:'Name is Required'});
@@ -77,7 +77,7 @@ export const addressController = async (req,res) => {
             return res.send({message:'postalcode is Required'});
         }
         if(!email){
-            return res.send({message:'emali is missed'});
+            return res.send({message:'email is Required'});
         }
 
         //check address

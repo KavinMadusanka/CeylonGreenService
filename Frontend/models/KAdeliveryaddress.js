@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     email: {
-        type:String,
+        type:String
     }
 
 },{timestamps:true})

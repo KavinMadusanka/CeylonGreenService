@@ -55,13 +55,6 @@ const KAddaddress = () => {
   }, [auth]);
   // console.log(email)
 
-  
-  
-  // useEffect(() => {
-  //   getToken();
-  //   setEmail(auth?.email);
-  // }, [auth?.token]);
-
   return (
     <Layout2 title={'Add Adreess - Ceylon Green'}>
       {/* <pre>{JSON.stringify(auth,null,4)}</pre> */}
