@@ -53,6 +53,7 @@ function App() {
           element={<AddCategory />}
         />
         <Route path="//SMDashboard/Employee" element={<Employee />} />
+        <Route path="//SMDashboard/Employeeprofile" element={<EmployeeProfile />} />
         <Route path="/SMDashboard/Category" element={<Category />} />
         <Route path="/SMDashboard/AddEmployee" element={<AddEmployee />} />
         <Route
