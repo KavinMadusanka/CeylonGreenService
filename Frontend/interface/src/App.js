@@ -33,7 +33,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/kaddcard" element={<KAddcard />} />
         <Route path="/kAddaddress" element={<KAddaddress />} />
-        <Route path="/appointment1" element={<Appointment1 />} />
+        <Route path='/appointment1' element={<Appointment1 />} />
+        <Route path='/appointment2' element={<Appointment2 />} />
+        <Route path='/appointment3i' element={<Appointment3i />} />
+        <Route path='/appointment3ii' element={<Appointment3ii />} />
         <Route path="/userRegister" element={<Register />} />
         <Route path="/userLogin" element={<UserLogin />} />
         <Route path="/userManagement" element={<UserManagement />} />

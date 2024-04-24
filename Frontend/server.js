@@ -4,14 +4,17 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoutes from './routes/KAauthRoute.js';
+
+import appointmentRoutes from './routes/appointmentRoutes.js';
 import empRoutes from "./routes/employeeRoutes.js";
 import fileUpload from 'express-fileupload'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import UserRoutes from './routes/UserRegisterRoutes.js';
-import tokenRoutes from './routes/tokenRoutes.js';
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import mongoose from 'mongoose';
+import tokenRoutes from './routes/tokenRoutes.js';
 
 //configure env
 dotenv.config();
@@ -32,6 +35,14 @@ app.use("/Assets", express.static(__dirname + "/Assets"));
 app.use(fileUpload());
 
 //middelwares
+app.use(express.json());
+// app.use(morgan("dev"));
+
+//routes
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/user', UserRoutes);
+app.use('/api/v1/appointment',appointmentRoutes);
+
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
