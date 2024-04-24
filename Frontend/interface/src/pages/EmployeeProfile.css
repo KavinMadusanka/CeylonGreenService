@@ -1,0 +1,73 @@
+.employee-profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns with equal width */
+  gap: 20px; /* Gap between grid items */
+}
+
+.hr {
+  margin: 20px 0;
+  border: 200px; 
+  border-top: 1px solid #555555;
+  width: 20%; 
+}
+
+
+.left-section,
+.right-section {
+  /* Style for each grid section */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color:#89F946;
+}
+.left-section img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  align-items: center;
+  justify-content: center;
+
+}
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.personal-info {
+  flex: 1;
+  background-color:#89F946;
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  font-weight: 100;
+  font-style: normal;
+  font-size: large;
+}
+
+
+
+.profile-section {
+  /* Style for profile section */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-row {
+  margin-bottom: 10px;
+  font-weight: 100;
+  font-style: normal;
+  font-size: normal;
+  margin-top: 20px;
+
+}
+
+.label {
+  font-weight: bold;
+}
+
+.value {
+  margin-left: 5px;
+}

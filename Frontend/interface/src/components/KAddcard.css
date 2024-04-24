@@ -1,0 +1,122 @@
+/* ==============================Kavin IT22572042================================================ */
+*{
+  font-family: "Poppins", sans-serif;
+}
+
+.KAboarder {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border: 1px solid ;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+}
+.KApayment{
+  text-align: center;
+  color:#416D19;
+}
+.KAbar{
+  background-color: #BFEA7C;
+  padding-bottom:0px;
+  padding-top: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.KAbarIn{
+  margin-left: 20px;
+  display: inline;
+}
+.KAbarInn{
+  list-style: none;
+}
+
+#table {
+  width: 100%;
+}
+#table td {
+  padding-left: calc(2%);
+  padding-right: calc(2%);
+}
+
+#table td input {
+  width: 100%;
+}
+.texting {
+  padding-left: 5%;
+}
+.btnsub {
+  background-color:#BFEA7C;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+}
+  
+  /* ============================================================================================== */
+  
+.item1{
+    grid-area: provide;
+}
+.item2{
+  grid-area: addnew;
+  padding-top: 10px;
+}
+.item3{
+    grid-area: table;
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
+    width: 100%;
+    
+}
+#item4 {
+    grid-area: yy;
+    width: 100%;
+}
+.item5{
+    grid-area: mm;
+    /* margin-left: 10px; */
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
+    width: 100%;
+}
+.item9{
+  grid-area: button;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* left: 40%;
+  transform: translate(0%, -50%); */
+}
+.item9 button:hover {
+  background-color: #9BCF53;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-areas:
+    'provide provide provide provide provide provide provide provide provide provide'
+    'addnew addnew addnew addnew addnew addnew addnew addnew addnew addnew'
+    'table table table table table table table table table table'
+    'mm mm mm mm mm mm mm mm mm mm mm cvv'
+    'yy yy yy yy yy yy yy yy yy yy'
+    'button button button button button button button button button button';
+    gap: 0px;
+}
+form{
+  width: 100%;
+}
+
+/* ========================================================================= for privacy policy page ====================================================== */
+
+.privacy {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+section{
+  margin-bottom: 25px;
+}
+
+/* ======================================================================================================================================================== */

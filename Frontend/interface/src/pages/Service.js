@@ -1,12 +1,12 @@
 import React from 'react';
-import Layout from '../components/Layout/Layout';
+import Layout1 from './../components/Layout/Layout1';
 
 const Service = () => {
   return (
-    <Layout>
+    <Layout1 title={'Service - Ceylon Green'}>
         <h1>Service page</h1>
-    </Layout>
+    </Layout1>
   )
 }
 
-export default Service
+export default Service;
