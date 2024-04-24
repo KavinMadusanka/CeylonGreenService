@@ -66,6 +66,7 @@ export const CheckUserDetails = async (req, res) => {
             const token = await JWT.sign({ _id: loginDetails[0]._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
             const user = {
+            _id: loginDetails[0]._id,
             name: loginDetails[0].name,
             email: loginDetails[0].email,
             address: loginDetails[0].address,
