@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout2 from '../components/Layout/Layout2';
 import { FaCreditCard } from "react-icons/fa6";
 import { IoShieldCheckmark } from "react-icons/io5";
@@ -6,6 +6,7 @@ import {} from '../components/KAddcard.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
+import { useAuth } from '../context/auth';
 
 const KAddcard = () => {
   const [cardNumber,setNumber] = useState("");
@@ -13,6 +14,8 @@ const KAddcard = () => {
   const [cvv,setCvv] = useState("");
   const [month,setMonth] = useState("");
   const [year,setYear] = useState("");
+  const [email, setEmail] = useState("");
+  const [auth,setAuth] = useAuth();
   const navigate = useNavigate()
 
   //form function
@@ -20,7 +23,7 @@ const KAddcard = () => {
     e.preventDefault();
     try {
       const res = await axios.post('/api/v1/auth/KAddcard',
-        {name,cardNumber,cvv,month,year}
+        {name,cardNumber,cvv,month,year,email}
       );
       if(res && res.data.success){
         toast.success(res.data.message);
@@ -33,6 +36,13 @@ const KAddcard = () => {
       toast.error('Somthing went wrong!');
     }
   };
+
+  useEffect(() => {
+    if (auth && auth.user) {
+      setEmail(auth.user.email);
+     
+    }
+  }, [auth]);
   
   return (
     <Layout2 title={'Add Card - Ceylon Green'}>
