@@ -3,7 +3,16 @@ import colors from "colors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
+import authRoutes from './routes/KAauthRoute.js';
+import appointmentRoutes from './routes/appointmentRoutes.js';
 
+import fileUpload from 'express-fileupload'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import UserRoutes from './routes/UserRegisterRoutes.js';
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose';
 
 //configure env
 dotenv.config();
@@ -15,8 +24,13 @@ connectDB();
 const app = express();
 
 //middelwares
-app.use(express.json);
-app.use(morgan("dev"));
+app.use(express.json());
+// app.use(morgan("dev"));
+
+//routes
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/user', UserRoutes);
+app.use('/api/v1/appointment',appointmentRoutes);
 
 
 //rest api
