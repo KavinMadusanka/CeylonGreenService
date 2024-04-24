@@ -16,7 +16,7 @@ const KAddaddress = () => {
   const [district,setDistrict] = useState("");
   const [postalcode,setPostalcode] = useState("");
   const [clientToken, setClientToken] = useState("");
-  const [email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [auth,setAuth] = useAuth()
   const navigate = useNavigate();
 
@@ -47,7 +47,16 @@ const KAddaddress = () => {
   //     console.log(error);
   //   }
   // };
+  useEffect(() => {
+    if (auth && auth.user) {
+      setEmail(auth.user.email);
+     
+    }
+  }, [auth]);
+  // console.log(email)
 
+  
+  
   // useEffect(() => {
   //   getToken();
   //   setEmail(auth?.email);
@@ -55,7 +64,7 @@ const KAddaddress = () => {
 
   return (
     <Layout2 title={'Add Adreess - Ceylon Green'}>
-      <pre>{JSON.stringify(auth,null,4)}</pre>
+      {/* <pre>{JSON.stringify(auth,null,4)}</pre> */}
       <div className='grid-container'>
       <form onSubmit={handleSubmit}>
         <div className='KAboarder'>

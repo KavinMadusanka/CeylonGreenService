@@ -21,6 +21,8 @@ import EditEmployee from "./pages/EditEmployee";
 import SMDashboard from "./pages/SMDashboard";
 import EmployeeProfile from "./pages/EmployeeProfile";
 import EmployeeSalary from "./pages/EmployeeSalary";
+import Paymentpage from './pages/Paymentpage';
+
 
 function App() {
   return (
@@ -59,6 +61,20 @@ function App() {
         <Route path="/EmployeeSalary" element={<EmployeeSalary/>} />
 
         <Route path="*" element={<Pagenotfound />} />
+        <Route path='/' element={<HomePage />} />
+        <Route path='/homepage2' element={<HomePage2 />} />
+        <Route path='/service' element={<Service />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/kaddcard' element={<KAddcard />} />
+        <Route path='/kAddaddress' element={<KAddaddress />} />
+        <Route path='/appointment1' element={<Appointment1 />} />
+        <Route path='/userRegister' element={<Register />} />
+        <Route path='/userLogin' element={<UserLogin />} />
+        <Route path='/userManagement' element={<UserManagement />} />
+        <Route path='/payment' element={<Paymentpage />} />
+
+        <Route path='*' element={<Pagenotfound />} />
       </Routes>
       <ToastContainer
         position="bottom-right"
