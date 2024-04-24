@@ -7,7 +7,8 @@ const Paymentpage = () => {
   return (
     <Layout2 title={'Home - Ceylon Green'}>
         <h1>Payment page</h1>
-        <pre>{JSON.stringify(auth,null,4)}</pre>
+        {/* <pre>{JSON.stringify(auth,null,4)}</pre> */}
+        
     </Layout2>
   )
 }
