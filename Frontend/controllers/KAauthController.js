@@ -56,7 +56,7 @@ export const cardController = async (req,res) => {
 
 export const addressController = async (req,res) => {
     try {
-        const{name,address,cNumber,province,district,postalcode } =req.body
+        const{name,address,cNumber,province,district,postalcode,email } =req.body
         //validation
         if(!name){
             return res.send({message:'Name is Required'});
@@ -76,6 +76,9 @@ export const addressController = async (req,res) => {
         if(!postalcode){
             return res.send({message:'postalcode is Required'});
         }
+        if(!email){
+            return res.send({message:'emali is missed'});
+        }
 
         //check address
         const exisitingAddress = await KAdeliveryaddress.findOne({address});
@@ -88,12 +91,12 @@ export const addressController = async (req,res) => {
             });
         }
         //save
-        const card = await new KAdeliveryaddress({name,address,cNumber,province,district,postalcode}).save();
+        const deliaddress = await new KAdeliveryaddress({name,address,cNumber,province,district,postalcode,email}).save();
 
         res.status(201).send({
             success:true,
             message:'Address Addeded Successfully',
-            card
+            deliaddress
         });
 
     } catch (error) {
@@ -102,6 +105,84 @@ export const addressController = async (req,res) => {
             success: false,
             message: 'Error in details entering',
             error
+        });
+    }
+};
+
+//update address details
+export const updateAddressController = async (req,res) => {
+    try {
+        const {name} = req.body;
+        const {address} = req.body;
+        const {cNumber} = req.body;
+        const {province} = req.body;
+        const {district} = req.body;
+        const {postalcode} = req.body;
+        const {id} = req.params;
+        const category = await KAdeliveryaddress.findByIdAndUpdate(
+            id,
+            {name, slug: slugify(name)},
+            {address, slug: slugify(address)},
+            {cNumber, slug: slugify(cNumber)},
+            {province, slug: slugify(province)},
+            {district, slug: slugify(district)},
+            {postalcode, slug: slugify(postalcode)},
+            {new: true}
+            
+        );
+        res.status(200).send({
+            success: true,
+            message: "Address Updated Successfully",
+            category,
+        });
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            error,
+            message:"Error while updating Address"
+        })
+        
+    }
+};
+
+//get all deliverAddress
+export const getAddressControlller = async(req, res) =>{
+    try {
+        const address = await KAdeliveryaddress.find({});
+        res.status(200).send({
+            success: true,
+            message: "All Categories List",
+            address,
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            error,
+            message: "Error while getting all categories",
+        });
+        
+    }
+};
+
+//delete Address
+export const deleteAddressController = async (req, res) =>{
+    try {
+        const { id } = req.params;
+        await KAdeliveryaddress.findByIdAndDelete(id);
+        res.status(200).send({
+            success: true,
+            message: "Address Deleted Successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "error while deleting Address",
+            error,
         });
     }
 };
