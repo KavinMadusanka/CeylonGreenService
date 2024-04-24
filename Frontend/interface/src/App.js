@@ -22,13 +22,16 @@ import SMDashboard from "./pages/SMDashboard";
 import EmployeeProfile from "./pages/EmployeeProfile";
 import EmployeeSalary from "./pages/EmployeeSalary";
 import Paymentpage from './pages/Paymentpage';
-
+import Appointment2 from './pages/Appointment2';
+import Appointment3i from './pages/Appointment3i';
+import Appointment3ii from './pages/Appointment3ii';
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/" element={<HomePage2 />} />
         <Route path="/homepage2" element={<HomePage2 />} />
         <Route path="/service" element={<Service />} />
         <Route path="/about" element={<About />} />
@@ -42,6 +45,7 @@ function App() {
         <Route path="/userRegister" element={<Register />} />
         <Route path="/userLogin" element={<UserLogin />} />
         <Route path="/userManagement" element={<UserManagement />} />
+        <Route path="/payment" element={<Paymentpage />} />
         <Route
           path="/SMDashboard/Category/AddCategory"
           element={<AddCategory />}
