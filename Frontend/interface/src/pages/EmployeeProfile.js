@@ -1,5 +1,5 @@
 import React from "react";
-import "./EmployeeProfile.css";
+import "../components/EmployeeProfile.css";
 
 const EmployeeProfile = () => {
   const employeeData = {
