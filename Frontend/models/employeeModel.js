@@ -46,7 +46,7 @@ const EmployeeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    profileImageUrl: {
+    profileImage: {
       type: String,
       required: true,
     },
