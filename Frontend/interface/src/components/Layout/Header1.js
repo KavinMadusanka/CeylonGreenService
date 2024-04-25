@@ -29,7 +29,62 @@ const Header1 = () => {
                     Login
                   </NavLink >
                 </li>
-                </>) : (<>
+                </>): auth.user.role === 1 ?(
+                <>
+                    <li className="nav-item">
+                      <NavLink to="/homepage2" className="nav-link" >
+                        Home
+                      </NavLink >
+                    </li>
+                  <li className="nav-item dropdown">
+                    <NavLink
+                      className="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      style={{ border: "none"}}
+                    >
+                      {auth?.user?.name}
+                    </NavLink>
+                    <ul className="dropdown-menu dropdown-menu-end" style={{ textAlign:"left"}}>
+                      <li>
+                        <NavLink to="/AppointmentDashboard"
+                          // to={`/AppointmentDashboard${
+                          //   auth?.user?.role === 1 ? "admin" : "user"
+                          // }`}
+                          className="dropdown-item"
+                        >
+                          Appointment
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/AppointmentDashboard" className="dropdown-item"
+                        >
+                          Inventory
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/AppointmentDashboard" className="dropdown-item"
+                        >
+                          Payment
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/userManagement" className="dropdown-item"
+                        >
+                          User Management
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/AppointmentDashboard" className="dropdown-item"
+                        >
+                          Rating management
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </li>
+                </>
+                ) : (<>
                   <li className="nav-item">
                   <NavLink to="/homepage2" className="nav-link">
                     Home
@@ -43,11 +98,6 @@ const Header1 = () => {
                 <li className="nav-item">
                   <NavLink to="/about" className="nav-link" href="#">
                     About Us
-                  </NavLink >
-                </li>
-                <li className="nav-item">
-                  <NavLink to="/userManagement" className="nav-link" href="#">
-                    User Management
                   </NavLink >
                 </li>
                 <li className="nav-item">
