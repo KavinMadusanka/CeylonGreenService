@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.2",
     "morgan": "^1.10.0",
+    "nodemodule": "^0.3.0",
     "nodemon": "^3.1.0",
     "react-datepicker": "^6.9.0",
     "react-icons": "^5.0.1",
