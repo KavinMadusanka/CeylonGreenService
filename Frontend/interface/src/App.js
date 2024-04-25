@@ -25,6 +25,8 @@ import Paymentpage from './pages/Paymentpage';
 import Appointment2 from './pages/Appointment2';
 import Appointment3i from './pages/Appointment3i';
 import Appointment3ii from './pages/Appointment3ii';
+import Appointment4 from './pages/Appointment4';
+import AppointmentDashboard from './pages/AppointmentDashboard';
 
 function App() {
   return (
@@ -42,6 +44,8 @@ function App() {
         <Route path='/appointment2' element={<Appointment2 />} />
         <Route path='/appointment3i' element={<Appointment3i />} />
         <Route path='/appointment3ii' element={<Appointment3ii />} />
+        <Route path='/appointment4' element={<Appointment4 />} />
+        <Route path='/AppointmentDashboard' element={<AppointmentDashboard />} />
         <Route path="/userRegister" element={<Register />} />
         <Route path="/userLogin" element={<UserLogin />} />
         <Route path="/userManagement" element={<UserManagement />} />
