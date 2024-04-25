@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout1 from '../components/Layout/Layout1';
 import '../components/Appointment.css';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import { useAuth } from '../context/auth';
 
 const Appointment1 = () => {
   const [fullName, setFullName] = useState("");
@@ -14,6 +15,8 @@ const Appointment1 = () => {
   const [comments, setComments] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [userId, setUserId] = useState("");
+  const [auth,setAuth] = useAuth()
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,7 +30,8 @@ const Appointment1 = () => {
         servicePackage,
         comments,
         selectedDate,
-        selectedTime
+        selectedTime,
+        userId
       });
       console.log(res.data);  // Log the response
       if (res.data.success) {
@@ -41,6 +45,17 @@ const Appointment1 = () => {
       toast.error('Something went wrong');
     }
   };
+
+
+
+  //////////////////////////
+  useEffect(() => {
+    if (auth && auth.user) {
+      setUserId(auth.user._id);
+     
+    }
+  }, [auth]);
+  ///////////////////////////////
 
   return (
     <Layout1 title={'Make Appointment - Ceylon Green'}>
