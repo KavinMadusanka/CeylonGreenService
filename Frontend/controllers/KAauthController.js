@@ -149,8 +149,9 @@ export const updateAddressController = async (req,res) => {
 
 //get all deliverAddress
 export const getAddressControlller = async(req, res) =>{
+    const{ email } =req.body
     try {
-        const address = await KAdeliveryaddress.find({});
+        const address = await KAdeliveryaddress.find({email});
         res.status(200).send({
             success: true,
             message: "All Categories List",
