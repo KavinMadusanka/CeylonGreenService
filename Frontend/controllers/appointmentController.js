@@ -2,7 +2,7 @@ import appointmentModel from "../models/appointmentModel.js";
 
 export const appointmentController = async (req,res) => {
     try {
-        const {fullName,address,phoneNumber,email,comments,servicePackage,selectedDate,selectedTime} = req.body;
+        const {fullName,address,phoneNumber,email,comments,servicePackage,selectedDate,selectedTime,userId} = req.body;
         
         // console.log(req.body); // Log the request body for debugging
         
@@ -31,16 +31,9 @@ export const appointmentController = async (req,res) => {
         if(!selectedTime){
             return res.status(400).send({error:'Time is Required'});
         }
-
-        //check appointment
-        // const existingAppointment = await appointmentModel.findOne({});
-        // //existing appointment
-        // if(existingAppointment){
-        //     return res.status(400).send({
-        //         success:false,
-        //         message:'This Appointment is already added',
-        //     });
-        // }
+        if(!userId){
+            return res.status(400).send({error:'userId is Required'});
+        }
 
         //save
         const appointment = await new appointmentModel({
@@ -51,7 +44,8 @@ export const appointmentController = async (req,res) => {
             comments,
             servicePackage,
             selectedDate,
-            selectedTime
+            selectedTime,
+            userId
         }).save();
 
         res.status(201).send({
