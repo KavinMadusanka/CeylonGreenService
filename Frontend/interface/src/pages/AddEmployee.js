@@ -1,42 +1,65 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const AddEmployee = () => {
-  const [employee, setEmployee] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    gender: "",
-    pronouns: "",
-    salary: "",
-    leaves: 0,
-    status: "",
-    address: "",
-    email: "",
-    profileImageUrl: "",
-  });
+  const [employee, setEmployee] = useState("");
+  const [firstname, setfirstName] = useState("");
+  const [lastname, setlastName] = useState("");
+  const [phone, setphone] = useState("");
+  const [gender, setgender] = useState("");
+  const [pronouns, setpronouns] = useState("");
+  const [salary, setsalary] = useState("");
+  const [leaves, setleaves] = useState("");
+  const [status, setstatus] = useState("");
+  const [address, setaddress] = useState("");
+  const [email, setemail] = useState("");
+  const [profileImageUrl, setprofileImageUrl] = useState("");
+  const navigate = useNavigate();
 
-  const [category, setCategory] = useState([]);
+  // const [category, setCategory] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/smdashboard/category")
-      .then((result) => {
-        if (result.data.Status) {
-          setCategory(result.data.Result);
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/smdashboard/category")
+  //     .then((result) => {
+  //       if (result.data.Status) {
+  //         setCategory(result.data.Result);
+  //       } else {
+  //         alert(result.data.Error);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000/smdashboard/employee/addemployee", employee)
-      .then((result) => console.log(result.data))
-      .catch((err) => console.log(err));
+    try {
+      const res = await axios.post("http://localhost:8000/api/v1/employee/smdashboard/addemployee", {
+        firstname,
+        lastname,
+        phone,
+        gender,
+        pronouns,
+        salary,
+        leaves,
+        status,
+        address,
+        email,
+        profileImageUrl,
+      });
+      if (res && res.data.success) {
+        toast.success(res.data.message);
+        navigate("/smdashboard/addemployee");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {}
+    // axios
+    //   .post("http://localhost:3000/smdashboard/addemployee", employee)
+    //   .then((result) => console.log(result.data))
+    //   .catch((err) => console.log(err));
   };
 
   return (
@@ -53,9 +76,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputFirstName"
               placeholder="Enter First Name"
-              onChange={(e) =>
-                setEmployee({ ...employee, firstName: e.target.value })
-              }
+              value={firstname}
+              onChange={(e) => setfirstName(e.target.value)}
             />
           </div>
           <div className="col-6">
@@ -67,9 +89,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputLastName"
               placeholder="Enter Last Name"
-              onChange={(e) =>
-                setEmployee({ ...employee, lastName: e.target.value })
-              }
+              value={lastname}
+              onChange={(e) => setlastName(e.target.value)}
             />
           </div>
           <div className="col-6">
@@ -81,9 +102,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputPhone"
               placeholder="Enter Phone"
-              onChange={(e) =>
-                setEmployee({ ...employee, phone: e.target.value })
-              }
+              value={phone}
+              onChange={(e) => setphone(e.target.value)}
             />
           </div>
           <div className="col-6">
@@ -95,9 +115,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputGender"
               placeholder="Enter Gender"
-              onChange={(e) =>
-                setEmployee({ ...employee, gender: e.target.value })
-              }
+              value={gender}
+              onChange={(e) => setgender(e.target.value)}
             />
           </div>
           <div className="col-6">
@@ -109,9 +128,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputPronouns"
               placeholder="Enter Pronouns"
-              onChange={(e) =>
-                setEmployee({ ...employee, pronouns: e.target.value })
-              }
+              value={pronouns}
+              onChange={(e) => setpronouns(e.target.value)}
             />
           </div>
           <div className="col-6">
@@ -123,9 +141,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputSalary"
               placeholder="Enter Salary"
-              onChange={(e) =>
-                setEmployee({ ...employee, salary: e.target.value })
-              }
+              value={salary}
+              onChange={(e) => setsalary(e.target.value)}
             />
           </div>
           <div className="col-6">
@@ -137,9 +154,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputLeaves"
               placeholder="Enter Leaves"
-              onChange={(e) =>
-                setEmployee({ ...employee, leaves: e.target.value })
-              }
+              value={leaves}
+              onChange={(e) => setleaves(e.target.value)}
             />
           </div>
           <div className="col-6">
@@ -151,9 +167,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputStatus"
               placeholder="Enter Status"
-              onChange={(e) =>
-                setEmployee({ ...employee, status: e.target.value })
-              }
+              value={status}
+              onChange={(e) => setstatus(e.target.value)}
             />
           </div>
           <div className="col-12">
@@ -165,9 +180,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputAddress"
               placeholder="Enter Address"
-              onChange={(e) =>
-                setEmployee({ ...employee, address: e.target.value })
-              }
+              value={address}
+              onChange={(e) => setaddress(e.target.value)}
             />
           </div>
           <div className="col-12">
@@ -179,9 +193,8 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputEmail"
               placeholder="Enter Email"
-              onChange={(e) =>
-                setEmployee({ ...employee, email: e.target.value })
-              }
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
             />
           </div>
           <div className="col-12 mb-3">
@@ -192,15 +205,17 @@ const AddEmployee = () => {
               type="file"
               className="form-control rounded-0"
               id="inputGroupFile01"
-              onChange={(e) =>
-                setEmployee({ ...employee, image: e.target.files[0] })
-              }
+              value={profileImageUrl}
+              onChange={(e) => setprofileImageUrl(e.target.files[1])}
             />
           </div>
 
           <div className="col-12">
-            <button type="submit" className="btn btn-primary w-100"
-            style={{ width: "70%", backgroundColor: "green" }}>
+            <button
+              type="submit"
+              className="btn btn-primary w-100"
+              style={{ width: "70%", backgroundColor: "green" }}
+            >
               Add Employee
             </button>
           </div>

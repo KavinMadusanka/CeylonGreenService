@@ -48,10 +48,10 @@ const EmployeeSchema = new mongoose.Schema(
     },
     profileImage: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("employees", EmployeeSchema);
+export default mongoose.model("employee", EmployeeSchema);

@@ -15,8 +15,8 @@ export const createEmployeeController = async (req, res) => {
       leaves,
       status,
       profileImage,
-    } = req.body;
-    const newEmployee = new Employee({
+        } = req.body;
+    const newEmployee = await new Employee({
       firstname,
       lastname,
       email,
@@ -28,8 +28,7 @@ export const createEmployeeController = async (req, res) => {
       leaves,
       status,
       profileImage,
-    });
-    await newEmployee.save();
+    }).save();
     res.status(201).send({
       success: true,
       message: "Employee created successfully",
