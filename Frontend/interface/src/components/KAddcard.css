@@ -4,11 +4,11 @@
 }
 
 .KAboarder {
-  margin-left: 10%;
-  margin-right: 10%;
+  /* margin-left: 10%;
+  margin-right: 10%; */
   margin-top: 20px;
-  margin-bottom: 15px;
-  border: 1px solid ;
+  /* margin-bottom: 15px; */
+  border: 2px solid ;
   padding-top: 10px;
   padding-bottom: 20px;
   border-radius: 10px;
@@ -38,6 +38,7 @@
 #table td {
   padding-left: calc(2%);
   padding-right: calc(2%);
+  padding-bottom: 1%
 }
 
 #table td input {
@@ -47,10 +48,12 @@
   padding-left: 5%;
 }
 .btnsub {
-  background-color:#BFEA7C;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 10px;
+  background-color:#416D19;
+  padding: 8px 16px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
   
   /* ============================================================================================== */
@@ -90,6 +93,7 @@
 }
 .item9 button:hover {
   background-color: #9BCF53;
+  transform: scale(1.05);
 }
 
 .grid-container{

@@ -3,11 +3,13 @@ import {cardController,
     addressController,
     updateAddressController,
     getAddressControlller,
+    getSingleAddressControlller,
     deleteAddressController
 } from '../controllers/KAauthController.js';
 
 //router object
 const router = express.Router();
+
 
 //routing
 //Method POST
@@ -19,7 +21,10 @@ router.post("/KAddaddress", addressController);
 router.put("/update-Address/:id",updateAddressController);
 
 //getAll address
-router.get("/get-Address",getAddressControlller);
+router.get("/get-Address/:email",getAddressControlller);
+
+//get single address
+router.get("/get-single-Address/:id",getSingleAddressControlller);
 
 //delete address
 router.delete("/delete-Address/:id",deleteAddressController);

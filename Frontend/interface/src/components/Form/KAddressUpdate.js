@@ -1,34 +1,33 @@
 import React, {useEffect, useState} from 'react';
-// import Layout2 from '../components/Layout/Layout2';
+import Layout2 from '../Layout/Layout2';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoShieldCheckmark } from "react-icons/io5";
-import {}  from '../components/KAddcard.css';
+import {}  from '../KAddcard.css';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,useParams} from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAuth } from '../context/auth';
+import { useAuth } from '../../context/auth';
 
-const KAddaddress = () => {
-  const [cNumber,setNumber] = useState("");
-  const [name,setName] = useState("");
-  const [address,setAddress] = useState("");
-  const [province,setProvince] = useState("");
-  const [district,setDistrict] = useState("");
-  const [postalcode,setPostalcode] = useState("");
-  const [clientToken, setClientToken] = useState("");
-  const [email, setEmail] = useState("");
-  const [auth,setAuth] = useAuth()
-  const navigate = useNavigate();
+const KAddressUpdate = () => {
+    const { id } = useParams();
+    const [addressDetails, setAddressDetails] = useState(null);
+    const [cNumber,setNumber] = useState("");
+    const [name,setName] = useState("");
+    const [address,setAddress] = useState("");
+    const [province,setProvince] = useState("");
+    const [district,setDistrict] = useState("");
+    const [postalcode,setPostalcode] = useState("");
+    const [clientToken, setClientToken] = useState("");
+    const [email, setEmail] = useState("");
+    const [auth,setAuth] = useAuth()
+    const navigate = useNavigate();
+    // console.log(id)
 
   //form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (cNumber.length !== 10) {
-        toast.error("Contact number must be 10 characters long");
-        return;
-      }
-      const res = await axios.post('/api/v1/auth/KAddaddress',
+      const res = await axios.put(`/api/v1/auth//update-Address/${id}`,
         {name,address,cNumber,province,district,postalcode,email}
       );
       if(res && res.data.success){
@@ -48,22 +47,62 @@ const KAddaddress = () => {
   //     const { data } = await axios.get("/api/v1/product/braintree/token");
   //     setClientToken(data?.clientToken);
   //   } catch (error) {
-  //     console.log(error);
+      // console.log(error);
   //   }
   // };
-  useEffect(() => {
-    if (auth && auth.user) {
-      setEmail(auth.user.email);
-      setAddress(auth.user.address);
-      setName(auth.user.name);
-      setNumber(auth.user.pNumber);
+//   useEffect(() => {
+//     if (auth && auth.user) {
+//       setAddress(addressDetails.address);
+//       setName(auth.user.name);
+//       setNumber(auth.user.pNumber);
      
-    }
-  }, [auth]);
+//     }
+//   }, [auth]);
   // console.log(email)
 
+//fetch data
+  useEffect(() => {
+    const fetchAddressDetails = async () => {
+
+      try {
+        const res = await axios.get(`/api/v1/auth/get-single-Address/${id}`);
+        setAddressDetails(res.data);
+        if (res.data) {
+          toast.success('catch successfully');
+          // const { name, address, cNumber, province, district, postalcode, email } = res.data;
+          // setName(res.data.name);
+          // setAddress(res.data.address);
+          // setNumber(res.data.cNumber);
+          // setProvince(res.data.province);
+          // setDistrict(res.data.district);
+          // setPostalcode(res.data.postalcode);
+          // setEmail(res.data.email);
+        }
+      } catch (error) {
+        console.error('Error fetching address details:', error);
+      }
+    };
+    fetchAddressDetails();
+  }, [id]);
+
+
+
   return (
-    // <Layout2 title={'Add Adreess - Ceylon Green'}>
+    <Layout2 title={'Add Adreess - Ceylon Green'}>
+    <div>
+            <h1>Address Details</h1>
+            {addressDetails && (
+                <div>
+                    <p>Name: {addressDetails.name}</p>
+                    <p>Contact Number: {addressDetails.cNumber}</p>
+                    <p>Address: {addressDetails.address}</p>
+                    <p>Province: {addressDetails.province}</p>
+                    <p>District: {addressDetails.district}</p>
+                    <p>Postal Code: {addressDetails.postalcode}</p>
+                    <p>Email: {addressDetails.email}</p>
+                </div>
+            )}
+        </div>
       <div className='grid-container'>
       <form onSubmit={handleSubmit}>
         <div className='KAboarder'>
@@ -117,7 +156,6 @@ const KAddaddress = () => {
                       <input 
                       type="text"
                       value={address}
-                      onChange={(e) => setAddress(e.target.value)}
                       required  
                       /></td></tr>
                       <tr><br/></tr>
@@ -161,8 +199,8 @@ const KAddaddress = () => {
         </div>
         </form>
       </div>
-    // </Layout2>
+    </Layout2>
   )
 }
 
-export default KAddaddress;
+export default KAddressUpdate;
