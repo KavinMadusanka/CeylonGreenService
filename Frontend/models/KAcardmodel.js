@@ -26,10 +26,6 @@ const userSchema = new mongoose.Schema({
     year: {
         type:Number,
         required:true
-    },
-    email: {
-        type:String,
-        required:true
     }
 
 },{timestamps:true})

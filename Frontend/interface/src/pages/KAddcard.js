@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Layout2 from '../components/Layout/Layout2';
+// import Layout2 from '../components/Layout/Layout2';
 import { FaCreditCard } from "react-icons/fa6";
 import { IoShieldCheckmark } from "react-icons/io5";
 import {} from '../components/KAddcard.css';
@@ -22,6 +22,31 @@ const KAddcard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (cardNumber.length !== 16) {
+        toast.error("Card number must be 16 characters long");
+        return;
+      }
+      if (cvv.length !== 3) {
+        toast.error("CVV number is 3 digit number");
+        return;
+      }
+      // Validate month
+      // const currentMonth = new Date().getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
+      const currentYear = new Date().getFullYear();
+      // const enteredMonth = parseInt(month, 10);
+      let enteredYearFull = parseInt(year, 10);
+      if (year.length === 2) {
+        enteredYearFull += currentYear - (currentYear % 100);
+      }
+
+      if (
+        enteredYearFull < currentYear ||
+        (enteredYearFull === currentYear && parseInt(month, 10) < new Date().getMonth() + 1) || (parseInt(month, 10) > 12)
+      ) {
+        toast.error("Please enter a valid expiration date");
+        return;
+      }
+      
       const res = await axios.post('/api/v1/auth/KAddcard',
         {name,cardNumber,cvv,month,year,email}
       );
@@ -45,7 +70,7 @@ const KAddcard = () => {
   }, [auth]);
   
   return (
-    <Layout2 title={'Add Card - Ceylon Green'}>
+    // <Layout2 title={'Add Card - Ceylon Green'}>
       
       <div className='grid-container'>
       <form onSubmit={handleSubmit}>
@@ -66,7 +91,6 @@ const KAddcard = () => {
                     </ul>
               </div>
             </div>
-            <br/>
             <div className="item3">
                 <table id="table">
                   <tbody>
@@ -138,7 +162,7 @@ const KAddcard = () => {
         </div>
         </form>
       </div>
-    </Layout2>
+    // </Layout2>
   )
 }
 

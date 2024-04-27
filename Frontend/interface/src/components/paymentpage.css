@@ -1,0 +1,52 @@
+.Link {
+    text-align: right;
+
+}
+.Link button{
+    align-items: right;
+    background-color: #416D19;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 3%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    /* font-size: 1.3em; */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.Link button:hover {
+    background-color: #9BCF53;
+    transform: scale(1.05);
+}
+.btn button{
+    margin-right: 2px;
+    border: none;
+
+}
+.btn button:hover{
+    transform: scale(1.05);
+}
+.table {
+    margin-bottom: 1%;
+}
+.div {
+    margin-top: 2%;
+    padding-top: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border: solid 1px;
+    border-radius: 10px;
+    content: "Delivery Details";
+}
+.searchbar {
+    margin-left: 10% ;
+    margin-top: 2%;
+}
+#btnedit {
+    background-color: #416D19;
+}
+#btnedit:hover {
+    background-color: #9BCF53;
+}

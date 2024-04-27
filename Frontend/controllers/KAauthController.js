@@ -1,4 +1,5 @@
 import KAcardmodel from "../models/KAcardmodel.js";
+import slugify from "slugify";
 import KAdeliveryaddress from "../models/KAdeliveryaddress.js";
 
 
@@ -26,7 +27,7 @@ export const cardController = async (req,res) => {
         }
 
         //check card
-        const exisitingCard = await KAcardmodel.findOne({cardNumber});
+        const exisitingCard = await KAcardmodel.findOne({cardNumber,email});
 
         //exisit card
         if(exisitingCard){
@@ -54,6 +55,7 @@ export const cardController = async (req,res) => {
     }
 };
 
+//add new address
 export const addressController = async (req,res) => {
     try {
         const{name,address,cNumber,province,district,postalcode, email } =req.body
@@ -81,7 +83,7 @@ export const addressController = async (req,res) => {
         }
 
         //check address
-        const exisitingAddress = await KAdeliveryaddress.findOne({address});
+        const exisitingAddress = await KAdeliveryaddress.findOne({address,email});
 
         //exisit card
         if(exisitingAddress){
@@ -112,28 +114,24 @@ export const addressController = async (req,res) => {
 //update address details
 export const updateAddressController = async (req,res) => {
     try {
-        const {name} = req.body;
-        const {address} = req.body;
-        const {cNumber} = req.body;
-        const {province} = req.body;
-        const {district} = req.body;
-        const {postalcode} = req.body;
+        const {
+            name,
+            address,
+            province,
+            cNumber,
+            district,
+            postalcode} = req.body;
         const {id} = req.params;
-        const category = await KAdeliveryaddress.findByIdAndUpdate(
+        const addre = await KAdeliveryaddress.findByIdAndUpdate(
             id,
-            {name, slug: slugify(name)},
-            {address, slug: slugify(address)},
-            {cNumber, slug: slugify(cNumber)},
-            {province, slug: slugify(province)},
-            {district, slug: slugify(district)},
-            {postalcode, slug: slugify(postalcode)},
+            {name,address,cNumber,province,district,postalcode, slug: slugify(postalcode)},
             {new: true}
             
         );
         res.status(200).send({
             success: true,
             message: "Address Updated Successfully",
-            category,
+            addre,
         });
         
     } catch (error) {
@@ -149,12 +147,12 @@ export const updateAddressController = async (req,res) => {
 
 //get all deliverAddress
 export const getAddressControlller = async(req, res) =>{
-    const{ email } =req.body
+    const{ email } =req.params;
     try {
         const address = await KAdeliveryaddress.find({email});
         res.status(200).send({
             success: true,
-            message: "All Categories List",
+            message: "Addresses retrieved successfully",
             address,
         });
         
@@ -163,9 +161,30 @@ export const getAddressControlller = async(req, res) =>{
         res.status(500).send({
             success: false,
             error,
-            message: "Error while getting all categories",
+            message: "Error while retrieving addresses",
         });
         
+    }
+};
+
+//get single address 
+export const getSingleAddressControlller = async (req,res) => {
+    try {
+        const {id} = req.params;
+        console.log(id)
+        const address = await KAdeliveryaddress.findOne({_id:id})
+        res.status(200).send({
+            success: true,
+            message: "Get delivery address successfully",
+            address,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            error,
+            message: "Error while getting single Address ",
+        });
     }
 };
 
