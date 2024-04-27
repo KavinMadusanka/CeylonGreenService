@@ -52,12 +52,8 @@ app.use(morgan("dev"));
 app.use('/api/v1/auth', authRoutes);
 app.use('api/v1/product',tokenRoutes);
 app.use('/api/user', UserRoutes);
-<<<<<<< Updated upstream
-app.use("/api/v1/employee", empRoutes);
-=======
 app.use("/api/v1/employees", empRoutes);
 app.use("/api/vi/Cart", CartRoutes);
->>>>>>> Stashed changes
 
 
 //rest api
