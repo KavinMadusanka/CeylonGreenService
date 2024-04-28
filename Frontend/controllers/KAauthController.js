@@ -171,7 +171,7 @@ export const getAddressControlller = async(req, res) =>{
 export const getSingleAddressControlller = async (req,res) => {
     try {
         const {id} = req.params;
-        console.log(id)
+        // console.log(id)
         const address = await KAdeliveryaddress.findOne({_id:id})
         res.status(200).send({
             success: true,
@@ -204,5 +204,105 @@ export const deleteAddressController = async (req, res) =>{
             message: "error while deleting Address",
             error,
         });
+    }
+};
+
+//get all Card DEtails
+export const getCardControlller = async(req, res) =>{
+    const{ email } =req.params;
+    try {
+        const cards = await KAcardmodel.find({email});
+        if (!cards || cards.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "No card details found for this email",
+            });
+        }
+        res.status(200).send({
+            success: true,
+            message: "Card details retrieved successfully",
+            cards,
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            error,
+            message: "Error while retrieving card details",
+        });
+        
+    }
+};
+
+//delete card details
+export const deleteCardController = async (req, res) =>{
+    try {
+        const { id } = req.params;
+        await KAcardmodel.findByIdAndDelete(id);
+        res.status(200).send({
+            success: true,
+            message: "Card Details Deleted Successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "error while deleting Card Details",
+            error,
+        });
+    }
+};
+//get single card 
+export const getSingleCardControlller = async (req,res) => {
+    try {
+        const {id} = req.params;
+        // console.log(id)
+        const cards = await KAcardmodel.findOne({_id:id})
+        res.status(200).send({
+            success: true,
+            message: "Get delivery address successfully",
+            cards,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            error,
+            message: "Error while getting single Address ",
+        });
+    }
+};
+
+//update card details
+export const updateCardController = async (req,res) => {
+    try {
+        const {
+            name,
+            cardNumber,
+            month,
+            year,
+            cvv } = req.body;
+        const {id} = req.params;
+        const cards = await KAcardmodel.findByIdAndUpdate(
+            id,
+            {name,cardNumber,month,year,cvv},
+            {new: true}
+            
+        );
+        res.status(200).send({
+            success: true,
+            message: "Address Updated Successfully",
+            cards,
+        });
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            error,
+            message:"Error while updating Address"
+        })
+        
     }
 };

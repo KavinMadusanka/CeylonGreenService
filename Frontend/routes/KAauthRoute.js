@@ -4,7 +4,11 @@ import {cardController,
     updateAddressController,
     getAddressControlller,
     getSingleAddressControlller,
-    deleteAddressController
+    deleteAddressController,
+    getCardControlller,
+    deleteCardController,
+    getSingleCardControlller,
+    updateCardController
 } from '../controllers/KAauthController.js';
 
 //router object
@@ -28,6 +32,18 @@ router.get("/get-single-Address/:id",getSingleAddressControlller);
 
 //delete address
 router.delete("/delete-Address/:id",deleteAddressController);
+
+
+//getAll card
+router.get("/get-Card/:email",getCardControlller);
+//get single address
+router.get("/get-single-card/:id",getSingleCardControlller);
+
+//update address
+router.put("/update-card/:id",updateCardController);
+
+//delete card
+router.delete("/delete-card/:id",deleteCardController);
 
 //LOGIN || POST
 // router.post('/login',)
