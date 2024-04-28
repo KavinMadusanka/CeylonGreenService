@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         trim:true
     },
     cNumber: {
-        type:Number,
+        type:String,
         required:true
     },
     province: {

@@ -124,7 +124,7 @@ export const updateAddressController = async (req,res) => {
         const {id} = req.params;
         const addre = await KAdeliveryaddress.findByIdAndUpdate(
             id,
-            {name,address,cNumber,province,district,postalcode, slug: slugify(postalcode)},
+            {name,address,cNumber,province,district,postalcode},
             {new: true}
             
         );
