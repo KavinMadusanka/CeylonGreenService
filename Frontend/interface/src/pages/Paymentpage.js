@@ -8,7 +8,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import KAddaddress from './KAddaddress';
 import { Modal } from "antd";
 import KAddcard from './KAddcard';
-import KAddressUpdate from './../components/Form/KAddressUpdate';
 
 const Paymentpage = () => {
   const [Addre,setAddress] = useState([]);
@@ -131,10 +130,11 @@ const Paymentpage = () => {
         {/* Search input */}
         <input
               type="text"
-              placeholder="Search Address..."
+              placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="form-control mb-3"
+              // style={{border:'solid 1px'}}
             />
         </div>
         <div className='div'>
