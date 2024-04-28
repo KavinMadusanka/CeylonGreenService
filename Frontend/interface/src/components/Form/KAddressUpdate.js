@@ -23,11 +23,38 @@ const KAddressUpdate = () => {
     const navigate = useNavigate();
     // console.log(id)
 
+    //get single address
+    const getSingleAddress = async ()=>{
+      try {
+        const { data }  = await axios.get(`/api/v1/auth/get-single-Address/${id}`);
+        if(data && data.address){
+        setName(data.address.name);
+        setAddress(data.address.address);
+        setNumber(data.address.cNumber);
+        setProvince(data.address.province);
+        setDistrict(data.address.district);
+        setPostalcode(data.address.postalcode);
+        setEmail(data.address.email);
+        }else {
+          console.error('Address data not found:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching address details:', error);
+      }
+    };
+    useEffect(() => {
+      getSingleAddress();
+    }, []);
+
   //form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`/api/v1/auth//update-Address/${id}`,
+      if (cNumber.length !== 10) {
+        toast.error("Contact number must be 10 characters long");
+        return;
+      }
+      const res = await axios.put(`/api/v1/auth/update-Address/${id}`,
         {name,address,cNumber,province,district,postalcode,email}
       );
       if(res && res.data.success){
@@ -42,67 +69,8 @@ const KAddressUpdate = () => {
     }
   };
 
-  // const getToken = async () => {
-  //   try {
-  //     const { data } = await axios.get("/api/v1/product/braintree/token");
-  //     setClientToken(data?.clientToken);
-  //   } catch (error) {
-      // console.log(error);
-  //   }
-  // };
-//   useEffect(() => {
-//     if (auth && auth.user) {
-//       setAddress(addressDetails.address);
-//       setName(auth.user.name);
-//       setNumber(auth.user.pNumber);
-     
-//     }
-//   }, [auth]);
-  // console.log(email)
-
-//fetch data
-  useEffect(() => {
-    const fetchAddressDetails = async () => {
-
-      try {
-        const res = await axios.get(`/api/v1/auth/get-single-Address/${id}`);
-        setAddressDetails(res.data);
-        if (res.data) {
-          toast.success('catch successfully');
-          // const { name, address, cNumber, province, district, postalcode, email } = res.data;
-          // setName(res.data.name);
-          // setAddress(res.data.address);
-          // setNumber(res.data.cNumber);
-          // setProvince(res.data.province);
-          // setDistrict(res.data.district);
-          // setPostalcode(res.data.postalcode);
-          // setEmail(res.data.email);
-        }
-      } catch (error) {
-        console.error('Error fetching address details:', error);
-      }
-    };
-    fetchAddressDetails();
-  }, [id]);
-
-
-
   return (
     <Layout2 title={'Add Adreess - Ceylon Green'}>
-    <div>
-            <h1>Address Details</h1>
-            {addressDetails && (
-                <div>
-                    <p>Name: {addressDetails.name}</p>
-                    <p>Contact Number: {addressDetails.cNumber}</p>
-                    <p>Address: {addressDetails.address}</p>
-                    <p>Province: {addressDetails.province}</p>
-                    <p>District: {addressDetails.district}</p>
-                    <p>Postal Code: {addressDetails.postalcode}</p>
-                    <p>Email: {addressDetails.email}</p>
-                </div>
-            )}
-        </div>
       <div className='grid-container'>
       <form onSubmit={handleSubmit}>
         <div className='KAboarder'>

@@ -146,6 +146,7 @@ const Paymentpage = () => {
                         <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Contact No:</th>
                         <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Province</th>
                         <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>District</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Postalcode</th>
                         <th scope='col' style={{ border: '1px solid white', padding: '10px', textAlign: 'center' }} colSpan={2}>Action</th>
                     </tr>
                 </thead>
@@ -157,6 +158,7 @@ const Paymentpage = () => {
                         <td >{c.cNumber}</td>
                         <td >{c.province}</td>
                         <td >{c.district}</td>
+                        <td >{c.postalcode}</td>
                         <td className='btn'>
                           <button className="btn btn-primary" id="btnedit"
                           onClick={() => { handleEdit(c._id);}}>
