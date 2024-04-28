@@ -28,6 +28,7 @@ import Appointment3ii from './pages/Appointment3ii';
 import Appointment4 from './pages/Appointment4';
 import AppointmentDashboard from './pages/AppointmentDashboard';
 import KAddressUpdate from "./components/Form/KAddressUpdate";
+import KAcardUpdate from "./components/Form/KAcardUpdate";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
         <Route path="/userManagement" element={<UserManagement />} />
         <Route path="/payment" element={<Paymentpage />} />
         <Route path="/KAddressUpdate/:id" element={<KAddressUpdate />} />
+        <Route path="/KAcardUpdate/:id" element={<KAcardUpdate />} />
 
         <Route path="*" element={<Pagenotfound />} />
         <Route

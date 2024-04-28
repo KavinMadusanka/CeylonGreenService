@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Layout2 from '../Layout/Layout2';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoShieldCheckmark } from "react-icons/io5";
-import {}  from '../KAddcard.css';
+import {} from '../KAddcard.css';
 import axios from "axios";
 import {useNavigate,useParams} from "react-router-dom";
 import toast from "react-hot-toast";

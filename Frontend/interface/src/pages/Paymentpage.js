@@ -12,6 +12,7 @@ import KAddcard from './KAddcard';
 const Paymentpage = () => {
   const [Addre,setAddress] = useState([]);
   const [filteredAddresses, setFilteredAddresses] = useState([]);
+  const [filteredCard, setFilteredCard] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [auth,setAuth] = useAuth();
   const [email, setEmail] = useState("");
@@ -22,6 +23,14 @@ const Paymentpage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
 
+  //car details decleare
+  const [Card,setCard] = useState([]);
+  const [cHolder, setCHolder] = useState("");
+  const [cName, setcName] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const [cvv, setCVV] = useState("");
+  
   // get all address
   const getAllAddress = async() =>{
     try {
@@ -39,8 +48,7 @@ const Paymentpage = () => {
   useEffect(() => {
     if (auth && auth.user) {
       setEmail(auth.user.email);
-    }
-    
+    }  
   },[auth])
 
   useEffect(() => {
@@ -62,26 +70,26 @@ const Paymentpage = () => {
   // console.log(email)
 
   //update address
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axios.put(
-        `/api/v1/category/update-category/${selected._id}`,
-        { name: updatedName }
-      );
-      if (data?.success) {
-        toast.success(`${updatedName} is updated`);
-        setSelected(null);
-        setUpdatedName("");
-        setVisible(false);
-        getAllAddress();
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleUpdate = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const { data } = await axios.put(
+  //       `/api/v1/category/update-Address/${selected._id}`,
+  //       { name: updatedName }
+  //     );
+  //     if (data?.success) {
+  //       toast.success(`${updatedName} is updated`);
+  //       setSelected(null);
+  //       setUpdatedName("");
+  //       setVisible(false);
+  //       getAllAddress();
+  //     } else {
+  //       toast.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   //handel delete address
   const handleDelete = async (AId) => {
@@ -107,7 +115,7 @@ const Paymentpage = () => {
     setModalContent(content);
   };
 
-    // Handle edit button click
+    // Handle edit button click for address edit funtion
     const handleEdit = (id) => {
       navigate(`/KAddressUpdate/${id}`);
     };
@@ -116,11 +124,61 @@ const Paymentpage = () => {
   useEffect(() => {
     const filtered = Addre.filter((address) =>
     address.address.toLowerCase().includes(searchTerm.toLowerCase()) || address.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    address.province.toLowerCase().includes(searchTerm.toLowerCase()) || address.district.toLowerCase().includes(searchTerm.toLowerCase()) 
+    address.province.toLowerCase().includes(searchTerm.toLowerCase()) || address.district.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredAddresses(filtered);
   }, [searchTerm, Addre]);
 
+  useEffect(() => {
+    const filtered = Card.filter((cards) =>
+    cards.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredCard(filtered);
+  }, [searchTerm, Card]);
+
+/////////////////////////////////////////////////////////////
+
+//get all card details
+const getAllCard = async() =>{
+  try {
+    const {data} = await axios.get(`api/v1/auth/get-Card/${email}`);
+    if(data.success){
+      setCard(data.cards);
+      getAllCard();
+    }
+  } catch (error) {
+    // toast.error('ganna baggggg');
+    console.log(error);
+    // toast.error('Somthing went wrong in getting Address');
+  }
+};
+
+useEffect(() => {
+  getAllCard();
+  
+},[email])
+
+const handleDeleteCard = async (CId) => {
+  try {
+    const { data } = await axios.delete(
+      `/api/v1/auth/delete-card/${CId}`
+    );
+    if (data.success) {
+      toast.success('Card Details deleted successfully');
+
+      getAllAddress();
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    toast.error("Somtihing went wrong");
+  }
+};
+
+    // Handle edit button click for card edit function
+    const handleEditCard = (id) => {
+      navigate(`/KAcardUpdate/${id}`);
+    };
 
 /////////////////////////////////////////////////////////////
   return (
@@ -137,6 +195,60 @@ const Paymentpage = () => {
               // style={{border:'solid 1px'}}
             />
         </div>
+        
+        {/* display card details  */}
+        <div className='div'>
+        <table style={{ borderCollapse: 'collapse', width: '100%',marginLeft: '1%' }}>
+        <thead>
+                    <tr>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Card Holder Name</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Card Number</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Expire Month</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Expire Year</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>CVV</th>
+                        {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Email</th> */}
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px', textAlign: 'center' }} colSpan={2}>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {filteredCard.map((c) => (
+                    <tr key={c._id}>
+                        <td >{c.name}</td>
+                        <td >{c.cardNumber}</td>
+                        <td >{c.month}</td>
+                        <td >{c.year}</td>
+                        <td >{c.cvv}</td>
+                        {/* <td >{c.email}</td> */}
+                        <td className='btn'>
+                          <button className="btn btn-primary" id="btnedit"
+                          onClick={() => { handleEditCard(c._id);}}>
+                            Edit
+                          </button>
+                        </td>
+                        <td className='btn'>
+                          <button className="btn btn-danger" 
+                            onClick={() => {
+                            handleDeleteCard(c._id);
+                            }}>
+                              Delete
+                            </button>
+                        </td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan={7} className='Link'>
+                      {/* <Link to={"/kaddaddress"}> */}
+                        <button onClick={() => { handleModal(<KAddcard />);}}>Add New card</button>
+                      {/* </Link> */}
+                    </td>
+
+                  </tr>
+                </tbody>
+        </table>
+        </div>
+
+
+        {/* display delivery details table */}
         <div className='div'>
         <table style={{ borderCollapse: 'collapse', width: '100%',marginLeft: '1%' }}>
         <thead>
@@ -179,7 +291,6 @@ const Paymentpage = () => {
                     <td colSpan={7} className='Link'>
                       {/* <Link to={"/kaddaddress"}> */}
                         <button onClick={() => { handleModal(<KAddaddress />);}}>Add New Deliver Address</button>
-                        <button onClick={() => { handleModal(<KAddcard />);}}>Add New card</button>
                       {/* </Link> */}
                     </td>
 
