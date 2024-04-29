@@ -66,7 +66,7 @@ const Service = () => {
             </div>
             <div className="col-md-6 d-flex justify-content-center align-items-center">
               <p className="text-justify mt-2 " style={{fontSize:'30px'}}>
-                Product and Tools
+                Hired Employees          
               </p>
             </div>
           </div>
