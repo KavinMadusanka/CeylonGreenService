@@ -25,6 +25,8 @@
     "express-fileupload": "^1.5.0",
     "express-formidable": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "mongoose": "^8.2.2",
     "morgan": "^1.10.0",
     "nodemodule": "^0.3.0",

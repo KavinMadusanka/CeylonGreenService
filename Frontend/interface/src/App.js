@@ -29,6 +29,15 @@ import Appointment4 from './pages/Appointment4';
 import AppointmentDashboard from './pages/AppointmentDashboard';
 import KAddressUpdate from "./components/Form/KAddressUpdate";
 import KAcardUpdate from "./components/Form/KAcardUpdate";
+// import Login from "./pages/CartLogin";
+import PrAdminDashboard from './pages/Admin/PrAdminDashboard';
+import CreateCategory from "./pages/Admin/CreateCategory";
+import CreateProducts from "./pages/Admin/CreateProducts";
+import CreateSupplier from "./pages/Admin/CreateSupplier";
+import Products from "./pages/Admin/Products";
+import UpdateProduct from "./pages/Admin/UpdateProduct";
+import Suppliers from "./pages/Admin/Supplier";
+import UpdateSupplier from './pages/Admin/UpdateSupplier';
 
 function App() {
   return (
@@ -54,6 +63,29 @@ function App() {
         <Route path="/payment" element={<Paymentpage />} />
         <Route path="/KAddressUpdate/:id" element={<KAddressUpdate />} />
         <Route path="/KAcardUpdate/:id" element={<KAcardUpdate />} />
+        {/* <Route path="/cartlogin" element={<Login />} /> */}
+
+
+{/* piyusha */}
+        <Route path="/PrAdminDashboard" element={<PrAdminDashboard/>}/>
+        <Route path="/dashboard/admin/create-category" element={<CreateCategory/>}/>
+        <Route path="/dashboard/admin/create-product" element={<CreateProducts/>}/>
+        <Route path="/dashboard/admin/product/:slug" element={<UpdateProduct/>}/>
+        <Route path="/dashboard/admin/product" element={<Products/>}/>
+        <Route path="/dashboard/admin/create-supplier" element={<CreateSupplier/>}/>
+        <Route path="/dashboard/admin/suppliers" element={<Suppliers/>}/>
+        <Route path="/dashboard/admin/update-supplier/:id" element={<UpdateSupplier/>}/> {/* Add :id parameter */}
+
+
+{/* piyusha */}
+        <Route path="/PrAdminDashboard" element={<PrAdminDashboard/>}/>
+        <Route path="/dashboard/admin/create-category" element={<CreateCategory/>}/>
+        <Route path="/dashboard/admin/create-product" element={<CreateProducts/>}/>
+        <Route path="/dashboard/admin/product/:slug" element={<UpdateProduct/>}/>
+        <Route path="/dashboard/admin/product" element={<Products/>}/>
+        <Route path="/dashboard/admin/create-supplier" element={<CreateSupplier/>}/>
+        <Route path="/dashboard/admin/suppliers" element={<Suppliers/>}/>
+        <Route path="/dashboard/admin/update-supplier/:id" element={<UpdateSupplier/>}/> {/* Add :id parameter */}
 
         <Route path="*" element={<Pagenotfound />} />
         <Route
