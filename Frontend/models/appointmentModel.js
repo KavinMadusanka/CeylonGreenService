@@ -37,7 +37,7 @@ const appointmentSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
-    },
+    }
 },{timestamps:true})
 
 export default mongoose.model('appointments',appointmentSchema)

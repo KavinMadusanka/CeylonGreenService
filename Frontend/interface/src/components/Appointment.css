@@ -214,3 +214,103 @@
 .appointment-details button:hover {
   transform: scale(1.05);
 }
+
+
+
+/* ====================== My Appointments =================================== */
+
+.my-appointments-container {
+  padding: 20px;
+}
+
+.my-appointments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.my-appointments-header h2 {
+  font-size: 40px;
+  color: #416D19;
+}
+
+.book-appointment-btn {
+  background-color: #BFEA7C;
+  color: #416D19;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.book-appointment-btn:hover {
+  background-color: #416D19;
+  color: #fff;
+}
+
+/* -------- */
+
+.buttonset {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.view-btn,
+.edit-btn,
+.delete-btn {
+  margin-left: 10px;
+}
+
+.view-btn a,
+.edit-btn a {
+  text-decoration: none;
+  color: #416D19;
+}
+
+.delete-btn a:hover {
+  transform: scale(1.05);
+}
+
+.delete-btn a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.buttonset button {
+  padding: 8px 16px; 
+  border: none; 
+  color: #fff; 
+  border-radius: 4px; 
+  cursor: pointer; 
+}
+
+.view-btn, .edit-btn {
+  background-color: #BFEA7C;
+}
+
+.delete-btn {
+  background-color: #FF7F50; 
+}
+
+.Appointment-link {
+  text-decoration: none;
+  color: black !important;
+}
+
+.card-body {
+  background-color: #def9b2;
+}
+
+
+/* dropdwon */
+.dropdown {
+  margin-bottom: 20px; /* Add margin at the bottom of the dropdown */
+}
+
+.dropdown select {
+  padding: 5px; /* Add padding around the dropdown options */
+  margin: 5px 0; /* Add margin above and below the dropdown */
+  width: 250px; /* Adjust the width of the dropdown as needed */
+}
