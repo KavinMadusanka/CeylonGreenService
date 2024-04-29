@@ -217,7 +217,8 @@ const handleDeleteCard = async (CId) => {
                         <td >{c.cardNumber}</td>
                         <td >{c.month}</td>
                         <td >{c.year}</td>
-                        <td >{c.cvv}</td>
+                        {/* <td >{c.cvv}</td> */}
+                        <td >XXX</td>
                         {/* <td >{c.email}</td> */}
                         <td className='btn'>
                           <button className="btn btn-primary" id="btnedit"
