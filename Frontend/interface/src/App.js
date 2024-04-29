@@ -29,6 +29,7 @@ import Appointment4 from './pages/Appointment4';
 import AppointmentDashboard from './pages/AppointmentDashboard';
 import KAddressUpdate from "./components/Form/KAddressUpdate";
 import KAcardUpdate from "./components/Form/KAcardUpdate";
+// import Login from "./pages/CartLogin";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/payment" element={<Paymentpage />} />
         <Route path="/KAddressUpdate/:id" element={<KAddressUpdate />} />
         <Route path="/KAcardUpdate/:id" element={<KAcardUpdate />} />
+        {/* <Route path="/cartlogin" element={<Login />} /> */}
 
         <Route path="*" element={<Pagenotfound />} />
         <Route
