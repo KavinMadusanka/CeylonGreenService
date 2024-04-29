@@ -41,10 +41,6 @@ import UpdateSupplier from './pages/Admin/UpdateSupplier';
 import MyAppointments from "./pages/myAppointments";
 import UpdateAppointment from "./pages/UpdateAppointment";
 
-import HiredEmployees from './pages/HiredEmployees';
-import AddComment from './pages/AddComment';
-import UpdateComment from './pages/UpdateComment';
-import RateUs from './pages/RateUs';
 
 function App() {
   return (
@@ -85,12 +81,6 @@ function App() {
         <Route path="/dashboard/admin/suppliers" element={<Suppliers/>}/>
         <Route path="/dashboard/admin/update-supplier/:id" element={<UpdateSupplier/>}/> {/* Add :id parameter */}
 
-
-{/* thushani */}
-        <Route path="/hiredemployees" element={<HiredEmployees />} />
-        <Route path="/addcomment/:employeeId" element={<AddComment />} />
-        <Route path="/updatecomment/:commentId" element={<UpdateComment />} />        
-        <Route path="/rateus" element={<RateUs />} />
 
         <Route path="*" element={<Pagenotfound />} />
         <Route
