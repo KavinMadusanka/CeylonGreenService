@@ -2,27 +2,58 @@ import React, { useEffect, useState } from 'react';
 import Layout1 from '../components/Layout/Layout1';
 import '../components/Appointment.css';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useAuth } from '../context/auth';
 
-const Appointment1 = () => {
-  const [fullName, setFullName] = useState("");
-  const [address, setAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [servicePackage, setServicePackage] = useState("homeBasic");
-  const [comments, setComments] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [userId, setUserId] = useState("");
-  const [auth,setAuth] = useAuth()
-  const navigate = useNavigate();
+const UpdateAppointment = () => {
+  const {id} = useParams();
+    const [fullName, setFullName] = useState("");
+    const [address, setAddress] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [email, setEmail] = useState("");
+    const [servicePackage, setServicePackage] = useState("homeBasic");
+    const [comments, setComments] = useState("");
+    const [selectedDate, setSelectedDate] = useState("");
+    const [selectedTime, setSelectedTime] = useState("");
+    const [userId, setUserId] = useState("");
+    const [auth,setAuth] = useAuth()
+    const navigate = useNavigate();
+    
 
-  const handleSubmit = async (e) => {
+  //get single appointment
+  const getSingleAppointment = async () => {
+    try {
+          const { data } = await axios.get(`/api/v1/appointment/single-appointment/${id}`);
+          setFullName(data.appointment.fullName);
+          setAddress(data.appointment.address);
+          setPhoneNumber(data.appointment.phoneNumber);
+          setEmail(data.appointment.email);
+          setServicePackage(data.appointment.servicePackage);
+          setComments(data.appointment.comments);
+          setSelectedDate(data.appointment.selectedDate);
+          setSelectedTime(data.appointment.selectedTime);
+          setUserId(data.appointment.userId);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    console.log(id)
+
+  useEffect(() => {
+    getSingleAppointment();
+    //eslint-disable-next-Line
+  }, []);
+
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/v1/appointment/appointment1', {
+      if (phoneNumber.length !== 10) {
+        toast.error("Contact number must be 10 characters long");
+        return;
+      }
+      const res = await axios.put(`/api/v1/appointment/update-appointment/${id}`, {
         fullName,
         address,
         phoneNumber,
@@ -34,7 +65,7 @@ const Appointment1 = () => {
         userId
       });
       console.log(res.data);  // Log the response
-      if (res.data.success) {
+      if (res && res.data.success) {
         toast.success(res.data.message);
         navigate('/myappointments');
       } else {
@@ -46,10 +77,8 @@ const Appointment1 = () => {
     }
   };
 
-
-
-  //////////////////////////
-  useEffect(() => {
+//////////////////////////
+useEffect(() => {
     if (auth && auth.user) {
       setUserId(auth.user._id);
      
@@ -58,10 +87,10 @@ const Appointment1 = () => {
   ///////////////////////////////
 
   return (
-    <Layout1 title={'Make Appointment - Ceylon Green'}>
+    <Layout1 title={'Edit Appointment - Ceylon Green'}>
       <div className='border'>
-        <form onSubmit={handleSubmit} className="appointment-form">
-          <h2>Appointment Form</h2>
+        <form onSubmit={handleUpdate} className="appointment-form">
+          <h2>Update Appointment</h2>
           <div className="form-group">
             <label htmlFor="fullName">Full Name:</label>
             <input
@@ -156,13 +185,13 @@ const Appointment1 = () => {
           </div>
 
           <div className="form-buttons">
-            <button type="button">Cancel</button>
-            <button type="submit">Next</button>
+            {/* <button type="button">Cancel</button> */}
+            <button>Save Changes</button>
           </div>
         </form>
       </div>
     </Layout1>
-  );
-};
+  )
+}
 
-export default Appointment1;
+export default UpdateAppointment;

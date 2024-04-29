@@ -38,6 +38,8 @@ import Products from "./pages/Admin/Products";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
 import Suppliers from "./pages/Admin/Supplier";
 import UpdateSupplier from './pages/Admin/UpdateSupplier';
+import MyAppointments from "./pages/myAppointments";
+import UpdateAppointment from "./pages/UpdateAppointment";
 
 function App() {
   return (
@@ -57,6 +59,8 @@ function App() {
         <Route path='/appointment3ii' element={<Appointment3ii />} />
         <Route path='/appointment4' element={<Appointment4 />} />
         <Route path='/AppointmentDashboard' element={<AppointmentDashboard />} />
+        <Route path='/updateAppointment/:id' element={<UpdateAppointment />} />
+        <Route path="/myAppointments" element={<MyAppointments />} />
         <Route path="/userRegister" element={<Register />} />
         <Route path="/userLogin" element={<UserLogin />} />
         <Route path="/userManagement" element={<UserManagement />} />
