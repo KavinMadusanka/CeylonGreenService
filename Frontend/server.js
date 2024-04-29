@@ -19,7 +19,8 @@ import CartRoutes from './routes/CartRoutes.js';
 import categoryRoutes from "./routes/categoryRoutes.js";
 import InventoryRoutes from "./routes/InventoryRoutes.js";
 import SupplierRoutes from "./routes/SupplierRoutes.js";
-
+import commentRoutes from './routes/commentRoutes.js';
+import feedbackRoutes from './routes/feedbackRoutes.js';
 //configure env
 dotenv.config();
 
@@ -46,6 +47,8 @@ app.use(express.json());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/user', UserRoutes);
 app.use('/api/v1/appointment',appointmentRoutes);
+app.use('/api/feedbacks', feedbackRoutes);
+app.use('/api/v1/comments', commentRoutes);
 
 app.use(cors());
 app.use(express.json());
