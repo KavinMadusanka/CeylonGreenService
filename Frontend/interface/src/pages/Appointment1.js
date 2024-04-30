@@ -22,6 +22,10 @@ const Appointment1 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (phoneNumber.length !== 10) {
+        toast.error("Contact number must be 10 characters long");
+        return;
+      }
       const res = await axios.post('/api/v1/appointment/appointment1', {
         fullName,
         address,

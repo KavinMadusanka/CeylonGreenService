@@ -263,15 +263,14 @@
   margin-left: 10px;
 }
 
+
 .view-btn a,
 .edit-btn a {
   text-decoration: none;
   color: #416D19;
 }
 
-.delete-btn a:hover {
-  transform: scale(1.05);
-}
+
 
 .delete-btn a {
   text-decoration: none;

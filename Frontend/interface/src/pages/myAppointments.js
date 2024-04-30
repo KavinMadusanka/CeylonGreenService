@@ -5,6 +5,8 @@ import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useAuth } from '../context/auth';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 
 const MyAppointments = () => {
@@ -83,39 +85,28 @@ const MyAppointments = () => {
 
 
 
-  const downloadPDF = async (appointmentId) => {
-    try {
-        const response = await axios.get(`/api/v1/appointment/download-pdf/${appointmentId}`, {
-            responseType: 'blob', // Important to specify the response type as blob
-        });
+const generateAppointmentPDF = (appointment) => {
+    const doc = new jsPDF();
+    doc.text("Appointment Details", 10, 10);
+    // Add appointment details to the PDF
+    doc.text(`Name: ${appointment.fullName}`, 10, 20);
+    doc.text(`Address: ${appointment.address}`, 10, 30);
+    doc.text(`Phone No: ${appointment.phoneNumber}`, 10, 40);
+    doc.text(`Email: ${appointment.email}`, 10, 50);
+    doc.text(`Service Package: ${appointment.servicePackage}`, 10, 60);
+    doc.text(`Date: ${appointment.selectedDate}`, 10, 70);
+    doc.text(`Time: ${appointment.selectedTime}`, 10, 80);
+    // Save the PDF with a unique name (e.g., based on appointment ID)
+    doc.save(`appointment_${appointment._id}.pdf`);
+  };
 
-        // Create a Blob from the response data
-        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
 
-        // Retrieve the appointment details to get the file name
-        const appointment = appointments.find(a => a._id === appointmentId);
 
-        // Create a Blob URL for the PDF data
-        const url = window.URL.createObjectURL(pdfBlob);
 
-        // Create a link element to trigger the download
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', appointment ? `${appointment.fullName}_appointment.pdf` : 'appointment.pdf');
-        document.body.appendChild(link);
-
-        // Trigger the download by clicking the link
-        link.click();
-
-        // Cleanup: Remove the link and revoke the Blob URL
-        link.parentNode.removeChild(link);
-        window.URL.revokeObjectURL(url);
-    } catch (error) {
-        console.log(error);
-        toast.error('Error downloading PDF');
-    }
-};
-
+  // Handler to generate PDF for a specific appointment
+const handleDownloadPDF = (appointment) => {
+    generateAppointmentPDF(appointment);
+  };
 
 
     return (
@@ -134,7 +125,7 @@ const MyAppointments = () => {
                             // style={{border:'solid 1px'}}
                             />
                         </div>
-                        <div className="dropdown mt-10">
+                        <div className="dropdown">
                     <select value={selectedServicePackage} onChange={handleServicePackageChange}>
                         <option value="">All Service Packages</option>
                         {/* Replace servicePackageOptions with a list of unique service packages from appointments */}
@@ -154,7 +145,7 @@ const MyAppointments = () => {
                                 <p className="card-text"><b>Name:</b> {a.fullName} | <b>Address:</b> {a.address} | <b>Phone No:</b> {a.phoneNumber} | <b>E mail:</b> {a.email}</p>
                                 <p className="card-text"><b>Service Package:</b> {a.servicePackage} | <b>Date:</b> {a.selectedDate} | <b>Time:</b> {a.selectedTime}</p>
                                 <div className="buttonset">
-                                    <button className="view-btn" onClick={() => downloadPDF(a._id)}><a href="">Download</a></button>
+                                    <button className="view-btn"  onClick={() => handleDownloadPDF(a)}><a href="">Download</a></button>
                                     <button className="edit-btn"><a href={`/updateAppointment/${a._id}`}>Edit</a></button>
                                     <button className="delete-btn"
                                     onClick={() => {
