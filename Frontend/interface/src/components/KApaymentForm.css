@@ -1,0 +1,10 @@
+#btnedit {
+    background-color: #416D19;
+    border: none;
+    /* justify-content: center;
+    align-items: center; */
+}
+#btnedit:hover {
+    background-color: #9BCF53;
+    transform: scale(1.05);
+}

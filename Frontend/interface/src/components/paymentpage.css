@@ -44,10 +44,33 @@
 .searchbar {
     margin-left: 10% ;
     margin-top: 2%;
+    /* width: 500px; */
 }
+/* .searchbar input {
+    margin-right: 100px ;
+    margin-top: 2%;
+} */
 #btnedit {
     background-color: #416D19;
 }
 #btnedit:hover {
+    background-color: #9BCF53;
+}
+/* #toppart{
+    margin-right: 500px;
+}
+#toppart div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+#btnedit2 {
+    background-color: #416D19;
+    /* float: left; */
+    height: 36px;
+    /* width: 200px; */
+}
+#btnedit2:hover {
     background-color: #9BCF53;
 }

@@ -1,0 +1,26 @@
+.btnb{
+    background-color: #416D19;
+    border: none;
+    margin: 1%;
+    height: 36px;
+    width: 200px;
+}
+.btnb:hover {
+    background-color: #9BCF53;
+    transform: scale(1.05);
+}
+.ulc{
+    list-style: none;
+    display: flex;
+    align-items: stretch;
+}
+.ulc li{
+    margin-right: 2%;
+}
+.ulc li:last-child {
+    margin-right: 0;
+}
+.ulc a{
+    text-decoration: none;
+    color: white;
+}

@@ -40,6 +40,8 @@ import Suppliers from "./pages/Admin/Supplier";
 import UpdateSupplier from './pages/Admin/UpdateSupplier';
 import MyAppointments from "./pages/myAppointments";
 import UpdateAppointment from "./pages/UpdateAppointment";
+import KApaymentForm from "./pages/KApaymentForm";
+import { KApaymentOptions } from "./pages/KApaymentOptions";
 
 
 function App() {
@@ -68,6 +70,9 @@ function App() {
         <Route path="/payment" element={<Paymentpage />} />
         <Route path="/KAddressUpdate/:id" element={<KAddressUpdate />} />
         <Route path="/KAcardUpdate/:id" element={<KAcardUpdate />} />
+        <Route path="/KApaymentForm" element={<KApaymentForm />} />
+        <Route path="/KApaymentOption" element={<KApaymentOptions />} />
+
         {/* <Route path="/cartlogin" element={<Login />} /> */}
 
 

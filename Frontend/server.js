@@ -16,6 +16,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose';
 import tokenRoutes from './routes/tokenRoutes.js';
 import CartRoutes from './routes/CartRoutes.js';
+import PaymentRoutes from './routes/PaymentRoutes.js';
 
 //configure env
 dotenv.config();
@@ -41,6 +42,7 @@ app.use(express.json());
 
 //routes
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/payment', PaymentRoutes);
 app.use('/api/user', UserRoutes);
 app.use('/api/v1/appointment',appointmentRoutes);
 
