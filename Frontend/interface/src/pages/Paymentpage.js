@@ -8,6 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import KAddaddress from './KAddaddress';
 import { Modal } from "antd";
 import KAddcard from './KAddcard';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const Paymentpage = () => {
   const [Addre,setAddress] = useState([]);
@@ -181,20 +183,44 @@ const handleDeleteCard = async (CId) => {
     };
 
 /////////////////////////////////////////////////////////////
+
+
+  // Function to download PDF report
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.text("Address Details", 10, 10);
+    const columns = ["name","address","Contact Number","province","district","postalcode"];
+    const rows = Addre.map(c => [
+      c.name,
+      c.address,
+      c.cNumber,
+      c.province,
+      c.district,
+      c.postalcode
+    ])
+    doc.autoTable({ head: [columns], body: rows });
+    doc.save("Address_report.pdf");
+  };
+
+
+
   return (
     <Layout2 title={'Home - Ceylon Green'}>
         {/* <pre>{JSON.stringify(auth,null,4)}</pre> */}
-        <div className='searchbar w-25'>
-        {/* Search input */}
-        <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="form-control mb-3"
-              // style={{border:'solid 1px'}}
-            />
-        </div>
+        <div id='toppart'>
+              <div className='searchbar w-25' >
+              {/* Search input */}
+              <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="form-control mb-3"
+                    // style={{border:'solid 1px'}}
+                    />
+                  <button className="btn btn-primary mb-3" id='btnedit2' onClick={generatePDF} >Download Report</button>
+              </div>
+          </div>
         
         {/* display card details  */}
         <div className='div'>

@@ -10,7 +10,7 @@ const Service = () => {
     <Layout1 title={'Service - Ceylon Green'}>
 
         <div style={{marginTop:'3%',display: 'flex', justifyContent: 'center'}}>
-          <NavLink to={"/appointment1"} className="nav-link">
+          <NavLink to={"/myappointments"} className="nav-link">
           <div className="row contactus " style={{border: '2px solid black', borderRadius:'10px',padding:'1px', Width: '80%'}}>
             <div className="col-md-3 d-flex justify-content-center align-items-center" >
             <img src={bkImage} alt="Person cleaning kitchen counter with eco-friendly products" 
