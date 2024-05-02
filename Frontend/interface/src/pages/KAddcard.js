@@ -68,6 +68,22 @@ const KAddcard = () => {
      
     }
   }, [auth]);
+
+
+    //only gets alpherbatds
+    const handleKeyPress = (event) => {
+      const regex = /^[a-zA-Z\s]*$/;
+      if(!regex.test(event.key)){
+        event.preventDefault();
+      }
+    };
+    //only gets numbers
+    const handleKeyNumber = (event) => {
+      const regex = /^[0-9\s]*$/;
+      if(!regex.test(event.key)){
+        event.preventDefault();
+      }
+    };
   
   return (
     // <Layout2 title={'Add Card - Ceylon Green'}>
@@ -103,6 +119,7 @@ const KAddcard = () => {
                       value={cardNumber}
                       onChange={(e) => setNumber(e.target.value)}
                       placeholder='Card Number'
+                      onKeyPress={handleKeyNumber}
                       required
                       />
                       </td>
@@ -112,6 +129,7 @@ const KAddcard = () => {
                       value={name} 
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Card Holder's Name"
+                      onKeyPress={handleKeyPress}
                       required
                       />
                       </td></tr>
@@ -150,6 +168,7 @@ const KAddcard = () => {
                       value={cvv}
                       onChange={(e) => setCvv(e.target.value)}
                       placeholder='CVV'
+                      onKeyPress={handleKeyNumber}
                       required
                       />
                       </td></tr>

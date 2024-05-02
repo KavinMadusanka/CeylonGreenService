@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
-import Service from "./pages/Service";
+// import Service from "./pages/Service";
 import Pagenotfound from "./pages/Pagenotfound";
 import Profile from "./pages/Profile";
 import KAddcard from "./pages/KAddcard";
@@ -51,7 +51,7 @@ function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/" element={<HomePage2 />} />
         <Route path="/homepage2" element={<HomePage2 />} />
-        <Route path="/service" element={<Service />} />
+        {/* <Route path="/service" element={<Service />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/kaddcard" element={<KAddcard />} />

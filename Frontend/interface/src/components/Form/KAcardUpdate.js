@@ -64,11 +64,19 @@ const KAcardUpdate = () => {
     }
   };
 
+    //only gets alpherbatds
+    const handleKeyPress = (event) => {
+      const regex = /^[a-zA-Z\s]*$/;
+      if(!regex.test(event.key)){
+        event.preventDefault();
+      }
+    };
+
   return (
     <Layout2 title={'Add Adreess - Ceylon Green'}>
       <div className='grid-container'>
       <form onSubmit={handleSubmit}>
-        <div className='KAboarder'>
+        <div className='KAboarder' style={{marginLeft:'10%',marginRight:'10%', marginBottom:'2%'}}>
             <div className='item1'>
               <h1 className='text-center'>Provide further information</h1>
               <div className='KApayment'><IoShieldCheckmark/> Your payment information is safe with us</div>
@@ -104,6 +112,7 @@ const KAcardUpdate = () => {
                       type="text"
                       value={name} 
                       onChange={(e) => setName(e.target.value)}
+                      onKeyPress={handleKeyPress}
                       placeholder="Card Holder's Name"
                       required
                       />
