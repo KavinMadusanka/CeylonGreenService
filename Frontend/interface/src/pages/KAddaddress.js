@@ -61,7 +61,21 @@ const KAddaddress = () => {
     }
   }, [auth]);
   // console.log(email)
-
+  
+  //only gets alpherbatds
+  const handleKeyPress = (event) => {
+    const regex = /^[a-zA-Z\s]*$/;
+    if(!regex.test(event.key)){
+      event.preventDefault();
+    }
+  };
+  //only gets numbers
+  const handleKeyNumber = (event) => {
+    const regex = /^[0-9\s]*$/;
+    if(!regex.test(event.key)){
+      event.preventDefault();
+    }
+  };
   return (
     // <Layout2 title={'Add Adreess - Ceylon Green'}>
       <div className='grid-container'>
@@ -95,6 +109,7 @@ const KAddaddress = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder='perera p.l.'
+                      onKeyPress={handleKeyPress}
                       required 
                       /></td>
                       <td>
@@ -103,6 +118,7 @@ const KAddaddress = () => {
                         value={cNumber}
                         onChange={(e) => setNumber(e.target.value)}
                         placeholder='07x xxxxxxx'
+                        onKeyPress={handleKeyNumber}
                         required 
                         /></td></tr>
                       <tr></tr>
@@ -136,6 +152,7 @@ const KAddaddress = () => {
                         type="text" 
                         value={province}
                         onChange={(e) => setProvince(e.target.value)}
+                        onKeyPress={handleKeyPress}
                         required 
                         /></td>
                       <td>
@@ -143,6 +160,7 @@ const KAddaddress = () => {
                         type="text" 
                         value={district}
                         onChange={(e) => setDistrict(e.target.value)}
+                        onKeyPress={handleKeyPress}
                         required 
                         /></td>
                       <td>
@@ -150,6 +168,7 @@ const KAddaddress = () => {
                         type="text" 
                         value={postalcode}
                         onChange={(e) => setPostalcode(e.target.value)}
+                        onKeyPress={handleKeyNumber}
                         required 
                         /></td></tr>
                       <tr><br/></tr>

@@ -52,7 +52,7 @@ const About = () => {
             </section>
             <section>
               <h2>Contact Us</h2>
-              <p>Have questions or feedback? We'd love to hear from you! Reach out to us through our web application or email us at <a href="mailto:[your email address]">ceylongreenservice@gmail.com</a>.</p>
+              <p>Have questions or feedback? We'd love to hear from you! Reach out to us through our web application or email us at <a href="mailto:[your email address]" style={{color:'green'}}>ceylongreenservice@gmail.com</a>.</p>
             </section>
           </div>
 

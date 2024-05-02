@@ -90,11 +90,55 @@ const Header1 = () => {
                     Home
                   </NavLink >
                 </li>
-                <li className="nav-item">
-                  <NavLink to="/service" className="nav-link">
-                    Service
-                  </NavLink >
-                </li>
+                {/* <li className="nav-item"> */}
+                <li className="nav-item dropdown">
+                    <NavLink
+                      className="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      style={{ border: "none"}}
+                    >
+                      Service
+                    </NavLink>
+                    <ul className="dropdown-menu dropdown-menu-end" style={{ textAlign:"left"}}>
+                      <li>
+                        <NavLink to="/myappointments"
+                          // to={`/AppointmentDashboard${
+                          //   auth?.user?.role === 1 ? "admin" : "user"
+                          // }`}
+                          className="dropdown-item"
+                        >
+                          View your Appointment
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/" className="dropdown-item"
+                        >
+                          Buy Product and tools
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/" className="dropdown-item"
+                        >
+                          Shpopping Cart
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/payment" className="dropdown-item"
+                        >
+                          Payment details
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/" className="dropdown-item"
+                        >
+                          Hired Employees
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </li>
+                {/* </li> */}
                 <li className="nav-item">
                   <NavLink to="/about" className="nav-link" href="#">
                     About Us
