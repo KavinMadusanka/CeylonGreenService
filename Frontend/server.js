@@ -17,6 +17,8 @@ import mongoose from 'mongoose';
 import tokenRoutes from './routes/tokenRoutes.js';
 import CartRoutes from './routes/CartRoutes.js';
 import PaymentRoutes from './routes/PaymentRoutes.js';
+import InventoryRoutes from './routes/InventoryRoutes.js'
+import categoryModel from "./models/categoryModel.js";
 
 //configure env
 dotenv.config();
@@ -55,7 +57,8 @@ app.use('/api/v1/auth', authRoutes);
 app.use('api/v1/product',tokenRoutes);
 app.use('/api/user', UserRoutes);
 app.use("/api/v1/employees", empRoutes);
-app.use("/api/vi/Cart", CartRoutes);
+app.use("/api/v1/Cart", CartRoutes);
+app.use("/api/v1/Inventory", InventoryRoutes);
 
 
 //rest api
