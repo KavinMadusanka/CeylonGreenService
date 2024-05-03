@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import InventoryModel from "../models/InventoryModel.js";
+
 import fs from "fs";
 
 

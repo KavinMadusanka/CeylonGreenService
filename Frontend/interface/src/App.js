@@ -29,7 +29,7 @@ import Appointment4 from './pages/Appointment4';
 import AppointmentDashboard from './pages/AppointmentDashboard';
 import KAddressUpdate from "./components/Form/KAddressUpdate";
 import KAcardUpdate from "./components/Form/KAcardUpdate";
-// import Login from "./pages/CartLogin";
+
 import PrAdminDashboard from './pages/Admin/PrAdminDashboard';
 import CreateCategory from "./pages/Admin/CreateCategory";
 import CreateProducts from "./pages/Admin/CreateProducts";
@@ -42,6 +42,8 @@ import MyAppointments from "./pages/myAppointments";
 import UpdateAppointment from "./pages/UpdateAppointment";
 import KApaymentForm from "./pages/KApaymentForm";
 import { KApaymentOptions } from "./pages/KApaymentOptions";
+import ProductDisplayPage from "./pages/productDisplay";
+import ShoppingCart from "./pages/ShoppingCart";
 
 
 function App() {
@@ -73,8 +75,9 @@ function App() {
         <Route path="/KApaymentForm" element={<KApaymentForm />} />
         <Route path="/KApaymentOption" element={<KApaymentOptions />} />
 
-        {/* <Route path="/cartlogin" element={<Login />} /> */}
-
+        {/* Nethmi  */}
+        <Route path="/productDisplay" element={<ProductDisplayPage />} />
+        <Route path="/ShoppingCart" element={<ShoppingCart />} />
 
 {/* piyusha */}
         <Route path="/PrAdminDashboard" element={<PrAdminDashboard/>}/>

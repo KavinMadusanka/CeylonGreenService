@@ -7,13 +7,15 @@ const CartItemSchema = new mongoose.Schema({
         required: true
     },
     quantity: {
-        type: Number,
+        type: Number,  
         required: true
+    }, 
+    email: {
+        type:String,
+        required:true,
     }
-});
 
-const CartSchema = new mongoose.Schema({
-    cartItems: [CartItemSchema]
-});
+},{timestamps:true});
 
-export default mongoose.model('Cart', CartSchema);
+
+export default mongoose.model('Cart', CartItemSchema);
