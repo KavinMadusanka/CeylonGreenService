@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 
 const Header = () => {
   const [ auth,setAuth] = useAuth();
+
   return (
     <>
       <div className='header'>
@@ -46,39 +47,45 @@ const Header = () => {
                     >
                       {auth?.user?.name}
                     </NavLink>
-                    <ul className="dropdown-menu dropdown-menu-end" style={{ textAlign:"left"}}>
+                    <ul className="dropdown-menu dropdown-menu-end" style={{ textAlign:"left"}}> 
                       <li>
-                        <NavLink to="/AppointmentDashboard"
+                        <NavLink to="/AppointmentDashboard" activeClassName="active"
                           // to={`/AppointmentDashboard${
                           //   auth?.user?.role === 1 ? "admin" : "user"
                           // }`}
-                          className="dropdown-item"
+                          className='dropdown-item'
                         >
                           Appointment
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/AppointmentDashboard" className="dropdown-item"
+                        <NavLink to="/inventory" activeClassName="active" className='dropdown-item'
                         >
                           Inventory
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/AppointmentDashboard" className="dropdown-item"
+                        <NavLink to="/paymentmanager" activeClassName="active" className='dropdown-item'
                         >
-                          Payment
+                          Payment Managemenr
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/userManagement" className="dropdown-item"
+                        <NavLink to="/userManagement" activeClassName="active" className='dropdown-item'
                         >
                           User Management
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/AppointmentDashboard" className="dropdown-item"
+                        <NavLink to="/rating" activeClassName="active" className='dropdown-item'
                         >
                           Rating management
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/employee" activeClassName="active" className='dropdown-item'
+                        >
+                          Employee Management
                         </NavLink>
                       </li>
                     </ul>

@@ -117,3 +117,7 @@
 
 
 }
+.dropdown-item.active {
+  background-color: #9BCF53;
+  color: white; /* Optionally, you can change text color */
+}
