@@ -3,19 +3,37 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import { useAuth } from '../context/auth';
 import axios from 'axios';
+import {ShoppingCartcss} from '../components/ShoppingCart.css';
+
 
 
 function ProductDisplay() {
   const [products, setProducts] = useState([]);
+  const [FilteredName, setFilteredName] = useState([]);
   const [auth,setAuth] = useAuth();
   const [email, setEmail] = useState("");
   const [address,setAddress] = useState("");
   const [name,setName] = useState("");
   const [cNumber,setNumber] = useState("");
   const [visible, setVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const[selectedCategory,setSelectedCategory]=useState("");
+  const [selectedServicePackage, setSelectedServicePackage] = useState("");
 
 
+
+ 
+  // Filter Address based on search term using addresses and names
   useEffect(() => {
+    const filtered = products.filter((products) =>
+      products.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+        // (selectedServicePackage === "" || appointment.servicePackage === selectedServicePackage)
+    );
+    setFilteredName(filtered);
+}, [searchTerm, products]);
+
+  
+useEffect(() => {
     // Fetch products from backend API
     fetchProducts();
   }, []);  
@@ -70,25 +88,67 @@ function ProductDisplay() {
   return (
     <div>
       <Header />
+
+      <div className='searchbar w-25'>
+                        {/* Search input */}
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="form-control mb-10"
+                            id='search'
+                            // style={{border:'solid 1px'}}
+                            />
+                        </div>
+
+                        <div className='searchbar w-25'>
+    
+    {/* Category dropdown */}
+    
+    <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+        className="form-control mb-10" id='filter'
+    >
+        <option value="">All Categories</option>
+        <option value="cleaning chemicals">Cleaning Chemicals</option>
+        <option value="specialty cleaning products">Specialty Cleaning Products</option>
+        <option value="cleaning tools">Cleaning Tools</option>
+        <option value="electronic equipment">Electronic Equipment</option>
+        <option value="floor care equipment">Floor Care Equipment</option>
+    </select>
+    <span className="mx-2"></span> {/* Adding space */}
+    <p id='filter'>Filter by category</p>
+</div>
+
+                        
+
       <div className="product-list">
-        {products.map(product => (
-          <div key={product._id} className="product">
-            <img className='product_picture' src={`http://localhost:8000/api/v1/Inventory/product-photo/${product._id}`} alt={product.name} />
-            <h2>{product.name}</h2>
-            <p>Category: {product.category.name}</p>
-            <p>Description: {product.description}</p>
-            <p>Price: Rs.{product.price}</p>
-            <p>Quantity: {product.quantity}</p>
-            {/* Render other product details as needed */}
-            <button onClick={() => addToCart(product._id)}  >Add to cart </button>
-            <button>Wishlist  </button>
+  {FilteredName.map(product => (
 
-            <div>{email}</div>
-          </div>
-        ))}
+   // Filter products based on category
+   (selectedCategory === "" || product.category.name.toLowerCase() === selectedCategory.toLowerCase()) &&
 
-        
-      </div>
+    <div key={product._id} className="product">
+      <img className='product_picture' src={`http://localhost:8000/api/v1/Inventory/product-photo/${product._id}`} alt={product.name} />
+      <h2><b>{product.name}</b></h2>
+      <p> {product.category.name}</p>
+      {/* <p>Description: {product.description}</p> */}
+      <p> Rs.{product.price}</p>
+      <p>Quantity: {product.quantity}</p>
+      {/* Render other product details as needed */}
+      
+      
+      <button id='addtocart' onClick={() => addToCart(product._id)} className='btnsub'>Add to cart</button>
+      
+      <button className='btnsub' id='wishlist'>Wishlist</button>
+      
+      
+    </div>
+  ))}
+</div>
+
       <Footer />
     </div>
   );
