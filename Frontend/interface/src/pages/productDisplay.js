@@ -73,6 +73,7 @@ function ProductDisplay() {
       <div className="product-list">
         {products.map(product => (
           <div key={product._id} className="product">
+            <img className='product_picture' src={`http://localhost:8000/api/v1/Inventory/product-photo/${product._id}`} alt={product.name} />
             <h2>{product.name}</h2>
             <p>Category: {product.category.name}</p>
             <p>Description: {product.description}</p>
