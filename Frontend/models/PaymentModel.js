@@ -11,8 +11,7 @@ const paymentSchema = new mongoose.Schema(
     //   required: true,
     // },
     orderId: {
-      type: String,
-      required: true,
+      type: String
     },
     price: {
       type: Number,
@@ -21,10 +20,6 @@ const paymentSchema = new mongoose.Schema(
     address: {
       type: mongoose.ObjectId,
       ref: "deliveryaddresses",
-      required: true,
-    },
-    quantity: {
-      type: Number,
       required: true,
     },
     photo: {

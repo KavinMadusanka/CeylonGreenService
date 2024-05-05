@@ -44,6 +44,7 @@ import KApaymentForm from "./pages/KApaymentForm";
 import { KApaymentOptions } from "./pages/KApaymentOptions";
 import ProductDisplayPage from "./pages/productDisplay";
 import ShoppingCart from "./pages/ShoppingCart";
+import KAcardpayment from "./pages/KAcardpayment";
 
 
 function App() {
@@ -74,6 +75,8 @@ function App() {
         <Route path="/KAcardUpdate/:id" element={<KAcardUpdate />} />
         <Route path="/KApaymentForm" element={<KApaymentForm />} />
         <Route path="/KApaymentOption" element={<KApaymentOptions />} />
+        <Route path="/KAcardpayment" element={<KAcardpayment />} />
+
 
         {/* Nethmi  */}
         <Route path="/productDisplay" element={<ProductDisplayPage />} />
