@@ -1,9 +1,10 @@
 .btnb{
     background-color: #416D19;
     border: none;
-    margin: 1%;
+    /* margin: 1%; */
     height: 36px;
-    width: 200px;
+    width: 105px;
+    border-radius: 7px;
 }
 .btnb:hover {
     background-color: #9BCF53;

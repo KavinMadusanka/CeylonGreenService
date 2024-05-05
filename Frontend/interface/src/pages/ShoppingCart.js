@@ -5,13 +5,17 @@ import { useAuth } from '../context/auth';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import { Modal } from "antd";
 import toast from "react-hot-toast";
 import {}  from '../components/KAddcard.css';
+import { KApaymentOptions } from './KApaymentOptions';
 
 
 
 function ShoppingCart() {
 
+  const [visible, setVisible] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const [auth,setAuth] = useAuth();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(true);
@@ -114,10 +118,10 @@ function ShoppingCart() {
 
 
   
-  const handleCheckout = () => {
-    navigate('/payment');
-    console.log("Checkout button clicked");
-  };
+  // const handleCheckout = () => {
+  //   navigate('/payment');
+  //   console.log("Checkout button clicked");
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -167,6 +171,12 @@ for (let i = 0; i < 10; i++) {
 // Format the delivery date as dd.mm.yyyy
 const formattedDeliveryDate = `${deliveryDate.getDate()}.${deliveryDate.getMonth() + 1}.${deliveryDate.getFullYear()}`;
 const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
+  // Function to handle modal visibility and content
+  const handleModal = (content) => {
+    setVisible(true);
+    setModalContent(<KApaymentOptions subtotal={subtotal+deliveryCharge+tax} />);
+  };
   return (
     <div>
       <Header/>
@@ -383,7 +393,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                   </li>
                 </ul>
                 <div className='item9'>
-                   <button onClick={handleCheckout} className='btnsub'>Go to checkout</button></div>
+                   <button onClick={() => {handleModal(<KApaymentOptions subtotal={(subtotal+deliveryCharge+tax)}/>);}} className='btnsub'>Go to checkout</button></div>
                   
                    
               </div>
@@ -397,7 +407,13 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
       </div>
     </section>
      
-     
+
+    <Modal
+              onCancel={() => setVisible(false)}
+              footer={null}
+              visible={visible}>
+                {modalContent}
+              </Modal>      
 
       <Footer/>
     </div>

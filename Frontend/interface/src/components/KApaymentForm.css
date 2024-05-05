@@ -8,3 +8,14 @@
     background-color: #9BCF53;
     transform: scale(1.05);
 }
+.inptab {
+    border-radius: 5px;
+    border-color: solid 1px black;
+}
+#table1 {
+    width: 100%;
+  }
+  
+#table1 td input {
+  width: 100%;
+}
