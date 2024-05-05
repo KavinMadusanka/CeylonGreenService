@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import Layout2 from './../components/Layout/Layout2';
+import Layout1 from './../components/Layout/Layout1';
 import { useAuth } from '../context/auth';
 import toast from 'react-hot-toast';
 import {}  from '../components/paymentpage.css';
@@ -157,7 +157,6 @@ const getAllCard = async() =>{
 
 useEffect(() => {
   getAllCard();
-  
 },[email])
 
 const handleDeleteCard = async (CId) => {
@@ -205,7 +204,7 @@ const handleDeleteCard = async (CId) => {
 
 
   return (
-    <Layout2 title={'Home - Ceylon Green'}>
+    <Layout1 title={'Home - Ceylon Green'}>
         {/* <pre>{JSON.stringify(auth,null,4)}</pre> */}
         <div id='toppart'>
               <div className='searchbar w-25' >
@@ -331,7 +330,7 @@ const handleDeleteCard = async (CId) => {
               visible={visible}>
                 {modalContent}
               </Modal> 
-    </Layout2>
+    </Layout1>
   )
 }
 

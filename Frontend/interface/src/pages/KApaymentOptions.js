@@ -5,7 +5,7 @@ import {} from '../components/KApaymentOption.css';
 export const KApaymentOptions = ({subtotal}) => {
   return (
     <>
-        <p style={{textAlign:'center'}}>Choose payment type{subtotal}</p>
+        <p style={{textAlign:'center'}}>Choose payment type</p>
         <ul className='ulc'>
             <li>
                 <div>
@@ -16,7 +16,7 @@ export const KApaymentOptions = ({subtotal}) => {
             </li>
             <li>
                 <div>
-                    <a href="/KApaymentForm" >
+                    <a href={`/KAcardpayment?subtotal=${subtotal}`} >
                         <button className='btnb'>Card Payment</button>
                     </a>
                 </div>

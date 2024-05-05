@@ -37,7 +37,7 @@ const KApaymentForm = () => {
 
   
 
-  //get all category
+  //get all Address
   const getAllAddress = async() =>{
     try {
       const {data} = await axios.get(`api/v1/auth/get-Address/${email}`);
@@ -179,7 +179,7 @@ const KApaymentForm = () => {
                 bordered={false}
                 placeholder="Select a Address"
                 size="large"
-                showSearch
+                // showSearch
                 className="form-select mb-3"
                 // onChange={(value) => {
                 //     setAddress(value);
@@ -272,7 +272,7 @@ const KApaymentForm = () => {
               <div className="mb-3">
                 <textarea
                   value={orderId}
-                  placeholder="write a orderId"
+                  placeholder="Discription"
                   className="form-control"
                   onChange={(e) => setOrderId(e.target.value)}
                 />
