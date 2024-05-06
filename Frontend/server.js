@@ -19,6 +19,9 @@ import CartRoutes from './routes/CartRoutes.js';
 import PaymentRoutes from './routes/PaymentRoutes.js';
 import InventoryRoutes from './routes/InventoryRoutes.js'
 import categoryModel from "./models/categoryModel.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import SupplierRoutes from "./routes/SupplierRoutes.js";
+
 
 //configure env
 dotenv.config();
@@ -58,7 +61,11 @@ app.use('api/v1/product',tokenRoutes);
 app.use('/api/user', UserRoutes);
 app.use("/api/v1/employees", empRoutes);
 app.use("/api/v1/Cart", CartRoutes);
-app.use("/api/v1/Inventory", InventoryRoutes);
+// app.use("/api/v1/Inventory", InventoryRoutes);
+
+app.use("/api/v1/category", categoryRoutes);
+app.use("/api/v1/product",InventoryRoutes);
+app.use("/api/v1/supplier", SupplierRoutes);
 
 
 //rest api
