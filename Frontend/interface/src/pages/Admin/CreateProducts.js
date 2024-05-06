@@ -6,7 +6,6 @@ import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import "../../components/CreateProducts.css";
 
-
 const { Option } = Select;
 
 const CreateProducts = () => {
@@ -14,15 +13,19 @@ const CreateProducts = () => {
   const [categories, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
   const [supplier, setSupplier] = useState("");
+  const [reorderLevel, setReorderLevel] = useState("");
 
-  // Get all categories
+  useEffect(() => {
+    // Fetch categories and suppliers when component mounts
+    getAllCategory();
+    getAllSuppliers();
+  }, []);
+
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("http://localhost:8000/api/v1/category/get-category");
@@ -35,45 +38,42 @@ const CreateProducts = () => {
     }
   };
 
-  // Get all suppliers
-const getAllSuppliers = async () => {
-  try {
-      const { data } = await axios.get("/api/v1/supplier/get-supplier");
-      if (data?.success) { // Adjusted endpoint to match the route
-          setSuppliers(data?.suppliers);
-      }
-  } catch (error) {
+  const getAllSuppliers = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:8000/api/v1/supplier/get-supplier");
+      setSuppliers(data.suppliers);
+    } catch (error) {
       console.log(error);
-      toast.error("Something went wrong when getting suppliers");
-  }
-};
+      toast.error("Something went wrong");
+    }
+  };
 
-useEffect(() => {
-  getAllCategory();
-  getAllSuppliers(); // Called getAllSuppliers to fetch supplier data
-}, []);
-
-  // Create product function
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
+      // Create FormData object to send product data
       const productData = new FormData();
       productData.append("name", name);
-      productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
       productData.append("photo", photo);
       productData.append("category", category);
       productData.append("supplier", supplier);
-      const { data } = axios.post("/api/v1/product/create-product", productData);
+      productData.append("reorderLevel", reorderLevel);
+
+      // Send POST request to create product
+      const { data } = await axios.post("http://localhost:8000/api/v1/product/create-product", productData);
+
+      // Handle response
       if (data?.success) {
-        toast.error(data?.message);
-      } else {
         toast.success("Product created successfully");
+        // Redirect to an appropriate page
         navigate("/dashboard/admin/create-product");
+      } else {
+        toast.error(data?.message || "Failed to create product");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error creating product:", error);
       toast.error("Something went wrong");
     }
   };
@@ -87,6 +87,7 @@ useEffect(() => {
         <div className="col-md-9">
           <h1>Create Product</h1>
           <div className="m-1 w-75">
+            {/* Category Select */}
             <Select
               bordered={false}
               placeholder="Select a category"
@@ -103,23 +104,26 @@ useEffect(() => {
                 </Option>
               ))}
             </Select>
-            
-<Select
-    bordered={false}
-    placeholder="Select a supplier"
-    size="large"
-    showSearch
-    className="form-select mb-3"
-    onChange={(value) => {
-        setSupplier(value);
-    }}
+
+            {/* Supplier Select */}
+            <Select
+            bordered={false}
+            placeholder="Select a supplier"
+            size="large"
+            showSearch
+            className="form-select mb-3"
+            onChange={(value) => {
+            setSupplier(value);
+            }}
 >
-    {suppliers.map((s) => (
-        <Option key={s._id} value={s._id}>
-            {s.name}
-        </Option>
-    ))}
-</Select>
+           {suppliers.map((s) => (
+           <Option key={s._id} value={s._id}>
+           {s.name}
+           </Option>
+            ))}
+           </Select>
+
+            {/* Photo Upload */}
             <div className="mb-3">
               <label className="btn btn-outline-secondary col-md-12">
                 {photo ? photo.name : "Upload Photo"}
@@ -132,6 +136,8 @@ useEffect(() => {
                 />
               </label>
             </div>
+
+            {/* Display Uploaded Photo */}
             <div className="mb-3">
               {photo && (
                 <div className="text-center">
@@ -139,33 +145,24 @@ useEffect(() => {
                 </div>
               )}
             </div>
+
+            {/* Other Product Details */}
             <div className="mb-3">
-              <input type="text" value={name} placeholder="write a name" className="form-control" onChange={(e) => setName(e.target.value)} />
+              <input type="text" value={name} placeholder="Product Name" className="form-control" onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="mb-3">
-              <textarea type="text" value={description} placeholder="write a description" className="form-control" onChange={(e) => setDescription(e.target.value)} />
+              <input type="number" value={price} placeholder="Price" className="form-control" onChange={(e) => setPrice(e.target.value)} />
             </div>
             <div className="mb-3">
-              <input type="number" value={price} placeholder="write a Price" className="form-control" onChange={(e) => setPrice(e.target.value)} />
+              <input type="number" value={quantity} placeholder="Quantity" className="form-control" onChange={(e) => setQuantity(e.target.value)} />
             </div>
+
+            {/* Reorder Level Input */}
             <div className="mb-3">
-              <input type="number" value={quantity} placeholder="write a quantity" className="form-control" onChange={(e) => setQuantity(e.target.value)} />
+              <input type="number" value={reorderLevel} placeholder="Reorder Level" className="form-control" onChange={(e) => setReorderLevel(e.target.value)} />
             </div>
-            <div className="mb-3">
-              <Select
-                bordered={false}
-                placeholder="Select Shipping"
-                size="large"
-                showSearch
-                className="form-select mb-3"
-                onChange={(value) => {
-                  setShipping(value);
-                }}
-              >
-                <Option value="0">Out of Stock</Option>
-                <Option value="1">Available</Option>
-              </Select>
-            </div>
+
+            {/* Submit Button */}
             <div className="mb-3">
               <button className="btn btn-primary" onClick={handleCreate}>CREATE PRODUCT</button>
             </div>

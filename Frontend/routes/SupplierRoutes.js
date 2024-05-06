@@ -1,5 +1,5 @@
 import express from "express";
-import { createSupplierController, deleteSupplierController, getSuppliersController, updateSupplierController } from "../controllers/SupplierController.js";
+import { createSupplierController, deleteSupplierController, getSuppliersController,getSingleSupplierController, updateSupplierController } from "../controllers/SupplierController.js";
 
 const router = express.Router();
 
@@ -8,6 +8,10 @@ router.post("/create-supplier", createSupplierController);
 
 // Get all suppliers
 router.get("/get-supplier", getSuppliersController);
+
+// Get single supplier
+router.get("/get-supplier/:id", getSingleSupplierController);
+
 
 // Update supplier details
 router.put("/update-supplier/:id", updateSupplierController);

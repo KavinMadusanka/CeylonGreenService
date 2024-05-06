@@ -16,6 +16,19 @@ export const createSupplierController = async (req, res) => {
     }
 };
 
+export const getSingleSupplierController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const supplier = await SupplierModel.findById(id);
+        if (!supplier) {
+            return res.status(404).json({ message: "Supplier not found" });
+        }
+        res.status(200).json({ supplier });
+    } catch (error) {
+        res.status(500).json({ message: "Error getting supplier", error: error.message });
+    }
+};
+
 // Get all suppliers
 export const getSuppliersController = async (req, res) => {
     try {

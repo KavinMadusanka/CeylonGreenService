@@ -12,10 +12,14 @@ const CreateSupplier = () => {
   const [address, setAddress] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
-
+//validation
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
+      if (contactNo.length !== 10) {
+        toast.error("Contact number must be 10 characters long");
+        return;
+      }
       const response = await axios.post("http://localhost:8000/api/v1/supplier/create-supplier", {
         name,
         address,

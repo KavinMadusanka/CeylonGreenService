@@ -1,17 +1,22 @@
-import express from "express";
-import { createProductController, deleteProductController, getProductController, getSingleProductController, productPhotoController, updateProductController } from "./../controllers/InventoryController.js";
+import express from 'express';
+import {
+    createProductController,
+    deleteProductController,
+    getProductController,
+    getSingleProductController,
+    updateProductController,
+    productPhotoController,
+    getReorderAlertsController,
+} from '../controllers/InventoryController.js';
 import formidable from "express-formidable";
 
 const router = express.Router();
 
-//routes
+// Create a new product
 router.post("/create-product",formidable(),createProductController);
 
-//update product
-router.put("/update-product/:pid",formidable(),updateProductController);
-
-//get products
-router.get("/get-product",getProductController);
+// Get all products
+router.get('/get-products', getProductController);
 
 //single product
 router.get("/get-product/:slug",getSingleProductController);
@@ -19,7 +24,13 @@ router.get("/get-product/:slug",getSingleProductController);
 //get photo
 router.get("/product-photo/:pid",productPhotoController);
 
-//delete product
-router.delete("/product/:pid",deleteProductController);
+// Update a product
+router.put("/update-product/:pid",formidable(),updateProductController);
+
+// Delete a product
+router.delete('/delete-product/:pid', deleteProductController);
+
+// Route to fetch reorder alerts
+router.get('/reorder-alerts', getReorderAlertsController);
 
 export default router;

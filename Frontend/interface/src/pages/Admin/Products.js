@@ -14,11 +14,11 @@ const Products = () => {
   // Get all products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get("http://localhost:8000/api/v1/product//get-products");
       setProducts(data.products);
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
+      toast.error("Failed to fetch products");
     }
   };
 
@@ -34,11 +34,15 @@ const Products = () => {
 
   // Function to generate PDF report
   const generatePDF = () => {
+    if (filteredProducts.length === 0) {
+      toast.error("No products found to generate report");
+      return;
+    }
     const doc = new jsPDF();
     doc.text("Products Report", 10, 10);
     doc.autoTable({
-      head: [['Name', 'Description', 'Price', 'Quantity', 'Supplier']],
-      body: filteredProducts.map(product => [product.name, product.description, `$${product.price}`, product.quantity, product.supplier ? product.supplier.name : "N/A"])
+      head: [['Name', 'Price', 'Quantity', 'Category', 'Supplier','ReorderLevel']],
+      body: filteredProducts.map(product => [product.name, `$${product.price}`, product.quantity, product.category, product.supplier ? product.supplier.name : '', product.reorderLevel ])
     });
     doc.save("products_report.pdf");
   };
@@ -75,11 +79,10 @@ const Products = () => {
                   />
                   <div className="card-body">
                     <h5 className="card-title">{p.name}</h5>
-                    <p className="card-text">{p.description}</p>
                     <p className="card-text">Price: ${p.price}</p>
                     <p className="card-text">Quantity: {p.quantity}</p>
                     <p className="card-text">
-                      Supplier: {p.supplier ? p.supplier.name : "N/A"}
+                      Supplier: {p.supplier ? p.supplier.name : ''}
                     </p>
                   </div>
                 </div>
