@@ -6,6 +6,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useAuth } from '../context/auth';
 
+// Function to get today's date in the format YYYY-MM-DD
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 const UpdateAppointment = () => {
   const {id} = useParams();
     const [fullName, setFullName] = useState("");
@@ -77,6 +86,16 @@ const UpdateAppointment = () => {
     }
   };
 
+  const handleFullNameChange = (e) => {
+    const input = e.target.value;
+    // Regular expression to allow only letters (both uppercase and lowercase) and spaces
+    const regex = /^[A-Za-z\s]+$/;
+    if (regex.test(input)) {
+      setFullName(input);
+    }
+  };
+
+
 //////////////////////////
 useEffect(() => {
     if (auth && auth.user) {
@@ -96,7 +115,7 @@ useEffect(() => {
             <input
               type="text"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={handleFullNameChange}
               placeholder="Enter your full name"
               required
             />
@@ -161,6 +180,7 @@ useEffect(() => {
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
+              min={getTodayDate()}
               required
             />
           </div>
