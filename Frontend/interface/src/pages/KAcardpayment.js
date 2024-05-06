@@ -90,20 +90,20 @@ const getAllCard = async() =>{
   },[email])
 
 
-//get cart items 
-  useEffect(() => {
+// //get cart items 
+//   useEffect(() => {
     
-    const fetchCartDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/v1/Cart/get-cart/${email}`);
-        setCart(response.data.cart);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching cart details:', error);
-      }
-    };
-    fetchCartDetails();
-  }, [email]);
+//     const fetchCartDetails = async () => {
+//       try {
+//         const response = await axios.get(`http://localhost:8000/api/v1/Cart/get-cart/${email}`);
+//         setCart(response.data.cart);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error('Error fetching cart details:', error);
+//       }
+//     };
+//     fetchCartDetails();
+//   }, [email]);
 
 
 
@@ -196,15 +196,42 @@ const handleCardsChange = async (value) => {
         toast.error("Your Bank Card is expired");
         return;
       }
-      const res = await axios.post('/api/v1/auth/KAddaddress',
-        {name,address,cNumber,province,district,postalcode,email}
+      // const res = await axios.post('/api/v1/payment/KAcardpayment',
+      //   {name,address,cNumber,province,district,postalcode,email}
+      // );
+      // if(res && res.data.success){
+      //   toast.success(res.data.message);
+      //   navigate('/payment');
+      // }else{
+      //   toast.error(res.data.message );
+      // }
+
+      const productData = new FormData();
+      productData.append("name", name);
+      productData.append("address", address);
+      productData.append("cNumber", cNumber);
+      productData.append("province", province);
+      productData.append("district", district);
+      productData.append("postalcode", postalcode);
+      productData.append("card", card);
+      productData.append("cHolder", cHolder);
+      productData.append("cardNumber", cardNumber);
+      productData.append("cvv", cvv);
+      productData.append("month", month);
+      productData.append("year", year);
+      productData.append("Discription", Discription);
+      productData.append("price", price);
+      const { data } = await axios.post(
+        "/api/v1/payment/KAcardpayment",
+        productData
       );
-      if(res && res.data.success){
-        toast.success(res.data.message);
-        navigate('/payment');
-      }else{
-        toast.error(res.data.message );
+      if (data?.success) {
+        toast.error(data?.message);
+      } else {
+        toast.success("Payment slip Uploded Successfully");
+        navigate("/");
       }
+
     } catch (error) {
       console.log(error);
       toast.error('Somthing went wrong!');
@@ -354,7 +381,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
             </div> */}
         </div>
                
-                <hr className="my-4" />
+                <hr className="my-2" />
                 <div>
                 <div>
             <div className="item3">
@@ -439,10 +466,14 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                       <tr><br/></tr>
                 </tbody></table>
             </div>
-            {/* <div className='item9'>
-              <button className='btnsub'>Save card Details</button>
-            </div> */}
         </div>
+                {/* <div className='item9'>
+                      <button
+                      onClick={(e) => { 
+                        e.preventDefault();
+                        handleSubmit(e);}}
+                        className='btnsub'>Save card Details</button>
+                    </div> */}
                 </div>
                
                 {/* <div className="card mb-4 mb-lg-0">
@@ -488,7 +519,11 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                 />
               </div>
               <div className='item9'>
-              <button className='btnsub'>Pay</button>
+              <button
+              // onClick={(e) => { 
+              //   e.preventDefault();
+              //   handleSubmit(e);}}
+              className='btnsub'>Pay</button>
             </div>
               </div>
               
@@ -507,6 +542,9 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
             </div>
           
         </div>
+        {/* <div className='item9'>
+              <button type='submit' className='btnsub'>Pay</button>
+            </div> */}
       </div>
     </form>
     </section>

@@ -10,17 +10,37 @@ const paymentSchema = new mongoose.Schema(
     //   type: String,
     //   required: true,
     // },
-    orderId: {
+    address: {
       type: String
     },
-    price: {
-      type: Number,
-      required: true,
+    cNumber: {
+      type: String
     },
     address: {
       type: mongoose.ObjectId,
       ref: "deliveryaddresses",
       required: true,
+    },
+    province: {
+      type: String
+    },
+    district: {
+      type: String
+    },
+    postalcode: {
+      type: String
+    },
+    card: {
+      type: String
+    },
+    cardNumber: {
+      type: String
+    },
+    Discription: {
+      type: String
+    },
+    price: {
+      type: String
     },
     photo: {
       data: Buffer,
