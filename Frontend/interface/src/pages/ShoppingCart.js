@@ -106,8 +106,9 @@ function ShoppingCart() {
 
    // Add delivery charge
   let deliveryCharge = 500; // Default delivery charge
-  if (totalQuantity >= 3) {
+  if (totalQuantity >= 3||totalQuantity==0) {
     deliveryCharge = 0; // Free delivery for 3 or more items
+    tax= 0;
   }
 
   // Update subtotal and delivery charge states
@@ -198,7 +199,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                       <div key={index} className="row mb-4">
                         <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
                           <div className="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                            <img src={`http://localhost:8000/api/v1/Inventory/product-photo/${carts.product._id}`} className="w-100" alt={carts.product.name} />
+                            <img src={`http://localhost:8000/api/v1/product/product-photo/${carts.product._id}`} className="w-100" alt={carts.product.name} />
                             <a href="#!">
                               <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" }}></div>
                             </a>
