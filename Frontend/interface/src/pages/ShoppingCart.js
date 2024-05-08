@@ -108,6 +108,9 @@ function ShoppingCart() {
   let deliveryCharge = 500; // Default delivery charge
   if (totalQuantity >= 3||totalQuantity==0) {
     deliveryCharge = 0; // Free delivery for 3 or more items
+  }
+  if (totalQuantity==0) {
+   // Free delivery for 3 or more items
     tax= 0;
   }
 
