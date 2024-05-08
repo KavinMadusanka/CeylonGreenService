@@ -19,7 +19,7 @@ export const addToCart = async (req,res) => {
             return res.send({message:'email is Required'});
         }
         //check cart
-        const exisitingcart = await Cart.findOne({product});
+        const exisitingcart = await Cart.findOne({product,email});
 
         //exisit cart
         if(exisitingcart){

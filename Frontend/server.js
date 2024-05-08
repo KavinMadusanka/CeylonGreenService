@@ -57,7 +57,7 @@ app.use(morgan("dev"));
 
 //routes
 app.use('/api/v1/auth', authRoutes);
-app.use('api/v1/product',tokenRoutes);
+//app.use('api/v1/product',tokenRoutes);
 app.use('/api/user', UserRoutes);
 app.use("/api/v1/employees", empRoutes);
 app.use("/api/v1/Cart", CartRoutes);

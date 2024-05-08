@@ -55,7 +55,7 @@ useEffect(() => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/Inventory/get-product');
+      const response = await fetch('http://localhost:8000/api/v1/product/get-products');
       const data = await response.json();
       if (data.success) {
         setProducts(data.products);
@@ -131,7 +131,7 @@ useEffect(() => {
    (selectedCategory === "" || product.category.name.toLowerCase() === selectedCategory.toLowerCase()) &&
 
     <div key={product._id} className="product">
-      <img className='product_picture' src={`http://localhost:8000/api/v1/Inventory/product-photo/${product._id}`} alt={product.name} />
+      <img className='product_picture' src={`http://localhost:8000/api/v1/product/product-photo/${product._id}`} alt={product.name} />
       <h2><b>{product.name}</b></h2>
       <p> {product.category.name}</p>
       {/* <p>Description: {product.description}</p> */}
