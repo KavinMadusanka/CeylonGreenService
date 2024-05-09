@@ -29,6 +29,7 @@ const KApaymentForm = () => {
   const [postalcode,setPostalcode] = useState("");
 
   const [deliveryCharge, setDeliveryCharge] = useState(500);
+  const [Discription,setDiscription] = useState("");
   const [cart, setCart] = useState([]);
   const [tax, setTax] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
@@ -56,7 +57,7 @@ const KApaymentForm = () => {
       setEmail(auth.user.email);
     }  
   },[auth])
-
+// console.log(email)
   useEffect(() => {
     getAllAddress();
   }, [email]);
@@ -66,22 +67,36 @@ const KApaymentForm = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
+      if (cNumber.length !== 10) {
+        toast.error("Contact number must be 10 characters long");
+        return;
+      }if (photo && photo.length > 0) {
+        toast.error("photo is required");
+        return;
+      }
       const productData = new FormData();
-      productData.append("name", name);
-      productData.append("orderId", orderId);
-      productData.append("price", price);
-      productData.append("quantity", quantity);
-      productData.append("address", address);
       productData.append("photo", photo);
+      productData.append("name", name);
+      productData.append("postalcode", postalcode);
+      productData.append("cNumber", cNumber);
+      productData.append("Discription", Discription);
+      productData.append("address", address);
+      productData.append("email", email); 
+      productData.append("price", price);
       const { data } = await axios.post(
         "/api/v1/payment/KApaymentForm",
         productData
       );
-      if (data?.success) {
-        toast.error(data?.message);
-      } else {
-        toast.success("Payment slip Uploded Successfully");
+      // const data = await axios.post(
+      //   "/api/v1/payment/KApaymentForm",
+      //   {name,address,cNumber,postalcode,email,Discription,price}
+      // );
+      // console.log(email)
+      if (data.success) {
+        toast.success(data.message);
         navigate("/");
+      } else {
+        toast.error("Payment slip Uploded faild");
       }
     } catch (error) {
       console.log(error);
@@ -106,11 +121,12 @@ const KApaymentForm = () => {
       };
 
       const handleAddressChange = async (value) => {
-        setAddress(value);
+        // setAddress(value);
         try {
           const { data } = await axios.get(`/api/v1/auth/get-single-Address/${value}`);
           if (data?.success) {
             setName(data.address.name);
+            setAddress(data.address.address);
             setPostalcode(data.address.postalcode);
             setCNumber(data.address.cNumber);
             setProvince(data.address.province);
@@ -208,6 +224,7 @@ const KApaymentForm = () => {
                         className="form-control"
                         onChange={(e) => setName(e.target.value)}
                         onKeyPress={handleKeyPress}
+                        required
                       />
                         </td>
                       <td className="m-1 w-90" style={{paddingRight:'2%'}}>
@@ -218,6 +235,7 @@ const KApaymentForm = () => {
                         className="form-control"
                         onKeyPress={handleKeyNumber}
                         onChange={(e) => setCNumber(e.target.value)}
+                        required
                       />
                         </td>
                       <td className="m-1 w-90">
@@ -227,8 +245,8 @@ const KApaymentForm = () => {
                         placeholder="Enter your name"
                         className="form-control"
                         onKeyPress={handleKeyNumber}
-                        onChange={(e) => setPostalcode(e.target.value)}
                         required
+                        // onChange={(e) => setPostalcode(e.target.value)}
                       />
                       </td></tr>
                       <tr><br/></tr>
@@ -271,10 +289,10 @@ const KApaymentForm = () => {
               Discription
               <div className="mb-3">
                 <textarea
-                  value={orderId}
+                  value={Discription}
                   placeholder="Discription"
                   className="form-control"
-                  onChange={(e) => setOrderId(e.target.value)}
+                  onChange={(e) => setDiscription(e.target.value)}
                 />
               </div>
               {/* <div className="mb-3">

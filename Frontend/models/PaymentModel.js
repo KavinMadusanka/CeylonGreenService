@@ -16,11 +16,11 @@ const paymentSchema = new mongoose.Schema(
     cNumber: {
       type: String
     },
-    address: {
-      type: mongoose.ObjectId,
-      ref: "deliveryaddresses",
-      required: true,
-    },
+    // address: {
+    //   type: mongoose.ObjectId,
+    //   ref: "deliveryaddresses",
+    //   required: true,
+    // },
     province: {
       type: String
     },
@@ -36,6 +36,10 @@ const paymentSchema = new mongoose.Schema(
     cardNumber: {
       type: String
     },
+    email: {
+      type:String,
+      required:true,
+  },
     Discription: {
       type: String
     },
