@@ -51,7 +51,7 @@ const Employee = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/employee/get-employees")
+      .get("http://localhost:8000/api/v1/employees/get-employees")
       .then((response) => {
         const data = response.data;
         if (data && data.success) {
@@ -69,7 +69,7 @@ const Employee = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8000/employee/employees/${id}`)
+      .delete(`http://localhost:8000/api/v1/employees/employees/${id}`)
       .then((result) => {
         if (result.data.success) {
           setEmployees(employees.filter((employee) => employee._id !== id));
@@ -89,7 +89,7 @@ const Employee = () => {
 
   const handleEdit = (id) => {
     axios
-      .get(`http://localhost:8000/employee/get-employee/${id}`)
+      .get(`http://localhost:8000/api/v1/employees/get-employee/${id}`)
       .then((response) => {
         const data = response.data;
         if (data && data.success) {
@@ -110,19 +110,25 @@ const Employee = () => {
         );
       });
   };
-
+  const handleFormEmail = (e) => {
+    const { name, value } = e.target;
+    setEditEmployeeData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setEditEmployeeData((prevData) => ({
       ...prevData,
-      [name]: value.replace(/[^A-Za-z]/ig, '') // Replace non-alphabetic characters
+      [name]: value.replace(/[^A-Za-z]/gi, ""), // Replace non-alphabetic characters
     }));
   };
 
   const handleFormSubmit = () => {
     axios
       .put(
-        `http://localhost:8000/employee/update-employee/${editEmployeeData._id}`,
+        `http://localhost:8000/api/v1/employees/update-employee/${editEmployeeData._id}`,
         editEmployeeData
       )
       .then((response) => {
@@ -250,7 +256,7 @@ const Employee = () => {
                       name="email"
                       placeholder="Enter Email"
                       value={editEmployeeData.email}
-                      onChange={handleFormChange}
+                      onChange={handleFormEmail}
                     />
                   </div>
                   <div className="col-12">
