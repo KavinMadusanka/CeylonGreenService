@@ -24,11 +24,17 @@ const InventorySchema = new mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
+    // category: {
+    //     type: String,
+    // },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "category",
         required: true,
     },
+    // supplier: {
+    //     type: String,
+    // },
     supplier: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Supplier",

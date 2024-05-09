@@ -62,7 +62,7 @@ const CreateProducts = () => {
       productData.append("reorderLevel", reorderLevel);
 
       // Send POST request to create product
-      const { data } = await axios.post("http://localhost:8000/api/v1/product/create-product", productData);
+      const { data } = await axios.post("http://localhost:8000/api/v1/product/dashboard/admin/create-product", productData);
 
       // Handle response
       if (data?.success) {
