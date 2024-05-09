@@ -1,0 +1,102 @@
+/* Employee.css */
+
+/* Styles for the Employee list table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+/* Styles for the Add Employee button */
+.btn-success {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* Styles for the Edit and Delete buttons */
+.btn-info,
+.btn-warning {
+  margin-right: 5px;
+}
+
+/* Styles for the popup edit form */
+.edit-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.edit-form input {
+  width: calc(50% - 5px); /* 50% width with a small gap between inputs */
+  margin-bottom: 10px;
+  margin-right: 5px; /* Small gap between inputs */
+}
+
+.edit-form button {
+  margin-top: 10px;
+  background-color: #007bff; /* Blue color for buttons */
+  color: #fff; /* White text color */
+  border: none; /* Remove button border */
+  padding: 8px 16px; /* Add some padding to buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.edit-form button.cancel {
+  background-color: #dc3545; /* Red color for cancel button */
+}
+
+/* Styles for the heading */
+h3 {
+  text-align: center;
+}
+
+/* Styles for the error message */
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Styles for the success message */
+.success-message {
+  color: green;
+  margin-bottom: 10px;
+}
+
+/* Styles for the Submit and Cancel buttons */
+.edit-form button {
+  margin-top: 10px;
+  background-color: #007bff; /* Blue color for buttons */
+  color: #fff; /* White text color */
+  border: none; /* Remove button border */
+  padding: 8px 16px; /* Add some padding to buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.edit-form button.cancel {
+  background-color: #dc3545; /* Red color for cancel button */
+}

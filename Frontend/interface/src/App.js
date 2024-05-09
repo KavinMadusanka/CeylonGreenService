@@ -46,6 +46,7 @@ import ProductDisplayPage from "./pages/productDisplay";
 import ShoppingCart from "./pages/ShoppingCart";
 import KAcardpayment from "./pages/KAcardpayment";
 
+import EPDashboard from './pages/EmployeeDashboard';
 
 function App() {
   return (
@@ -95,27 +96,25 @@ function App() {
 
         <Route path="*" element={<Pagenotfound />} />
         <Route
-          path="/SMDashboard/Category/AddCategory"
+          path="/AddCategory"
           element={<AddCategory />}
         />
-        <Route path="//SMDashboard/Employee" element={<Employee />} />
-        <Route path="//SMDashboard/Employeeprofile" element={<EmployeeProfile />} />
-        <Route path="/SMDashboard/Category" element={<Category />} />
+        <Route path="/SMDashboard/Employee" element={<Employee />} />
+        <Route path="/Employeeprofile" element={<EmployeeProfile />} />
+        <Route path="/Category" element={<Category />} />
         <Route path="/SMDashboard/AddEmployee" element={<AddEmployee />} />
-        <Route
-          path="/SMDashboard/EdditEmployee/:id"
-          element={<EditEmployee />}
+        <Route path="/EdditEmployee" element={<EditEmployee />}
         />
         <Route
-          path="/SMDashboard/Profile/EmployeeProfile"
+          path="/EmployeeProfile"
           element={<EmployeeProfile />}
         />
         <Route path="/SMDashboard" element={<SMDashboard />} />
         <Route path="/EmployeeSalary" element={<EmployeeSalary/>} />
-
+        <Route path="/EPDashboard" element={<EPDashboard/>} />
       </Routes>
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

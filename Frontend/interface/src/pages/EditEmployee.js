@@ -1,145 +1,231 @@
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 
 const EditEmployee = () => {
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneValid, setPhoneValid] = useState(true);
+  const [gender, setGender] = useState("");
+  const [nic, setNic] = useState("");
+  const [nicValid, setNicValid] = useState(true);
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [formValid, setFormValid] = useState(false);
+
   const { id } = useParams();
-  const [employee, setEmployee] = useState({
-    name: "",
-    email: "",
-    salary: "",
-    address: "",
-    categoryId: "",
-  });
-  const [category, setCategory] = useState();
-  console.log(category);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/smdashboard/category")
-      .then((result) => {
-        if (result.data.Status) {
-          setCategory(result.data.Result);
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-
-    axios
-      .get("http://localhost:3000/smdashboard/employee/" + id)
-      .then((result) => {
-        setEmployee({
-          ...employee,
-          name: result.data.Result[0].name,
-          email: result.data.Result[0].email,
-          address: result.data.Result[0].address,
-          salary: result.data.Result[0].salary,
-          categoryId: result.data.Result[0].categoryId,
+    if (id) {
+      axios
+        .get(`http://localhost:8000/employee/get-employee/${id}`)
+        .then((response) => {
+          const { firstname, lastname, email, phone, address, gender, nic } = response.data.employee;
+          setFirstName(firstname);
+          setLastName(lastname);
+          setEmail(email);
+          setPhone(phone);
+          setAddress(address);
+          setGender(gender);
+          setNic(nic);
+        })
+        .catch((error) => {
+          console.error("Error fetching employee:", error);
+          toast.error("An error occurred while fetching employee data.");
         });
-      })
-      .catch((err) => console.log(err));
-  }, [employee, id]);
+    }
+  }, [id]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const isPhoneValid = /^\d{10}$/.test(phone) && phone.startsWith("0");
+    const isNicValid =
+      (nic.startsWith("2") && /^\d{12}$/.test(nic)) ||
+      (!nic.startsWith("2") && /^\d{9}V$/.test(nic));
+    setPhoneValid(isPhoneValid);
+    setNicValid(isNicValid);
+    setFormValid(
+      firstname.trim() !== "" &&
+      lastname.trim() !== "" &&
+      email.trim() !== "" &&
+      isPhoneValid &&
+      address.trim() !== "" &&
+      gender.trim() !== "" &&
+      isNicValid
+    );
+  }, [firstname, lastname, email, phone, address, gender, nic]);
+
+  const handleChangePhone = (event) => {
+    const input = event.target.value;
+    if (/^\d{0,10}$/.test(input)) {
+      setPhone(input);
+      setPhoneValid(input.length === 10 && input.startsWith("0"));
+    }
+  };
+
+  const handleChangeNIC = (event) => {
+    const input = event.target.value;
+    setNic(input);
+    setNicValid(validateNIC(input));
+  };
+
+  const validateNIC = (nic) => {
+    if (nic.startsWith("2")) {
+      return /^\d{12}$/.test(nic);
+    } else {
+      return /^\d{9}V$/.test(nic);
+    }
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .put("http://localhost:3000/auth/editEmployee/" + id, employee)
-      .then((result) => {
-        if (result.data.Status) {
-          navigate("/smdashboard/employee");
-        } else {
-          alert(result.data.Error);
+    try {
+      const res = await axios.put(
+        `http://localhost:8000/employee/update-employee/:id`,
+        {
+          firstname,
+          lastname,
+          email,
+          phone,
+          address,
+          gender,
+          nic,
         }
-      })
-      .catch((err) => console.log(err));
+      );
+
+      if (res && res.data.success) {
+        toast.success(res.data.message);
+        window.location = "/smdashboard/employee";
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.error("Error updating employee:", error);
+      toast.error("An error occurred while updating employee data.");
+    }
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center mt-3">
       <div className="p-3 rounded w-50 border">
         <h3 className="text-center">Edit Employee</h3>
-        <form className="row g-1" onSubmit={handleSubmit}>
-          <div className="col-12">
-            <label for="inputName" className="form-label">
-              Name
+        <form className="row g-1" onSubmit={onSubmit}>
+          <div className="col-6">
+            <label htmlFor="inputFirstName" className="form-label">
+              First Name:
             </label>
             <input
               type="text"
               className="form-control rounded-0"
-              id="inputName"
-              placeholder="Enter Name"
-              value={employee.name}
-              onChange={(e) =>
-                setEmployee({ ...employee, name: e.target.value })
-              }
+              id="inputFirstName"
+              placeholder="Enter First Name"
+              value={firstname}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="col-6">
+            <label htmlFor="inputLastName" className="form-label">
+              Last Name:
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputLastName"
+              placeholder="Enter Last Name"
+              value={lastname}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
           <div className="col-12">
-            <label for="inputEmail4" className="form-label">
-              Email
+            <label htmlFor="inputEmail" className="form-label">
+              Email:
             </label>
             <input
               type="email"
               className="form-control rounded-0"
-              id="inputEmail4"
+              id="inputEmail"
               placeholder="Enter Email"
-              autoComplete="off"
-              value={employee.email}
-              onChange={(e) =>
-                setEmployee({ ...employee, email: e.target.value })
-              }
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="col-12">
-            <label for="inputSalary" className="form-label">
-              Salary
+            <label htmlFor="inputPhone" className="form-label">
+              Phone Number:
             </label>
             <input
-              type="text"
+              type="tel"
               className="form-control rounded-0"
-              id="inputSalary"
-              placeholder="Enter Salary"
-              autoComplete="off"
-              value={employee.salary}
-              onChange={(e) =>
-                setEmployee({ ...employee, salary: e.target.value })
-              }
+              id="inputPhone"
+              placeholder="Enter Phone"
+              value={phone}
+              onChange={handleChangePhone}
+              pattern="[0-9]{10}"
+              title="Please enter a valid 10-digit phone number starting with 0"
+              required
             />
+            {!phoneValid && (
+              <p>Please enter a valid 10-digit phone number starting with 0</p>
+            )}
           </div>
+
           <div className="col-12">
-            <label for="inputAddress" className="form-label">
-              Address
+            <label htmlFor="inputAddress" className="form-label">
+              Address:
             </label>
             <input
               type="text"
               className="form-control rounded-0"
               id="inputAddress"
-              placeholder="1234 Main St"
-              autoComplete="off"
-              value={employee.address}
-              onChange={(e) =>
-                setEmployee({ ...employee, address: e.target.value })
-              }
+              placeholder="Enter Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
-          <div className="col-12">
-            <label for="category" className="form-label">
-              Category
+          <div className="col-6">
+            <label htmlFor="inputGender" className="form-label">
+              Gender:
             </label>
-            <select name="category" id="category" className="form-select">
-              onChange=
-              {(e) => setEmployee({ ...employee, category: e.target.value })}
-              {category.map((c) => {
-                return <option value={c.id}>{c.name}</option>;
-              })}
+            <select
+              id="inputGender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="form-control rounded-0"
+            >
+              <option value=""></option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
+          </div>
+          <div className="col-12">
+            <label htmlFor="inputNic" className="form-label">
+              NIC:
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputNic"
+              placeholder="Enter NIC"
+              value={nic}
+              onChange={handleChangeNIC}
+            />
+            {!nicValid && (
+              <p>
+                NIC should be either 10 or 12 characters long for NIC starting with '2', or 9 characters followed by 'V' for other NICs
+              </p>
+            )}
           </div>
 
           <div className="col-12">
-            <button type="submit" className="btn btn-primary w-100">
-              Edit Employee
+            <button
+              type="submit"
+              className="btn btn-primary w-100"
+              style={{ width: "70%", backgroundColor: "green" }}
+              disabled={!formValid}
+            >
+              Update Employee
             </button>
           </div>
         </form>
