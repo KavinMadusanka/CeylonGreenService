@@ -4,7 +4,7 @@ import { createSupplierController, deleteSupplierController, getSuppliersControl
 const router = express.Router();
 
 // Create a new supplier
-router.post("/create-supplier", createSupplierController);
+router.post("/dashboard/admin/create-supplier", createSupplierController);
 
 // Get all suppliers
 router.get("/get-supplier", getSuppliersController);

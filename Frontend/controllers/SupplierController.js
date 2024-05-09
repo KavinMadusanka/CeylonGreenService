@@ -1,18 +1,20 @@
 import SupplierModel from "../models/SupplierModel.js";
+import slugify from "slugify";
 
 // Create a new supplier
 export const createSupplierController = async (req, res) => {
     try {
         const { name, address, contactNo, email } = req.body;
+        const slug = slugify(email, { lower: true });
         const existingSupplier = await SupplierModel.findOne({ email });
         if (existingSupplier) {
-            return res.status(400).json({ message: "Supplier already exists" });
+            return res.status(400).send({ message: "Supplier already exists" });
         }
-        const supplier = new SupplierModel({ name, address, contactNo, email });
+        const supplier = new SupplierModel({ name, address, contactNo, email , slug});
         await supplier.save();
-        res.status(201).json({ message: "Supplier created successfully", supplier });
+        res.status(201).send({ message: "Supplier created successfully", supplier });
     } catch (error) {
-        res.status(500).json({ message: "Error creating supplier", error: error.message });
+        res.status(500).send({ message: "Error creating supplier", error: error.message });
     }
 };
 

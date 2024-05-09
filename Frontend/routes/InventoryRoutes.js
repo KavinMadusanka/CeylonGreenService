@@ -14,7 +14,7 @@ import formidable from "express-formidable";
 const router = express.Router();
 
 // Create a new product
-router.post("/create-product",formidable(),createProductController);
+router.post("/dashboard/admin/create-product",createProductController);
 
 // Get all products
 router.get('/get-products', getProductController);

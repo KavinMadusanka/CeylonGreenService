@@ -20,7 +20,7 @@ const CreateSupplier = () => {
         toast.error("Contact number must be 10 characters long");
         return;
       }
-      const response = await axios.post("http://localhost:8000/api/v1/supplier/create-supplier", {
+      const response = await axios.post("http://localhost:8000/api/v1/supplier/dashboard/admin/create-supplier", {
         name,
         address,
         contactNo,
