@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../components/Layout/Header';
-import Footer from '../components/Layout/Footer';
+import Layout1 from '../components/Layout/Layout1';
 import { useAuth } from '../context/auth';
 import axios from 'axios';
 import {useNavigate,useLocation} from "react-router-dom";
@@ -114,6 +113,7 @@ const handleAddressChange = async (value) => {
       const { data } = await axios.get(`/api/v1/auth/get-single-Address/${value}`);
       if (data?.success) {
         setName(data.address.name);
+        setAddress(data.address.address);
         setPostalcode(data.address.postalcode);
         setCNumber(data.address.cNumber);
         setProvince(data.address.province);
@@ -128,15 +128,16 @@ const handleAddressChange = async (value) => {
 
   //handell Card change part
 const handleCardsChange = async (value) => {
-    setCard(value);
+    // setCard(value);
     try {
       const { data } = await axios.get(`/api/v1/auth/get-single-card/${value}`);
       if (data?.success) {
         setCHolder(data.cards.name);
-        setMonth(data.cards.month);
-        setYear(data.cards.year);
+        setCard(data.cards.cardNumber);
+        setMonth(data.cards.month.toString());
+        setYear(data.cards.year.toString());
         setCvv(data.cards.cvv);
-        
+        console.log(card)
       }
     } catch (error) {
       console.log(error);
@@ -168,15 +169,18 @@ const handleCardsChange = async (value) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (cardNumber.length !== 16) {
-          toast.error("Card number must be 16 characters long");
-          return;
-      }
-      if (cvv.length !== 3) {
-          toast.error("CVV number is 3 digit number");
-          return;
-      }
+      
+      // if (card.length !== 16) {
+      //   console.log(card)
+      //     toast.error("Card number must be 16 characters long");
+      //     return;
+      // }
+      // if (cvv.length !== 3) {
+      //     toast.error("CVV number is 3 digit number");
+      //     return;
+      // }
       if (cNumber.length !== 10) {
+        console.log(email)
         toast.error("Contact number must be 10 characters long");
         return;
       }
@@ -196,39 +200,15 @@ const handleCardsChange = async (value) => {
         toast.error("Your Bank Card is expired");
         return;
       }
-      // const res = await axios.post('/api/v1/payment/KAcardpayment',
-      //   {name,address,cNumber,province,district,postalcode,email}
-      // );
-      // if(res && res.data.success){
-      //   toast.success(res.data.message);
-      //   navigate('/payment');
-      // }else{
-      //   toast.error(res.data.message );
-      // }
-
-      const productData = new FormData();
-      productData.append("name", name);
-      productData.append("address", address);
-      productData.append("cNumber", cNumber);
-      productData.append("province", province);
-      productData.append("district", district);
-      productData.append("postalcode", postalcode);
-      productData.append("card", card);
-      productData.append("cHolder", cHolder);
-      productData.append("cardNumber", cardNumber);
-      productData.append("cvv", cvv);
-      productData.append("month", month);
-      productData.append("year", year);
-      productData.append("Discription", Discription);
-      productData.append("price", price);
-      const { data } = await axios.post(
+      const data = await axios.post(
         "/api/v1/payment/KAcardpayment",
-        productData
+        {name,address,cNumber,province,district,postalcode,email,card,cHolder,cvv,month,year,Discription,price}
       );
+
       if (data?.success) {
         toast.error(data?.message);
       } else {
-        toast.success("Payment slip Uploded Successfully");
+        toast.success("Payment Successfully");
         navigate("/");
       }
 
@@ -269,7 +249,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
 
   return (
     <div>
-      <Header/>
+      <Layout1>
       
    <section className="h-100 gradient-custom">
     <form onSubmit={handleSubmit}>
@@ -447,7 +427,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                         type="text"
                         value={year}
                         className="form-control"
-                        onKeyPress={handleKeyNumber}
+                        // onKeyPress={handleKeyNumber}
                         required
                         // onChange={(e) => setPrice(e.target.value)}
                         />
@@ -458,6 +438,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                         value={cvv}
                         placeholder='CVV'
                         onKeyPress={handleKeyNumber}
+                        // onChange={(e) => setCvv(e.target.value)}
                         required
                         className="form-control"
                         // onChange={(e) => setPrice(e.target.value)}
@@ -557,7 +538,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                 {modalContent}
               </Modal>      
 
-      <Footer/>
+      </Layout1>
     </div>
   )
 }
