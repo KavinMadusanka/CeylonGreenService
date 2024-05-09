@@ -1,0 +1,63 @@
+.reorder-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reorder-form h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .reorder-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .reorder-form input[type="number"],
+  .reorder-form input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .reorder-form button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .reorder-form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .reorder-form button[type="button"] {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  
+  .reorder-form input[type="number"],
+.reorder-form input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: black; /* Add this line to set the text color to black */
+}

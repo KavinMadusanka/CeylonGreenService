@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import PrAdminMenu from "../../components/Layout/PrAdminMenu";
 import axios from "axios";
 import "../../components/PrAdminDashboard.css";
+import ReorderForm from "../../components/Form/ReorderForm"; // Import ReorderForm component
+
 
 const PrAdminDashboard = () => {
   const [reorderAlerts, setReorderAlerts] = useState([]);
+  const [selectedAlert, setSelectedAlert] = useState(null);
 
   useEffect(() => {
     fetchReorderAlerts();
@@ -19,6 +22,14 @@ const PrAdminDashboard = () => {
     }
   };
 
+  const handleReorderClick = (alert) => {
+    setSelectedAlert(alert);
+  };
+
+  const handleCloseForm = () => {
+    setSelectedAlert(null);
+  };
+
   return (
     <div className="container-fluid m-3 p-3">
       <div className="row">
@@ -29,10 +40,18 @@ const PrAdminDashboard = () => {
           <h1>Reorder Alerts</h1>
           <div className="reorder-alerts">
             {reorderAlerts.map((alert, index) => (
-              <div key={index} className="alert">
-                <h3>{alert.name}</h3>
-                <p>Quantity: {alert.quantity}</p>
-                <p>Reorder Level: {alert.reorderLevel}</p>
+              <div key={index} className="card mb-3">
+                <div className="card-body">
+                  <h3 className="card-title">{alert.name}</h3>
+                  <p className="card-text">Quantity: {alert.quantity}</p>
+                  <p className="card-text">Reorder Level: {alert.reorderLevel}</p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleReorderClick(alert)}
+                  >
+                    Reorder
+                  </button>
+                </div>
               </div>
             ))}
             {reorderAlerts.length === 0 && (
@@ -41,6 +60,16 @@ const PrAdminDashboard = () => {
           </div>
         </div>
       </div>
+      {/* Render ReorderForm if selectedAlert is not null */}
+      {selectedAlert && (
+        <div className="reorder-form-container">
+          <ReorderForm
+            productId={selectedAlert.productId}
+            productName={selectedAlert.name}
+            onClose={handleCloseForm}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -83,7 +83,7 @@ function App() {
         <Route path="/ShoppingCart" element={<ShoppingCart />} />
 
 {/* piyusha */}
-        <Route path="/PrAdminDashboard" element={<PrAdminDashboard/>}/>
+<Route path="/PrAdminDashboard" element={<PrAdminDashboard/>}/>
         <Route path="/dashboard/admin/create-category" element={<CreateCategory/>}/>
         <Route path="/dashboard/admin/create-product" element={<CreateProducts/>}/>
         <Route path="/dashboard/admin/product/:slug" element={<UpdateProduct/>}/>
