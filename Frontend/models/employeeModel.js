@@ -30,28 +30,13 @@ const EmployeeSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    pronouns: {
+    nic: {
       type: String,
       trim: true,
     },
-    salary: {
-      type: String,
-      required: true,
-    },
-    leaves: {
-      type: Number,
-      required: true,
-    },
-    status: {
-      type: String,
-      required: true,
-    },
-    profileImage: {
-      type: String,
-      required: false,
-    },
+    
   },
   { timestamps: true }
 );
 
-export default mongoose.model("employee", EmployeeSchema);
+export default mongoose.model("Employee", EmployeeSchema);

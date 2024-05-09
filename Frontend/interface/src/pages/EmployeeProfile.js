@@ -14,7 +14,7 @@ const EmployeeProfile = () => {
     address: "Nattandiya, Sri Lanka",
     email: "imal@gmail.com",
     profileImageUrl:
-      "",
+      "https://img.icons8.com/?size=128&id=118243&format=png",
   };
 
   return (

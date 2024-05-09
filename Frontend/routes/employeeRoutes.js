@@ -4,25 +4,15 @@ import {
     getEmployeeController,
     getEmployeeByIdController,
     updateEmployeeController,
-    deleteEmployeeController,
-
+    deleteEmployeeByIdController,
 } from '../controllers/employeeController.js';
 
-const empRoutes= express.Router();
+const empRoutes = express.Router();
 
-// Create a new employee
-empRoutes.post('/smdashboard/addemployee', createEmployeeController);
-
-// Get all employees
+empRoutes.post('/addemployee', createEmployeeController);
 empRoutes.get('/get-employees', getEmployeeController);
-
-// Get a single employee by ID
 empRoutes.get('/get-employee/:id', getEmployeeByIdController);
-
-// Update an existing employee
 empRoutes.put('/update-employee/:id', updateEmployeeController);
-
-// Delete an existing employee
-empRoutes.delete('/delete-employee/:id', deleteEmployeeController);
+empRoutes.delete('/employees/:id', deleteEmployeeByIdController);
 
 export default empRoutes;
