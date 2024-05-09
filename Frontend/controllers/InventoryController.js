@@ -1,15 +1,16 @@
 import slugify from "slugify";
 import InventoryModel from "../models/InventoryModel.js";
+import nodemailer from 'nodemailer';
 import fs from "fs";
 
 
-
+// Create product controller
 export const createProductController = async (req, res) => {
     try {
-        const { name, price, quantity, category, supplier, reorderLevel } = req.fields;
-        const {photo} = req.files
+        const { name, price, quantity, category, supplier, reorderLevel } = req.body;
+        const {photo} = req.files;
 
-        //validation
+        // Validation
         switch(true){
             case !name:
                 return res.status(500).send({error:"Name is Required"});
@@ -22,15 +23,17 @@ export const createProductController = async (req, res) => {
             case !supplier:
                 return res.status(500).send({error:"Supplier is Required"});
             case !reorderLevel:
-                return res.status(500).send({error:"reorderLevel is Required"});
+                return res.status(500).send({error:"Reorder Level is Required"});
             case photo && photo.size > 1000000:
-                return res.status(500).send({error:"photo is Required and should be less than 1mb"});
+                return res.status(500).send({error:"Photo is Required and should be less than 1mb"});
         }
 
-        const products = new InventoryModel({...req.fields, slug:slugify(name)});
-        if(photo){
-            products.photo.data = fs.readFileSync(photo.path);
-            products.photo.contentType = photo.type;
+        const products = new InventoryModel({name, price, quantity, category, supplier, reorderLevel});
+        console.log(photo)
+        if(photo && photo.mimetype && photo.data){
+            console.log(name)
+            products.photo.data = photo.data;
+            products.photo.contentType = photo.mimetype;
         }
         await products.save();
         res.status(201).send({
@@ -48,7 +51,8 @@ export const createProductController = async (req, res) => {
         });
     }
 };
-//get all products
+
+// Get all products controller
 export const getProductController = async(req,res) =>{
     try {
         const products = await InventoryModel
@@ -61,7 +65,7 @@ export const getProductController = async(req,res) =>{
         res.status(200).send({
             success:true,
             counTotal: products.length,
-            message:"AllProducts",
+            message:"All Products",
             products,
         });
         
@@ -75,7 +79,7 @@ export const getProductController = async(req,res) =>{
     }
 };
 
-//get single product
+// Get single product controller
 export const getSingleProductController = async(req,res) => {
     try {
         const product = await InventoryModel
@@ -99,7 +103,7 @@ export const getSingleProductController = async(req,res) => {
     }
 };
 
-//get photo
+// Get product photo controller
 export const productPhotoController = async(req,res) => {
     try {
         const product = await InventoryModel.findById(req.params.pid).select("photo");
@@ -119,7 +123,7 @@ export const productPhotoController = async(req,res) => {
     }
 };
 
-//update products
+// Update product controller
 export const updateProductController = async(req,res) => {
     try {
         const {name,slug,price, quantity, category, supplier, reorderLevel} = req.fields
@@ -137,9 +141,9 @@ export const updateProductController = async(req,res) => {
             case !supplier:
                 return res.status(500).send({error:"Supplier is Required"});
             case !reorderLevel:
-                return res.status(500).send({error:"reorderLevel is Required"});
+                return res.status(500).send({error:"Reorder Level is Required"});
             case photo && photo.size > 1000000:
-                return res.status(500).send({error:"photo is Required and should be less than 1mb"});
+                return res.status(500).send({error:"Photo is Required and should be less than 1mb"});
         }
         const products = await InventoryModel.findByIdAndUpdate(req.params.pid,
             {...req.fields,slug:slugify(name)},{new:true}
@@ -165,7 +169,8 @@ export const updateProductController = async(req,res) => {
     }
 
 };
-//delete product
+
+// Delete product controller
 export const deleteProductController = async (req, res) => {
     try {
         const deletedProduct = await InventoryModel.findByIdAndDelete(req.params.pid).select("-photo");
@@ -178,7 +183,8 @@ export const deleteProductController = async (req, res) => {
         res.status(500).json({ success: false, message: "Error while deleting product", error: error.message });
     }
 };
-// Check stock levels and trigger reorder actions
+
+// Reorder alert controller
 export const getReorderAlertsController = async (req, res) => {
     try {
       // Retrieve all products from the database
@@ -192,5 +198,49 @@ export const getReorderAlertsController = async (req, res) => {
     } catch (error) {
       console.error('Error fetching reorder alerts:', error);
       res.status(500).json({ message: 'Error fetching reorder alerts' });
+    }
+};
+
+// Handle reorder email controller
+// Create a Nodemailer transporter using your Gmail SMTP configuration
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'ceylongreenservice@gmail.com', // Sender email
+      pass: 'ceylon1234' // Sender email password
+    }
+  });
+  
+  // Handle reorder email controller
+  export const handleReorderEmail = async (req, res) => {
+    try {
+      // Extract necessary data from the request body
+      const { productId, productName, reorderQuantity, requestDate } = req.body;
+  
+      // Fetch supplier information based on productId (Assuming you have a Supplier model)
+      const product = await InventoryModel.findById(productId).populate('supplier');
+      const supplierEmail = product.supplier.email; // Assuming the supplier's email is stored in the supplier field
+  
+      // Compose email
+      const emailContent = `
+        Reorder Details:
+        Product ID: ${productId}
+        Product Name: ${productName}
+        Reorder Quantity: ${reorderQuantity}
+        Request Date: ${requestDate}
+      `;
+  
+      // Send email using Nodemailer
+      await transporter.sendMail({
+        from: 'ceylongreenservice@gmail.com',
+        to: supplierEmail,
+        subject: 'Reorder Request',
+        text: emailContent
+      });
+  
+      res.status(200).json({ success: true, message: 'Reorder email sent successfully' });
+    } catch (error) {
+      console.error('Error sending reorder email:', error);
+      res.status(500).json({ success: false, message: 'Failed to send reorder email' });
     }
   };
