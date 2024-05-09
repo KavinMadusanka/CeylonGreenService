@@ -1,6 +1,6 @@
+import mongoose from 'mongoose';
 import Employee from "../models/employeeModel.js";
 
-// Create a new employee
 export const createEmployeeController = async (req, res) => {
   try {
     const {
@@ -10,12 +10,9 @@ export const createEmployeeController = async (req, res) => {
       phone,
       address,
       gender,
-      pronouns,
-      salary,
-      leaves,
-      status,
-      profileImage,
-        } = req.body;
+      nic
+    } = req.body;
+
     const newEmployee = await new Employee({
       firstname,
       lastname,
@@ -23,11 +20,7 @@ export const createEmployeeController = async (req, res) => {
       phone,
       address,
       gender,
-      pronouns,
-      salary,
-      leaves,
-      status,
-      profileImage,
+      nic
     }).save();
     res.status(201).send({
       success: true,
@@ -41,7 +34,6 @@ export const createEmployeeController = async (req, res) => {
   }
 };
 
-// Get all employees
 export const getEmployeeController = async (req, res) => {
   try {
     const employees = await Employee.find({});
@@ -53,7 +45,6 @@ export const getEmployeeController = async (req, res) => {
   }
 };
 
-// Get a single employee by ID
 export const getEmployeeByIdController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -70,7 +61,6 @@ export const getEmployeeByIdController = async (req, res) => {
   }
 };
 
-// Update an existing employee
 export const updateEmployeeController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -81,11 +71,7 @@ export const updateEmployeeController = async (req, res) => {
       phone,
       address,
       gender,
-      pronouns,
-      salary,
-      leaves,
-      status,
-      profileImage,
+      nic
     } = req.body;
     const updatedEmployee = await Employee.findByIdAndUpdate(
       id,
@@ -96,11 +82,7 @@ export const updateEmployeeController = async (req, res) => {
         phone,
         address,
         gender,
-        pronouns,
-        salary,
-        leaves,
-        status,
-        profileImage,
+        nic
       },
       { new: true }
     );
@@ -121,22 +103,22 @@ export const updateEmployeeController = async (req, res) => {
   }
 };
 
-// Delete an existing employee
-export const deleteEmployeeController = async (req, res) => {
+export const deleteEmployeeByIdController = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedEmployee = await Employee.findByIdAndDelete(id);
-    if (!deletedEmployee) {
-      return res
-        .status(404)
-        .send({ success: false, message: "Employee not found" });
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).send({ success: false, message: "Invalid employee ID" });
     }
-    res
-      .status(200)
-      .send({ success: true, message: "Employee deleted successfully" });
+
+    const deletedEmployee = await Employee.findByIdAndDelete(id);
+
+    if (deletedEmployee) {
+      res.status(200).send({ success: true, message: "Employee deleted successfully" });
+    } else {
+      res.status(404).send({ success: false, message: "Employee not found" });
+    }
   } catch (error) {
-    res
-      .status(500)
-      .send({ success: false, message: "Error deleting employee", error });
+    res.status(500).send({ success: false, message: "Error deleting employee", error });
   }
 };

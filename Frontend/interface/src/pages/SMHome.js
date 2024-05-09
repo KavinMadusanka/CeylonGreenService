@@ -86,7 +86,7 @@ const SMHome = () => {
         </div>
       </div>
       <div className="mt-4 px-5 pt-3">
-        <h3>List of Staff Managers</h3>
+        <h3>Staff Manager details</h3>
         <table className="table">
           <thead>
             <tr>
@@ -97,7 +97,7 @@ const SMHome = () => {
           <tbody>
             {staffManagers.map((s) => (
               <tr>
-                <td>{s.email}</td>
+                <td>{staffManagers.email}</td>
                 <td>
                   <button className="btn btn-info btn-sm me-2">Edit</button>
                   <button className="btn btn-warning btn-sm">Delete</button>

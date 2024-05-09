@@ -3,9 +3,9 @@ import colors from "colors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
-import authRoutes from './routes/KAauthRoute.js';
+import authRoutes from "./routes/KAauthRoute.js";
 
-import appointmentRoutes from './routes/appointmentRoutes.js';
+import appointmentRoutes from "./routes/appointmentRoutes.js";
 import empRoutes from "./routes/employeeRoutes.js";
 import fileUpload from 'express-fileupload'
 import { fileURLToPath } from 'url';
@@ -33,7 +33,7 @@ connectDB();
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //get the access of file upload
 const __filename = fileURLToPath(import.meta.url);
@@ -70,7 +70,7 @@ app.use("/api/v1/supplier", SupplierRoutes);
 
 //rest api
 app.get("/", (req, res) => {
-    res.send("<h1>Welcome to CeylonGreen</h1>");
+  res.send("<h1>Welcome to CeylonGreen</h1>");
 });
 
 //PORT
@@ -78,7 +78,8 @@ const PORT = process.env.PORT || 8000;
 
 //run listen
 app.listen(PORT, () => {
-    console.log(
-        `Server Running on ${process.env.DEV_MODE} mode on port ${PORT} `.bgCyan
-            .white);
+  console.log(
+    `Server Running on ${process.env.DEV_MODE} mode on port ${PORT} `.bgCyan
+      .white
+  );
 });

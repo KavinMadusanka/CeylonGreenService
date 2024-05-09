@@ -1,75 +1,103 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Header1 from "../components/Layout/Header1";
 
 const AddEmployee = () => {
-  const [employee, setEmployee] = useState("");
   const [firstname, setfirstName] = useState("");
   const [lastname, setlastName] = useState("");
   const [phone, setphone] = useState("");
+  const [valid, setValid] = useState(true);
   const [gender, setgender] = useState("");
-  const [pronouns, setpronouns] = useState("");
-  const [salary, setsalary] = useState("");
-  const [leaves, setleaves] = useState("");
-  const [status, setstatus] = useState("");
+  const [nic, setnic] = useState("");
+  const [nicValid, setNicValid] = useState(true);
   const [address, setaddress] = useState("");
   const [email, setemail] = useState("");
-  const [profileImageUrl, setprofileImageUrl] = useState("");
   const navigate = useNavigate();
 
-  // const [category, setCategory] = useState([]);
+  const handleChange = (event) => {
+    const inputPhone = event.target.value;
+    const isValidPhone = /^\d{10}$/.test(inputPhone); // Validate 10-digit phone number
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/smdashboard/category")
-  //     .then((result) => {
-  //       if (result.data.Status) {
-  //         setCategory(result.data.Result);
-  //       } else {
-  //         alert(result.data.Error);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+    setphone(inputPhone); // Update the phone state
+
+    // Update the valid state based on phone number validity
+    setValid(isValidPhone);
+  };
+
+  
+
+  const handleChangeNIC = (event) => {
+    const input = event.target.value;
+    setnic(input);
+    setNicValid(validateNIC(input));
+  };
+
+  const validateNIC = (nic) => {
+    if (nic.startsWith("2")) {
+      // NIC starts with 2, validate for 12 digits
+      return /^\d{12}$/.test(nic);
+    } else {
+      // NIC starts with a number other than 2, validate for 9 digits followed by 'V'
+      return /^\d{9}V$/.test(nic);
+    }
+  };
+
+  const handleFirstNameChange = (event) => {
+    const input = event.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+    setfirstName(input);
+  };
+
+  const handleLastNameChange = (event) => {
+    const input = event.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+    setlastName(input);
+  };
+
+  const handleEmailChange = (event) => {
+    const input = event.target.value.toLowerCase(); // Convert any uppercase letters to lowercase
+    setemail(input);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/api/v1/employee/smdashboard/addemployee", {
-        firstname,
-        lastname,
-        phone,
-        gender,
-        pronouns,
-        salary,
-        leaves,
-        status,
-        address,
-        email,
-        profileImageUrl,
-      });
+      const res = await axios.post(
+        "http://localhost:8000/employee/addemployee",
+        {
+          firstname,
+          lastname,
+          email,
+          phone,
+          address,
+          gender,
+          nic,
+        }
+      );
+
       if (res && res.data.success) {
-        toast.success(res.data.message);
-        navigate("/smdashboard/addemployee");
+        toast.success("Employee Added successfully!");
+        navigate("/smdashboard/employee");
       } else {
         toast.error(res.data.message);
       }
-    } catch (error) {}
-    // axios
-    //   .post("http://localhost:3000/smdashboard/addemployee", employee)
-    //   .then((result) => console.log(result.data))
-    //   .catch((err) => console.log(err));
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("An error occurred while adding employee. Please try again later.");
+    }
   };
 
   return (
+    <>
+    <Header1/>
     <div className="d-flex justify-content-center align-items-center mt-3">
       <div className="p-3 rounded w-50 border">
         <h3 className="text-center">Add Employee</h3>
         <form className="row g-1" onSubmit={handleSubmit}>
           <div className="col-6">
             <label htmlFor="inputFirstName" className="form-label">
-              First Name
+              First Name :
             </label>
             <input
               type="text"
@@ -77,12 +105,12 @@ const AddEmployee = () => {
               id="inputFirstName"
               placeholder="Enter First Name"
               value={firstname}
-              onChange={(e) => setfirstName(e.target.value)}
+              onChange={handleFirstNameChange} // Use custom handler for first name
             />
           </div>
           <div className="col-6">
             <label htmlFor="inputLastName" className="form-label">
-              Last Name
+              Last Name :
             </label>
             <input
               type="text"
@@ -90,12 +118,25 @@ const AddEmployee = () => {
               id="inputLastName"
               placeholder="Enter Last Name"
               value={lastname}
-              onChange={(e) => setlastName(e.target.value)}
+              onChange={handleLastNameChange} // Use custom handler for last name
             />
           </div>
-          <div className="col-6">
+          <div className="col-12">
+            <label htmlFor="inputEmail" className="form-label">
+              Email :
+            </label>
+            <input
+              type="email"
+              className="form-control rounded-0"
+              id="inputEmail"
+              placeholder="Enter Email"
+              value={email}
+              onChange={handleEmailChange} // Use custom handler for email
+            />
+          </div>
+          <div className="col-12">
             <label htmlFor="inputPhone" className="form-label">
-              Phone
+              Phone Number :
             </label>
             <input
               type="text"
@@ -103,77 +144,13 @@ const AddEmployee = () => {
               id="inputPhone"
               placeholder="Enter Phone"
               value={phone}
-              onChange={(e) => setphone(e.target.value)}
+              onChange={handleChange}
             />
-          </div>
-          <div className="col-6">
-            <label htmlFor="inputGender" className="form-label">
-              Gender
-            </label>
-            <input
-              type="text"
-              className="form-control rounded-0"
-              id="inputGender"
-              placeholder="Enter Gender"
-              value={gender}
-              onChange={(e) => setgender(e.target.value)}
-            />
-          </div>
-          <div className="col-6">
-            <label htmlFor="inputPronouns" className="form-label">
-              Pronouns
-            </label>
-            <input
-              type="text"
-              className="form-control rounded-0"
-              id="inputPronouns"
-              placeholder="Enter Pronouns"
-              value={pronouns}
-              onChange={(e) => setpronouns(e.target.value)}
-            />
-          </div>
-          <div className="col-6">
-            <label htmlFor="inputSalary" className="form-label">
-              Salary
-            </label>
-            <input
-              type="text"
-              className="form-control rounded-0"
-              id="inputSalary"
-              placeholder="Enter Salary"
-              value={salary}
-              onChange={(e) => setsalary(e.target.value)}
-            />
-          </div>
-          <div className="col-6">
-            <label htmlFor="inputLeaves" className="form-label">
-              Leaves
-            </label>
-            <input
-              type="number"
-              className="form-control rounded-0"
-              id="inputLeaves"
-              placeholder="Enter Leaves"
-              value={leaves}
-              onChange={(e) => setleaves(e.target.value)}
-            />
-          </div>
-          <div className="col-6">
-            <label htmlFor="inputStatus" className="form-label">
-              Status
-            </label>
-            <input
-              type="text"
-              className="form-control rounded-0"
-              id="inputStatus"
-              placeholder="Enter Status"
-              value={status}
-              onChange={(e) => setstatus(e.target.value)}
-            />
+            {!valid && <p>Please enter a valid 10-digit phone number</p>}
           </div>
           <div className="col-12">
             <label htmlFor="inputAddress" className="form-label">
-              Address
+              Address :
             </label>
             <input
               type="text"
@@ -184,30 +161,38 @@ const AddEmployee = () => {
               onChange={(e) => setaddress(e.target.value)}
             />
           </div>
-          <div className="col-12">
-            <label htmlFor="inputEmail" className="form-label">
-              Email
+          <div className="col-6">
+            <label htmlFor="inputGender" className="form-label">
+              Gender :
             </label>
-            <input
-              type="email"
+            <select
+              value={gender}
+              onChange={(e) => setgender(e.target.value)}
               className="form-control rounded-0"
-              id="inputEmail"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setemail(e.target.value)}
-            />
+            >
+              <option></option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
           </div>
-          <div className="col-12 mb-3">
-            <label for="inputGroupFile01" className="form-label">
-              Select Image
+          <div className="col-12">
+            <label htmlFor="inputnic" className="form-label">
+              NIC :
             </label>
             <input
-              type="file"
+              type="text"
               className="form-control rounded-0"
-              id="inputGroupFile01"
-              value={profileImageUrl}
-              onChange={(e) => setprofileImageUrl(e.target.files[1])}
+              id="inputnic"
+              placeholder="Enter NIC"
+              value={nic}
+              onChange={handleChangeNIC}
             />
+            {!nicValid && (
+              <p>
+                NIC should be either 10 or 12 characters long for NIC starting
+                with '2', or 9 characters followed by 'V' for other NICs
+              </p>
+            )}
           </div>
 
           <div className="col-12">
@@ -222,6 +207,7 @@ const AddEmployee = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
