@@ -7,21 +7,20 @@ import authRoutes from "./routes/KAauthRoute.js";
 
 import appointmentRoutes from "./routes/appointmentRoutes.js";
 import empRoutes from "./routes/employeeRoutes.js";
-import fileUpload from 'express-fileupload'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import UserRoutes from './routes/UserRegisterRoutes.js';
-import cors from 'cors'
-import bodyParser from 'body-parser'
-import mongoose from 'mongoose';
-import tokenRoutes from './routes/tokenRoutes.js';
-import CartRoutes from './routes/CartRoutes.js';
-import PaymentRoutes from './routes/PaymentRoutes.js';
-import InventoryRoutes from './routes/InventoryRoutes.js'
+import fileUpload from "express-fileupload";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import UserRoutes from "./routes/UserRegisterRoutes.js";
+import cors from "cors";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import tokenRoutes from "./routes/tokenRoutes.js";
+import CartRoutes from "./routes/CartRoutes.js";
+import PaymentRoutes from "./routes/PaymentRoutes.js";
+import InventoryRoutes from "./routes/InventoryRoutes.js";
 import categoryModel from "./models/categoryModel.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import SupplierRoutes from "./routes/SupplierRoutes.js";
-
 
 //configure env
 dotenv.config();
@@ -46,27 +45,25 @@ app.use(express.json());
 // app.use(morgan("dev"));
 
 //routes
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/payment', PaymentRoutes);
-app.use('/api/user', UserRoutes);
-app.use('/api/v1/appointment',appointmentRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/payment", PaymentRoutes);
+app.use("/api/user", UserRoutes);
+app.use("/api/v1/appointment", appointmentRoutes);
 
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
 //routes
-app.use('/api/v1/auth', authRoutes);
 //app.use('api/v1/product',tokenRoutes);
-app.use('/api/user', UserRoutes);
+app.use("/api/user", UserRoutes);
 app.use("/api/v1/employees", empRoutes);
 app.use("/api/v1/Cart", CartRoutes);
 // app.use("/api/v1/Inventory", InventoryRoutes);
 
 app.use("/api/v1/category", categoryRoutes);
-app.use("/api/v1/product",InventoryRoutes);
+app.use("/api/v1/product", InventoryRoutes);
 app.use("/api/v1/supplier", SupplierRoutes);
-
 
 //rest api
 app.get("/", (req, res) => {
