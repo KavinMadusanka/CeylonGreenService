@@ -7,8 +7,8 @@ import fs from "fs";
 // Create product controller
 export const createProductController = async (req, res) => {
     try {
-        const { name, price, quantity, category, supplier, reorderLevel } = req.body;
-        const {photo} = req.files;
+        const { name, price, quantity, category, supplier, reorderLevel } = req.fields;
+        const {photo} = req.files
 
         // Validation
         switch(true){
@@ -28,12 +28,10 @@ export const createProductController = async (req, res) => {
                 return res.status(500).send({error:"Photo is Required and should be less than 1mb"});
         }
 
-        const products = new InventoryModel({name, price, quantity, category, supplier, reorderLevel});
-        console.log(photo)
-        if(photo && photo.mimetype && photo.data){
-            console.log(name)
-            products.photo.data = photo.data;
-            products.photo.contentType = photo.mimetype;
+        const products = new InventoryModel({...req.fields, slug:slugify(name)});
+        if(photo){
+            products.photo.data = fs.readFileSync(photo.path);
+            products.photo.contentType = photo.type;
         }
         await products.save();
         res.status(201).send({
