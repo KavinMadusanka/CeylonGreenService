@@ -14,7 +14,7 @@ const Products = () => {
   // Get all products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/v1/product//get-products");
+      const { data } = await axios.get("http://localhost:8000/api/v1/product/get-products");
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -41,8 +41,8 @@ const Products = () => {
     const doc = new jsPDF();
     doc.text("Products Report", 10, 10);
     doc.autoTable({
-      head: [['Name', 'Price', 'Quantity', 'Category', 'Supplier','ReorderLevel']],
-      body: filteredProducts.map(product => [product.name, `$${product.price}`, product.quantity, product.category, product.supplier ? product.supplier.name : '', product.reorderLevel ])
+      head: [['Name', 'Price', 'Quantity', 'Category', 'Supplier', 'Reorder Level']],
+      body: filteredProducts.map(product => [product.name, `$${product.price}`, product.quantity, product.category.name, product.supplier ? product.supplier.name : '', product.reorderLevel ])
     });
     doc.save("products_report.pdf");
   };
@@ -71,7 +71,10 @@ const Products = () => {
                 className="product-link"
                 key={p._id}
               >
-                <div className="card m-2" style={{ width: "18rem" }}>
+                <div className={`card m-2 ${p.quantity === 0 ? 'out-of-stock' : ''}`} style={{ width: "18rem" }}>
+                  {p.quantity === 0 && (
+                    <div className="out-of-stock-label">Out of Stock</div>
+                  )}
                   <img
                     src={`/api/v1/product/product-photo/${p._id}`}
                     className="card-img-top"

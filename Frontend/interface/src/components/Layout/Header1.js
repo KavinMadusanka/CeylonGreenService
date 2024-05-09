@@ -59,7 +59,7 @@ const Header1 = () => {
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/inventory" activeClassName="active" className='dropdown-item'
+                        <NavLink to="/PrAdminDashboard" activeClassName="active" className='dropdown-item'
                         >
                           Inventory
                         </NavLink>
