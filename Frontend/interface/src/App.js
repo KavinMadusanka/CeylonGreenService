@@ -48,6 +48,8 @@ import KAcardpayment from "./pages/KAcardpayment";
 import KApaymentdashboard from "./pages/Admin/KApaymentdashboard";
 
 import EPDashboard from './pages/EmployeeDashboard';
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -114,6 +116,10 @@ function App() {
         <Route path="/SMDashboard" element={<SMDashboard />} />
         <Route path="/EmployeeSalary" element={<EmployeeSalary/>} />
         <Route path="/EPDashboard" element={<EPDashboard/>} />
+
+        <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/ContactUs" element={<ContactUs />} />
+
       </Routes>
       <ToastContainer
         position="top-right"
