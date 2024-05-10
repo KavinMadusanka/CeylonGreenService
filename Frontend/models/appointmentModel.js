@@ -27,7 +27,7 @@ const appointmentSchema = new mongoose.Schema({
         trim: true
     },
     selectedDate: {
-        type: Date,
+        type: String,
         required: true
     },
     selectedTime: {
