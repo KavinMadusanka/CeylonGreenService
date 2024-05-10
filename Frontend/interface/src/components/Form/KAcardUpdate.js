@@ -15,6 +15,7 @@ const KAcardUpdate = () => {
     const [cNumber,setNumber] = useState("");
     const [name,setName] = useState("");
     const [cardNumber,setCardNumber] = useState("");
+    // const [formattedCardNumber, setFormattedCardNumber] = useState("");
     const [month,setMonth] = useState("");
     const [year,setYear] = useState("");
     const [cvv,setCvv] = useState("");
@@ -34,6 +35,7 @@ const KAcardUpdate = () => {
         setYear(data.cards.year);
         setCvv(data.cards.cvv);
         setEmail(data.cards.email);
+        // setFormattedCardNumber(formatCardNumber(data.cards.cardNumber));
         }else {
           console.error('Address data not found:', data);
         }
@@ -72,6 +74,32 @@ const KAcardUpdate = () => {
       }
     };
 
+    // // Function to format the card number
+    // const formatCardNumber = (number) => {
+    //   // Insert a space every four characters
+    //   // return number.replace(/\s?(\d{4})/g, '$1 ').trim();
+    //   const formattedNumber = number.replace(/\s?(\d{4})/g, '$1 ').trim();
+    //   console.log('Formatted Card Number:', formattedNumber); // Add this line for debugging
+    //   return formattedNumber;
+    // };
+
+    const formatCardNumber = (number) => {
+      number = number.toString(); // Convert number to string
+      // console.log(number);
+      if (!number || number.length < 4) {
+        return number;
+      }
+      let formattedNumber = '';
+      for (let i = 0; i < number.length; i++) {
+        formattedNumber += number.charAt(i);
+        if ((i + 1) % 4 === 0 && i !== number.length - 1) {
+          formattedNumber += ' ';
+        }
+      }
+      // console.log(formattedNumber);
+      return formattedNumber;
+    };
+
   return (
     <Layout2 title={'Add Adreess - Ceylon Green'}>
       <div className='grid-container'>
@@ -102,8 +130,9 @@ const KAcardUpdate = () => {
                     <tr><td>
                       <input 
                       type="text" 
-                      value={cardNumber}
+                      value={formatCardNumber(cardNumber)}
                       placeholder='Card Number'
+                      readOnly
                       required
                       />
                       </td>
@@ -133,6 +162,7 @@ const KAcardUpdate = () => {
                         <input 
                         type="text" 
                         value={month}
+                        readOnly
                         required
                         />
                         </td>
@@ -141,6 +171,7 @@ const KAcardUpdate = () => {
                         <input 
                         type="text" 
                         value={year}
+                        readOnly
                         required
                         />
                         </td>
@@ -148,6 +179,7 @@ const KAcardUpdate = () => {
                       <input 
                       type="text" 
                       value={cvv}
+                      readOnly
                       placeholder='CVV'
                       required
                       />

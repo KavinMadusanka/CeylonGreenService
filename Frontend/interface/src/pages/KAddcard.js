@@ -84,6 +84,11 @@ const KAddcard = () => {
         event.preventDefault();
       }
     };
+    // Function to format the card number
+    const formatCardNumber = (number) => {
+      // Insert a space every four characters
+      return number.replace(/\s?(\d{4})/g, '$1 ').trim();
+    };
   
   return (
     // <Layout2 title={'Add Card - Ceylon Green'}>
@@ -116,10 +121,11 @@ const KAddcard = () => {
                     <tr><td>
                       <input 
                       type="text" 
-                      value={cardNumber}
-                      onChange={(e) => setNumber(e.target.value)}
+                      value={formatCardNumber(cardNumber)}
+                      onChange={(e) => setNumber(e.target.value.replace(/\D/g, ''))}
                       placeholder='Card Number'
                       onKeyPress={handleKeyNumber}
+                      maxLength={19}
                       required
                       />
                       </td>
@@ -150,6 +156,7 @@ const KAddcard = () => {
                         type="text" 
                         value={month}
                         onChange={(e) => setMonth(e.target.value)}
+                        onKeyPress={handleKeyNumber}
                         required
                         />
                         </td>
@@ -159,6 +166,7 @@ const KAddcard = () => {
                         type="text" 
                         value={year}
                         onChange={(e) => setYear(e.target.value)}
+                        onKeyPress={handleKeyNumber}
                         required
                         />
                         </td>
@@ -168,6 +176,7 @@ const KAddcard = () => {
                       value={cvv}
                       onChange={(e) => setCvv(e.target.value)}
                       placeholder='CVV'
+                      maxLength={3}
                       onKeyPress={handleKeyNumber}
                       required
                       />

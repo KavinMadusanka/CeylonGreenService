@@ -141,21 +141,20 @@ const Paymentpage = () => {
 /////////////////////////////////////////////////////////////
 
 //get all card details
-const getAllCard = async() =>{
-  try {
-    const {data} = await axios.get(`api/v1/auth/get-Card/${email}`);
-    if(data.success){
-      setCard(data.cards);
-      getAllCard();
-    }
-  } catch (error) {
-    // toast.error('ganna baggggg');
-    console.log(error);
-    // toast.error('Somthing went wrong in getting Address');
-  }
-};
-
 useEffect(() => {
+  const getAllCard = async() =>{
+    try {
+      const {data} = await axios.get(`api/v1/auth/get-Card/${email}`);
+      if(data.success){
+        setCard(data.cards);
+        getAllCard();
+      }
+    } catch (error) {
+      // toast.error('ganna baggggg');
+      console.log(error);
+      // toast.error('Somthing went wrong in getting Address');
+    }
+  };
   getAllCard();
 },[email])
 
@@ -201,6 +200,23 @@ const handleDeleteCard = async (CId) => {
     doc.save("Address_report.pdf");
   };
 
+  // Format card number by separating it into groups of four digits
+  const formatCardNumber = (number) => {
+    number = number.toString(); // Convert number to string
+    // console.log(number);
+    if (!number || number.length < 4) {
+      return number;
+    }
+    let formattedNumber = '';
+    for (let i = 0; i < number.length; i++) {
+      formattedNumber += number.charAt(i);
+      if ((i + 1) % 4 === 0 && i !== number.length - 1) {
+        formattedNumber += ' ';
+      }
+    }
+    // console.log(formattedNumber);
+    return formattedNumber;
+  };
 
 
   return (
@@ -239,7 +255,8 @@ const handleDeleteCard = async (CId) => {
                   {filteredCard.map((c) => (
                     <tr key={c._id}>
                         <td >{c.name}</td>
-                        <td >{c.cardNumber}</td>
+                        {/* <td >{c.cardNumber}</td> */}
+                        <td >{formatCardNumber(c.cardNumber)}</td>
                         <td >{c.month}</td>
                         <td >{c.year}</td>
                         {/* <td >{c.cvv}</td> */}

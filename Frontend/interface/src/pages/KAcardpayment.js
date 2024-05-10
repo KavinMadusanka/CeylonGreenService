@@ -247,6 +247,24 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
 
   // Function to handle modal visibility and content
 
+
+  const formatCardNumber = (number) => {
+    number = number.toString(); // Convert number to string
+    // console.log(number);
+    if (!number || number.length < 4) {
+      return number;
+    }
+    let formattedNumber = '';
+    for (let i = 0; i < number.length; i++) {
+      formattedNumber += number.charAt(i);
+      if ((i + 1) % 4 === 0 && i !== number.length - 1) {
+        formattedNumber += ' ';
+      }
+    }
+    // console.log(formattedNumber);
+    return formattedNumber;
+  };
+  
   return (
     <div>
       <Layout1>
@@ -384,7 +402,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                     >
                         {Cards?.map((c) => (
                         <Option key={c._id} value={c._id}>
-                            {c.cardNumber}
+                            {formatCardNumber(c.cardNumber)}
                         </Option>
                         ))}
                     </Select>
@@ -392,7 +410,8 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                       <td>
                       <input
                         type="text"
-                        value={cHolder} 
+                        value={cHolder}
+                        readOnly
                         placeholder="Card Holder's Name"
                         onKeyPress={handleKeyNumber}
                         className="form-control mb-3"
@@ -415,6 +434,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                       <input
                         type="text"
                         value={month}
+                        readOnly
                         className="form-control"
                         onKeyPress={handleKeyNumber}
                         required
@@ -426,6 +446,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                       <input
                         type="text"
                         value={year}
+                        readOnly
                         className="form-control"
                         // onKeyPress={handleKeyNumber}
                         required
@@ -436,6 +457,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                       <input
                         type="text"
                         value={cvv}
+                        readOnly
                         placeholder='CVV'
                         onKeyPress={handleKeyNumber}
                         // onChange={(e) => setCvv(e.target.value)}
@@ -485,6 +507,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                 <input
                   type="number"
                   value={price}
+                  readOnly
                   placeholder="write a Price"
                   className="form-control"
                   // onChange={(e) => setPrice(e.target.value)}
