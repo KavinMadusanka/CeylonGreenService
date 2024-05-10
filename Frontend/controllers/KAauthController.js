@@ -292,7 +292,7 @@ export const updateCardController = async (req,res) => {
         );
         res.status(200).send({
             success: true,
-            message: "Address Updated Successfully",
+            message: "Card Updated Successfully",
             cards,
         });
         

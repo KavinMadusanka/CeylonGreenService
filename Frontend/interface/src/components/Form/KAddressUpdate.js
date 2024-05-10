@@ -88,7 +88,7 @@ const KAddressUpdate = () => {
     <Layout2 title={'Add Adreess - Ceylon Green'}>
       <div className='grid-container'>
       <form onSubmit={handleSubmit}>
-        <div className='KAboarder'>
+        <div className='KAboarder' style={{marginLeft:'10%',marginRight:'10%', marginBottom:'2%'}}>
             <div className='item1'>
               <h1 className='text-center'>Provide further information</h1>
               <div className='KApayment'><IoShieldCheckmark/> Your personal information is safe with us</div>
@@ -141,6 +141,7 @@ const KAddressUpdate = () => {
                       <input 
                       type="text"
                       value={address}
+                      readOnly
                       required  
                       /></td></tr>
                       <tr><br/></tr>

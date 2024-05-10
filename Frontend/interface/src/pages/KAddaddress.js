@@ -28,6 +28,10 @@ const KAddaddress = () => {
         toast.error("Contact number must be 10 characters long");
         return;
       }
+      if (!cNumber.startsWith('0')) {
+        toast.error("Contact number needs to start at '0' ");
+        return;
+      }
       const res = await axios.post('/api/v1/auth/KAddaddress',
         {name,address,cNumber,province,district,postalcode,email}
       );
@@ -119,6 +123,7 @@ const KAddaddress = () => {
                         onChange={(e) => setNumber(e.target.value)}
                         placeholder='07x xxxxxxx'
                         onKeyPress={handleKeyNumber}
+                        maxLength={10}
                         required 
                         /></td></tr>
                       <tr></tr>

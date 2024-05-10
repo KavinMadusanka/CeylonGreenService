@@ -281,6 +281,7 @@ const KApaymentForm = () => {
                 <input
                   type="number"
                   value={price}
+                  readOnly
                   placeholder="write a Price"
                   className="form-control"
                   // onChange={(e) => setPrice(e.target.value)}
