@@ -70,7 +70,9 @@ function ShoppingCart() {
     try {
       await axios.delete(`http://localhost:8000/api/v1/Cart/delete-cart-item/${id}`);
       // Update the cart state to reflect the deleted item
-      setCart(cart.filter(item => item._id !== id));
+
+     // console.log("Cart:", cart);
+      setCart(cart.filter(item =>  item && item._id !== id));
       toast.success("Item deletion successfully");
     } catch (error) {
       console.error('Error deleting cart item:', error);
