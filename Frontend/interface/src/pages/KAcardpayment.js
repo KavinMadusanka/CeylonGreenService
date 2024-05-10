@@ -527,7 +527,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
               // onClick={(e) => { 
               //   e.preventDefault();
               //   handleSubmit(e);}}
-              className='btnsub'>Pay</button>
+              className='btnsub' >Pay</button>
             </div>
               </div>
               

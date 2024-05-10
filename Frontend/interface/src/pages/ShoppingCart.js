@@ -71,6 +71,7 @@ function ShoppingCart() {
       await axios.delete(`http://localhost:8000/api/v1/Cart/delete-cart-item/${id}`);
       // Update the cart state to reflect the deleted item
       setCart(cart.filter(item => item._id !== id));
+      toast.success("Item deletion successfully");
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }
@@ -83,6 +84,7 @@ function ShoppingCart() {
       await axios.put(`http://localhost:8000/api/v1/Cart/update-item/${id}`, { quantity: newQuantity });
       // Update the cart state to reflect the updated quantity
       setCart(cart.map(item => (item._id === id ? { ...item, quantity: newQuantity } : item)));
+      toast.success("Item quantity update successfully");
     } catch (error) {
       console.error('Error updating cart item quantity:', error);
     }
@@ -186,8 +188,8 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
       <Header/>
       
    <section className="h-100 gradient-custom">
-      <div className="container py-5">
-        <div className="row d-flex justify-content-center my-4">
+      <div className="container py-5" id='cartcontainer'>
+        <div className="row d-flex justify-content-center my-4" >
           <div className="col-md-8">
             <div className="card mb-4">
               <div className="card-header py-3">
@@ -213,6 +215,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                           {/* <p>Color: {carts.product.color}</p>
                           <p>Size: {carts.product.size}</p> */}
                           <p ><strong> Price :  Rs. {carts.product.price}</strong></p>
+                          <p ><strong> Available :  {carts.product.quantity}</strong></p>
                           <button type="button"className='btnsub' onClick={() => handleDeleteCartItem(carts._id)}>Remove</button>
                           <span className="mx-2"></span> {/* Adding space */}
                           <button type="button" className='btnsub'>Update</button>
@@ -240,16 +243,40 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                
                 <hr className="my-4" />
                
-                <div className="card mb-4">
-                <div className="card-body">
+                <div className="card mb-4" >
+                <div className="card-body" id='expected_delivery'>
                 <div className="mb-3">
-    <p><strong>Expected shipping delivery</strong></p>
-    <p className="mb-0"><b><h5>{todatDate}-{formattedDeliveryDate}</h5></b>(maximum 10 working days)</p>
+    <strong>Expected shipping delivery</strong>
+    <br/>
+    <p className="mb-0" id='expected'>{todatDate} &nbsp; -&nbsp; {formattedDeliveryDate}<br/></p>
+    
   </div>
+  <p id='maximum'>(maximum 10 working days)</p>
 
   <hr className="my-4" />
 
-  <form onSubmit={handleSubmit}>
+ 
+</div>
+
+                </div>
+                <div className="card mb-4 mb-lg-0">
+                  {/* <div className="card-body">
+                    <p><strong>We accept</strong></p>
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa" />
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express" />
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard" />
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp" alt="PayPal acceptance mark" />
+                  </div> */}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-4">
+          <div className="card mb-4">
+            
+          <div className="card-body">
+          <form onSubmit={handleSubmit}>
         <div >
             
             <div className='item2'>
@@ -348,31 +375,19 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
             </div>
         </div>
         </form>
-  
-</div>
-
-                </div>
-                <div className="card mb-4 mb-lg-0">
-                  {/* <div className="card-body">
-                    <p><strong>We accept</strong></p>
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa" />
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express" />
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard" />
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp" alt="PayPal acceptance mark" />
-                  </div> */}
-                </div>
-              </div>
-            </div>
+        </div>
+        </div>
           </div>
 
 
+         
    
 
 
-          <div className="col-md-4">
+          <div className="col-md-4" id='summary'>
             <div className="card mb-4">
               <div className="card-header py-3">
-                <h5 className="mb-0">Summary</h5>
+                <h5 className="mb-0" id='summary_topic'>Summary</h5>
               </div>
               <div className="card-body">
                 <ul className="list-group list-group-flush">
