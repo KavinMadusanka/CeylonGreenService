@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../components/UpdateSupplier.css";
+import Layout1 from "../../components/Layout/Layout1";
 
 const UpdateSupplier = () => {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ const UpdateSupplier = () => {
           toast.success(data.message || "Supplier updated successfully");
           navigate("/dashboard/admin/suppliers");
         } else {
-          toast.error(data.message || "Failed to update supplier");
+          toast.success(data.message );
         }
       } catch (error) {
         console.error("Error updating supplier:", error);
@@ -54,6 +55,7 @@ const UpdateSupplier = () => {
     };
   
     return (
+      <Layout1 >
       <div className="container-fluid m-3 p-3">
         <div className="row">
           <div className="col-md-3">
@@ -105,6 +107,7 @@ const UpdateSupplier = () => {
           </div>
         </div>
       </div>
+      </Layout1>
     );
   };
 

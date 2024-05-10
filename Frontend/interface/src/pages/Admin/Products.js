@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import "../../components/Products.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Layout1 from "../../components/Layout/Layout1";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -48,6 +49,7 @@ const Products = () => {
   };
 
   return (
+    <Layout1 >
     <div>
       <div className="row">
         <div className="col-md-3">
@@ -95,6 +97,7 @@ const Products = () => {
         </div>
       </div>
     </div>
+    </Layout1>
   );
 };
 

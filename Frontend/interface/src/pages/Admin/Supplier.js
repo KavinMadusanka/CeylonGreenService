@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Layout1 from "../../components/Layout/Layout1";
 
 const Suppliers = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -57,6 +58,7 @@ const Suppliers = () => {
   };
 
   return (
+    <Layout1 >
     <div className="container-fluid m-3 p-3">
       <div className="row">
         <div className="col-md-3">
@@ -103,6 +105,7 @@ const Suppliers = () => {
         </div>
       </div>
     </div>
+    </Layout1>
   );
 };
 

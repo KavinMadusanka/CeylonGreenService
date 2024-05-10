@@ -5,6 +5,7 @@ import axios from "axios";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import "../../components/CreateProducts.css";
+import Layout1 from "../../components/Layout/Layout1";
 
 const { Option } = Select;
 
@@ -79,6 +80,7 @@ const CreateProducts = () => {
   };
 
   return (
+    <Layout1>
     <div className="container-fluid m-3 p-3">
       <div className="row">
         <div className="col-md-3">
@@ -170,6 +172,7 @@ const CreateProducts = () => {
         </div>
       </div>
     </div>
+    </Layout1>
   );
 };
 

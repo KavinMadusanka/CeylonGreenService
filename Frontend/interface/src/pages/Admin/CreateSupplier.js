@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../components/CreateSupplier.css";
+import Layout1 from "../../components/Layout/Layout1";
 
 
 const CreateSupplier = () => {
@@ -41,6 +42,7 @@ const CreateSupplier = () => {
   };
 
   return (
+    <Layout1 >
     <div className="container-fluid m-3 p-3">
       <div className="row">
         <div className="col-md-3">
@@ -92,6 +94,7 @@ const CreateSupplier = () => {
         </div>
       </div>
     </div>
+    </Layout1>
   );
 };
 
