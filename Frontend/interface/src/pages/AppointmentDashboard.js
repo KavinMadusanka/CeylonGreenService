@@ -1,47 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import Layout1 from '../components/Layout/Layout1';
 import '../components/Appointment.css';
+import axios from "axios";
+import toast from 'react-hot-toast';
 
 const AppointmentDashboard = () => {
     const [appointments, setAppointments] = useState([]);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     const [filteredAppointments, setFilteredAppointments] = useState([]);
 
-    useEffect(() => {
-        // Fetch mock data for pending appointments
-        fetch('/api/pending-appointments')
-            .then(response => response.json())
-            .then(data => {
-                setAppointments(data);
-                setFilteredAppointments(data);
-            })
-            .catch(error => console.error('Error fetching pending appointments:', error));
+
+    const statusOptions = ['Pending', 'Accepted', 'Rejected'];
+
+
+    //useEffect(() => {
+        const getAllAppointments = async () => {
+            try {
+                const { data } = await axios.get('/api/v1/appointment/get-admin-appointment');
+                setAppointments(data.appointments);
+                setFilteredAppointments(data.appointments);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+    
+        useEffect(() => {
+        getAllAppointments();
     }, []);
 
-    const handleViewDetails = (appointment) => {
-        setSelectedAppointment(appointment);
+
+    const handleViewDetails = async (AID) => {
+        try {
+            const {data} = await axios.get(`/api/v1/appointment/single-appointment/${AID}`);
+        } catch (error) {
+            toast.error("Something went wrong")
+        }
     };
 
-    const handleAccept = (id) => {
-        updateStatus(id, 'Accepted');
+    const handleStatusChange = async (id, newStatus) => {
+        console.log(`Updating appointment ${id} to status: ${newStatus}`);
+        try {
+            const response = await axios.put(`/api/v1/appointment/update-appointment/${id}`, { status: newStatus });
+            if (response.data.success) {
+                toast.success(`Appointment ${newStatus.toLowerCase()} successfully`);
+                getAllAppointments(); // Refresh appointments after update
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.error(`Error ${newStatus.toLowerCase()}ing appointment:`, error);
+            toast.error(`Error ${newStatus.toLowerCase()}ing appointment`);
+        }
     };
-
-    const handleReject = (id) => {
-        updateStatus(id, 'Rejected');
-    };
-
-    const updateStatus = (id, status) => {
-        const updatedAppointments = appointments.map(appointment =>
-            appointment.id === id ? { ...appointment, status: status } : appointment
-        );
-        setAppointments(updatedAppointments);
-        setSelectedAppointment(null);
-        // Implement notification system here
-    };
-
-    const handleBack = () => {
-        setSelectedAppointment(null);
-    };
+    
+    
 
     const handleFilter = (status) => {
         if (status === 'All') {
@@ -64,10 +76,19 @@ const AppointmentDashboard = () => {
     };
 
     const convertToCSV = (data) => {
-        const headers = ['ID', 'Name', 'Date', 'Time', 'Status'];
+        const headers = ['Name', 'Address', 'Contact No', 'Email', 'Service Package', 'Date', 'Time', 'Status'];
         const csv = [
             headers.join(','),
-            ...data.map(appointment => [appointment.id, appointment.name, appointment.date, appointment.time, appointment.status].join(','))
+            ...data.map(appointment => [
+                appointment.fullName,
+                appointment.address,
+                appointment.phoneNumber,
+                appointment.email,
+                appointment.servicePackage,
+                appointment.selectedDate,
+                appointment.selectedTime,
+                appointment.status
+            ].join(','))
         ].join('\n');
         return csv;
     };
@@ -77,7 +98,7 @@ const AppointmentDashboard = () => {
             <div className="home-container">
                 <section className="dashboard-section">
                     <div className="section-title">
-                        <h2>Pending Appointment Requests</h2>
+                        <h2>Appointment Dashboard</h2>
                         <div className="underline"></div>
                     </div>
                     <div className="filter-section">
@@ -90,32 +111,61 @@ const AppointmentDashboard = () => {
                         </select>
                         <button onClick={handleExport}>Export Report</button>
                     </div>
-                    {selectedAppointment ? (
-                        <div className="appointment-details">
-                            <h3>Appointment Details</h3>
-                            <p>ID: {selectedAppointment.id}</p>
-                            <p>Name: {selectedAppointment.name}</p>
-                            <p>Date: {selectedAppointment.date}</p>
-                            <p>Time: {selectedAppointment.time}</p>
-                            <p>Status: {selectedAppointment.status}</p>
-                            <button onClick={() => handleAccept(selectedAppointment.id)}>Accept</button>
-                            <button onClick={() => handleReject(selectedAppointment.id)}>Reject</button>
-                            <button onClick={handleBack}>Back</button>
-                        </div>
-                    ) : (
-                        <div className="appointment-list">
-                            {filteredAppointments.map(appointment => (
-                                <div key={appointment.id} className="appointment-item">
-                                    <h3>{appointment.name}</h3>
-                                    <p>Date: {appointment.date}</p>
-                                    <p>Time: {appointment.time}</p>
-                                    <button onClick={() => handleViewDetails(appointment)}>View Details</button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </section>
+                    
+                    
+                    <div className="table-container">
+                    <div >
+        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <thead>
+                    <tr>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Name</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Address</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Contact No:</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Email</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>servicePackage</th>
+                        {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>comments</th> */}
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>selectedDate</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>selectedTime</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px', textAlign: 'center' }} colSpan={2}>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {filteredAppointments.map((c) => (
+                    <tr key={c._id}>
+                        <td >{c.fullName}</td>
+                        <td >{c.address}</td>
+                        <td >{c.phoneNumber}</td>
+                        <td >{c.email}</td>
+                        <td >{c.servicePackage}</td>
+                        {/* <td >{c.comments}</td> */}
+                        <td >{c.selectedDate}</td>
+                        <td >{c.selectedTime}</td>
+                        <td>
+                            {c.status === 'Pending' ? (
+                                <select
+                                value={c.status}
+                                onChange={(e) => handleStatusChange(c._id, e.target.value)}
+                                onClick={() => console.log('Select clicked')} // Add this line
+                            >
+                                    {statusOptions.map(option => (
+                                        <option key={option} value={option}>{option}</option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <span>{c.status}</span>
+                            )}
+                        </td>
+                    </tr>
+                  ))}
+                </tbody>
+        </table>
+        </div>
+        </div>
+        </section>  
             </div>
+
+
+            
         </Layout1>
     );
 };
