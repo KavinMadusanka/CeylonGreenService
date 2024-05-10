@@ -37,7 +37,12 @@ const appointmentSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
-    }
+    },
+    status: {
+        type: String,
+        default: "Pending",
+        enum: ["Pending", "Accepted", "Rejected"],
+      },
 },{timestamps:true})
 
 export default mongoose.model('appointments',appointmentSchema)
