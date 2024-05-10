@@ -3,6 +3,7 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import { useAuth } from '../context/auth';
 import axios from 'axios';
+import toast from "react-hot-toast";
 import {ShoppingCartcss} from '../components/ShoppingCart.css';
 
 
@@ -19,6 +20,7 @@ function ProductDisplay() {
   const [searchTerm, setSearchTerm] = useState("");
   const[selectedCategory,setSelectedCategory]=useState("");
   const [selectedServicePackage, setSelectedServicePackage] = useState("");
+  const [cart, setCart] = useState([]);
 
 
 
@@ -71,9 +73,27 @@ useEffect(() => {
 
   const addToCart = async (productId) => {
     try {
+
+          
+
       const response = await axios.post('http://localhost:8000/api/v1/Cart/add-to-cart', {
         product: productId,
         quantity: 1, // Set the quantity as needed
+        email: email // Pass the user's email
+      });
+      console.log('Item added to cart:', response.data);
+      // Optionally, you can update the UI to reflect that the item has been added to the cart
+      toast.success("Item added successfully");
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+
+  const addTowishlist = async (productId) => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/Cart/add-to-cart', {
+        product: productId,
+         // Set the quantity as needed
         email: email // Pass the user's email
       });
       console.log('Item added to cart:', response.data);
@@ -84,12 +104,13 @@ useEffect(() => {
   };
 
 
-
   return (
     <div>
       <Header />
 
-      <div className='searchbar w-25'>
+      <div className='username'><b>Hello.. {name} welcome to Ceylon Green Shop</b></div>   
+
+      <div className='searchbar w-25' id='search'>
                         {/* Search input */}
                         <input
                             type="text"
@@ -119,10 +140,10 @@ useEffect(() => {
         <option value="floor care equipment">Floor Care Equipment</option>
     </select>
     <span className="mx-2"></span> {/* Adding space */}
-    <p id='filter'>Filter by category</p>
+    <p id='filter'></p>
 </div>
 
-                        
+               
 
       <div className="product-list">
   {FilteredName.map(product => (
