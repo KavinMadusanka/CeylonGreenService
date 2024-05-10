@@ -26,12 +26,13 @@ const CreateSupplier = () => {
         contactNo,
         email,
       });
-      const { success, message } = response.data;
-      if (success) {
-        toast.success(message);
+      // const { success, message } = response.data;
+      if (response.success) {
+        toast.success('Supplier created successfully');
         navigate("/dashboard/admin/suppliers");
       } else {
-        toast.error(message);
+        toast.error("Error creating supplier");
+        navigate("/dashboard/admin/suppliers");
       }
     } catch (error) {
       console.error("Error creating supplier:", error);
