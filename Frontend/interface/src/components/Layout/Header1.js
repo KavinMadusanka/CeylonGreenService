@@ -83,7 +83,7 @@ const Header1 = () => {
                         </li>
                         <li>
                           <NavLink
-                            to="/paymentmanager"
+                            to="/KApaymentdashboard"
                             activeClassName="active"
                             className="dropdown-item"
                           >

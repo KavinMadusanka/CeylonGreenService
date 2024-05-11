@@ -91,7 +91,7 @@ const UpdateProduct = () => {
 
             if (data?.success) {
                 toast.success("Product updated successfully");
-                navigate("/dashboard/admin/products");
+                navigate("/dashboard/admin/product");
             } else {
                 toast.error(data?.message || "Failed to update product");
             }
@@ -107,7 +107,7 @@ const UpdateProduct = () => {
             const { data } = await axios.delete(`/api/v1/product/delete-product/${id}`);
             if (data?.success) {
                 toast.success("Product deleted successfully");
-                navigate("/dashboard/admin/products");
+                navigate("/dashboard/admin/product");
             } else {
                 toast.error(data?.message || "Failed to delete product");
             }
