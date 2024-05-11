@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Layout1 from '../components/Layout/Layout1';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import '../components/Appointment.css';
 import axios from "axios";
 import toast from 'react-hot-toast';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const AppointmentDashboard = () => {
     const [appointments, setAppointments] = useState([]);
@@ -64,39 +67,84 @@ const AppointmentDashboard = () => {
         }
     };
 
-    const handleExport = () => {
-        const csvData = convertToCSV(filteredAppointments);
-        const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'appointments_report.csv';
-        a.click();
-        window.URL.revokeObjectURL(url);
-    };
-
-    const convertToCSV = (data) => {
-        const headers = ['Name', 'Address', 'Contact No', 'Email', 'Service Package', 'Date', 'Time', 'Status'];
-        const csv = [
-            headers.join(','),
-            ...data.map(appointment => [
-                appointment.fullName,
-                appointment.address,
-                appointment.phoneNumber,
-                appointment.email,
-                appointment.servicePackage,
-                appointment.selectedDate,
-                appointment.selectedTime,
-                appointment.status
-            ].join(','))
-        ].join('\n');
-        return csv;
-    };
+    // Function to generate PDF report
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.text("Categories Report", 10, 10);
+    doc.autoTable({ html: '#category-table' });
+    doc.save("categories_report.pdf");
+  };
 
     return (
         <Layout1 title={'Appointment Dashboard - Ceylon Green'}>
-            <div className="home-container">
+            <div className ="row flex-nowrap">
+                {/* // add dash board part in there */}
+                
+                <div className ="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style={{backgroundColor:"#BFEA7C"}}>
+            <div className ="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <span className ="fs-5 fw-bolder d-none d-sm-inline" style={{color:'#416D19'}}>
+                        Appointment Manager
+                    </span>
+                <ul
+                    className ="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                    id="Menu"
+                    >
+                    <li className ="w-100">
+                        <Link 
+                        to = "/smdashboard/employee"
+                        className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
+                        >
+                            <i className ="fs-4 bi-speedometer2 ms-2"></i>
+                            <span className ="ms-2 d-none d-sm-inline">Payment Dashboard</span>
+                        </Link>
+                    </li>
+                    <li className ="w-100">
+                        <Link 
+                            to = "/smdashboard/employee"
+                            className ="nav-link px-0 align-middle "style={{color:'#416D19'}}
+                        >
+                            <i className ="fs-4 bi-speedometer2 ms-2"></i>
+                            <span className ="ms-2 d-none d-sm-inline">
+                                Manage Employee</span>
+                        </Link>
+                    </li>
+                    <li className="w-100">
+                        <Link 
+                            to = "/smdashboard/category"
+                            className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
+                        >
+                            <i className ="fs-4 bi-columns ms-2"></i>
+                            <span className ="ms-2 d-none d-sm-inline">Category</span>
+                        </Link>
+                    </li>
+                    <li className="w-100">
+                        <Link 
+                            to = "/smdashboard/profile"
+                            className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
+                        >
+                            <i className ="fs-4 bi-person ms-2"></i>
+                            <span className ="ms-2 d-none d-sm-inline">Profile</span>
+                        </Link>
+                    </li>
+                    <li className="w-100">
+                        <Link 
+                            to = "/"
+                            className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
+                        >
+                            <i className ="fs-4 bi-power ms-2"></i>
+                            <span className ="ms-2 d-none d-sm-inline">Logout</span>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+                {/* // add dash board part in there */}
+
+                <div className='apdashBody' style={{ width:'82.5%' }}>
+            <div>
                 <section className="dashboard-section">
+                    
                     <div className="section-title">
                         <h2>Appointment Dashboard</h2>
                         <div className="underline"></div>
@@ -109,11 +157,13 @@ const AppointmentDashboard = () => {
                             <option value="Accepted">Accepted</option>
                             <option value="Rejected">Rejected</option>
                         </select>
-                        <button onClick={handleExport}>Export Report</button>
+                        <div className='exportBtn'>
+                        <button onClick={generatePDF}>Export Report</button>
+                        </div>
                     </div>
                     
                     
-                    <div className="table-container">
+                    <div className="table-container" id='apdashboardTable'>
                     <div >
         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
@@ -121,11 +171,12 @@ const AppointmentDashboard = () => {
                         <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Name</th>
                         <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Address</th>
                         <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Contact No:</th>
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Email</th>
+                        {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Email</th> */}
                         <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>servicePackage</th>
                         {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>comments</th> */}
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>selectedDate</th>
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>selectedTime</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Date</th>
+                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Time</th>
+                        {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>selectedTime</th> */}
                         <th scope='col' style={{ border: '1px solid white', padding: '10px', textAlign: 'center' }} colSpan={2}>Status</th>
                     </tr>
                 </thead>
@@ -135,11 +186,12 @@ const AppointmentDashboard = () => {
                         <td >{c.fullName}</td>
                         <td >{c.address}</td>
                         <td >{c.phoneNumber}</td>
-                        <td >{c.email}</td>
+                        {/* <td >{c.email}</td> */}
                         <td >{c.servicePackage}</td>
                         {/* <td >{c.comments}</td> */}
                         <td >{c.selectedDate}</td>
-                        <td >{c.selectedTime}</td>
+                        <td>{c.selectedTime}</td>
+                        {/* <td >{c.selectedTime}</td> */}
                         <td>
                             {c.status === 'Pending' ? (
                                 <select
@@ -161,11 +213,12 @@ const AppointmentDashboard = () => {
         </table>
         </div>
         </div>
+        
         </section>  
             </div>
 
-
-            
+            </div>
+            </div>  
         </Layout1>
     );
 };
