@@ -59,13 +59,13 @@ const Header = () => {
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/PrAdminDashboard" activeClassName="active" className='dropdown-item'
+                        <NavLink to="/inventory" activeClassName="active" className='dropdown-item'
                         >
                           Inventory
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/KApaymentdashboard" activeClassName="active" className='dropdown-item'
+                        <NavLink to="/paymentmanager" activeClassName="active" className='dropdown-item'
                         >
                           Payment Managemenr
                         </NavLink>
@@ -86,6 +86,12 @@ const Header = () => {
                         <NavLink to="/employee" activeClassName="active" className='dropdown-item'
                         >
                           Employee Management
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/dashboard" activeClassName="active" className='dropdown-item'
+                        >
+                          Training Management
                         </NavLink>
                       </li>
                     </ul>
