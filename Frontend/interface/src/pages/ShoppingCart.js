@@ -66,7 +66,7 @@ function ShoppingCart() {
 
   
 // delete cart items 
-  const handleDeleteCartItem = async (id) => {
+  const handleDeleteCartItem = async (id,quantity) => {
     try {
       await axios.delete(`http://localhost:8000/api/v1/Cart/delete-cart-item/${id}`);
       // Update the cart state to reflect the deleted item
@@ -77,6 +77,27 @@ function ShoppingCart() {
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }
+
+
+    try {
+     
+      const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${id}`, {
+        
+        quantity: quantity +1,
+        
+      });
+      if(response && response.data.success){
+        toast.success(response.data.message);
+        // navigate('/payment');
+      }else{
+        toast.error(response.data.message);
+      }
+      
+    } catch (error) {
+      
+      console.error('Error updating  product quantity to cart:', error);
+    }
+
   };
 
 
@@ -86,10 +107,19 @@ function ShoppingCart() {
       await axios.put(`http://localhost:8000/api/v1/Cart/update-item/${id}`, { quantity: newQuantity });
       // Update the cart state to reflect the updated quantity
       setCart(cart.map(item => (item._id === id ? { ...item, quantity: newQuantity } : item)));
-      toast.success("Item quantity update successfully");
+      //toast.success("Item quantity update successfully");
     } catch (error) {
       console.error('Error updating cart item quantity:', error);
     }
+  };
+
+  //update button
+
+  const handleUpdateButton = async () => {
+    
+      
+      toast.success("Item quantity update successfully");
+   
   };
 
 
@@ -204,7 +234,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
               </div>
               <div className="card-body">
                 {loading ? (
-                  <p>Loading cart details...</p>
+                  <p>No any items in cart </p>
                 ) : (
                   <>
                     {cart.map((carts, index) => (
@@ -222,24 +252,33 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                           {/* <p>Color: {carts.product.color}</p>
                           <p>Size: {carts.product.size}</p> */}
                           <p ><strong> Price :  Rs. {carts.product.price}</strong></p>
-                          <p ><strong> Available :  {carts.product.quantity}</strong></p>
-                          <button type="button"className='btnsub' onClick={() => handleDeleteCartItem(carts._id)}>Remove</button>
+                          <p ><strong> Available: {carts.product.quantity}</strong></p>
+
+                          <div className='but'>
+                          <button type="button"className='btnsub' onClick={() => handleDeleteCartItem(carts._id,carts.product.quantity)}>Remove</button>
                           <span className="mx-2"></span> {/* Adding space */}
-                          <button type="button" className='btnsub'>Update</button>
+                          
+                          <button type="button" className='btnsub'  onClick={ handleUpdateButton}>Update</button>
+                          </div>
                         </div>
                         <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
                           <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
+                            <div className='but'>
                             <button className='btnsub' onClick={() => handleUpdateCartItemQuantity(carts._id, carts.quantity - 1)}>
                               <i className="fas fa-minus"></i>-
                             </button>
+                            </div>
                             <span className="mx-2"></span> {/* Adding space */}
                             <div className="form-outline">
                               <input type="number" min="1" name="quantity" value={carts.quantity} className="form-control" readOnly />
                             </div>
                             <span className="mx-2"></span> {/* Adding space */}
+                            <div className='but'>
                             <button className='btnsub' onClick={() => handleUpdateCartItemQuantity(carts._id, carts.quantity + 1)}>
                               <i className="fas fa-plus"></i>+
                             </button>
+                            </div>
+
                           </div>
                           
                         </div>
@@ -248,7 +287,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                   </>
                 )}
                
-                <hr className="my-4" />
+                {/* <hr className="my-4" /> */}
                
                 <div className="card mb-4" >
                 <div className="card-body" id='expected_delivery'>
@@ -260,107 +299,6 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
   </div>
   <p id='maximum'>(maximum 10 working days)</p>
 
-  <hr className="my-4" />
-
-  {/* <form onSubmit={handleSubmit}>
-        <div >
-            
-            <div className='item2'>
-              <div className='KAbar'>  
-                    <ul className="KAbarInn">
-                      
-                      <li className="KAbarIn">
-                        Add a New Delivery Address
-                      </li>
-                    </ul>
-              </div>
-            </div>
-            <div className="item3">
-                <table id="table">
-                  <tbody>
-                  <tr><td className='texting'>Contact Name :</td>
-                  <td className='texting'>Contact Number :</td></tr>
-                      <tr></tr>
-                    <tr><td>
-                      <input 
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder='perera p.l.'
-                      onKeyPress={handleKeyPress}
-                      required 
-                      /></td>
-                      <td>
-                        <input 
-                        type="text" 
-                        value={cNumber}
-                        onChange={(e) => setNumber(e.target.value)}
-                        placeholder='07x xxxxxxx'
-                        onKeyPress={handleKeyNumber}
-                        required 
-                        /></td></tr>
-                      <tr></tr>
-                </tbody></table>
-            </div>
-            <div id="item4">
-                <table id="table">
-                  <tbody>
-                  <tr><td className='texting'>Address :</td></tr>
-                      <tr></tr>
-                    <tr><td>
-                      <input 
-                      type="text"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      required  
-                      /></td></tr>
-                      <tr><br/></tr>
-                </tbody></table>
-            </div>
-            <div className="item5">
-                <table id="table">
-                  <tbody>
-                  <tr>
-                      <td className='texting'>Province</td>
-                      <td className='texting'>District</td>
-                      <td className='texting'>Postal Code</td></tr>
-                    <tr>
-                      <td>
-                        <input 
-                        type="text" 
-                        value={province}
-                        onChange={(e) => setProvince(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        required 
-                        /></td>
-                      <td>
-                        <input 
-                        type="text" 
-                        value={district}
-                        onChange={(e) => setDistrict(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        required 
-                        /></td>
-                      <td>
-                      <td>
-                        <input 
-                        type="text" 
-                        value={postalcode}
-                        onChange={(e) => setPostalcode(e.target.value)}
-                        onKeyPress={handleKeyNumber}
-                        required 
-                        /></td>
-                       </td></tr>
-                      <tr><br/></tr>
-                </tbody></table>
-            </div>
-            <div className='item9'>
-              <button className='btnsub'>Save personal Details</button>
-            </div>
-        </div>
-        </form> */}
-
- 
 </div>
 
                 </div>
