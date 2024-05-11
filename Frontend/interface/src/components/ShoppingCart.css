@@ -76,31 +76,40 @@
   font-weight: 500;
   font-style: normal;
 }
-#summary{
-  position:absolute;
-  left:970px;
-  top:550px;
-  width: 450px;
-}
+
 #expected_delivery{
-  background-color: #416D19;
-  color: white;
+  /* background-color: #416D19; */
+  color: rgb(13, 13, 13);
   font-size: 22px;
   /* margin-top: 10px; */
 }
 #expected{
-  background-color: #416D19;
-  color: white;
+  /* background-color: #517f25; */
+  color: rgb(0, 0, 0);
   font-size: 22px;
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
 }
 #maximum{
   font-size: 15px;
 }
-#cartcontainer{
 
-margin-bottom: 200px;
-height: 900px;
+
+#summary{
+  text-align: center;
+  position: relative;
+  left:45px;
+ 
+ 
+}
+#summarybody{
+  padding-left: 10px;
+  padding-right: 10px;
+  
+
+}
+#summarybody2{
+  padding-left: 10px;
+  padding-right: 10px;
 }
