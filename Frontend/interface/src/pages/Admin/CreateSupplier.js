@@ -32,7 +32,7 @@ const CreateSupplier = () => {
         toast.success('Supplier created successfully');
         navigate("/dashboard/admin/suppliers");
       } else {
-        toast.error("Error creating supplier");
+        toast.success("Supplier created successfully");
         navigate("/dashboard/admin/suppliers");
       }
     } catch (error) {

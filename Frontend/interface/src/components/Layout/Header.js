@@ -59,7 +59,7 @@ const Header = () => {
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to="/PrAdminDashboard" activeClassName="active" className='dropdown-item'
+                        <NavLink to="/inventory" activeClassName="active" className='dropdown-item'
                         >
                           Inventory
                         </NavLink>
@@ -86,6 +86,12 @@ const Header = () => {
                         <NavLink to="/employee" activeClassName="active" className='dropdown-item'
                         >
                           Employee Management
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/dashboard" activeClassName="active" className='dropdown-item'
+                        >
+                          Training Management
                         </NavLink>
                       </li>
                     </ul>

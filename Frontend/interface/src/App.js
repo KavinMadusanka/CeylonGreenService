@@ -52,6 +52,12 @@ import EPDashboard from './pages/EmployeeDashboard';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ContactUs from "./pages/ContactUs";
 
+import ViewPrograms from './pages/ViewPrograms';
+import AddProgram from './pages/AddProgram';
+import Dashboard from './pages/Dashboard';
+import Enrollments from './pages/Enrollments';
+
+
 function App() {
   return (
     <>
@@ -121,6 +127,13 @@ function App() {
 
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/ContactUs" element={<ContactUs />} />
+{/* Lakshan */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/addPrograms" element={<AddProgram />} />
+        <Route path="/viewPrograms" element={<ViewPrograms />} />
+        <Route path="/enrollments" element={<Enrollments />} />
+        
+
 
       </Routes>
       <ToastContainer
