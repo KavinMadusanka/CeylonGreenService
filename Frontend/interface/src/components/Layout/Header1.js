@@ -117,6 +117,12 @@ const Header1 = () => {
                             Employee Management
                           </NavLink>
                         </li>
+                        <li>
+                        <NavLink to="/dashboard" activeClassName="active" className='dropdown-item'
+                        >
+                          Training Management
+                        </NavLink>
+                      </li>
                       </ul>
                     </li>
                   </>
