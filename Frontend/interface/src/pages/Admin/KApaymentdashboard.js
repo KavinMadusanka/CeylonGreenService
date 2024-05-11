@@ -15,29 +15,29 @@ const KApaymentdashboard = () => {
       <div className ="row flex-nowrap">
         <div className ="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style={{backgroundColor:"#BFEA7C"}}>
             <div className ="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                <Link 
+                {/* <Link 
                     to = "/smdashboard"
                     className ="d-flex align-items-center pb-3 mb-md-1 mt-md-3 me-md-auto text-decoration-none" style={{color:'#416D19'}}
-                >
-                    <span className ="fs-5 fw-bolder d-none d-sm-inline">
+                > */}
+                    <span style={{color:'#416D19'}} className ="fs-6 fw-bolder d-none d-sm-inline">
                         Payment Manager
                     </span>
                     
-                </Link>
+                {/* </Link> */}
                 <ul
                     className ="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                     id="Menu"
                     >
                     <li className ="w-100">
                         <Link 
-                        to = "/smdashboard/employee"
+                        to = "/KApaymentdashboard"
                         className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-speedometer2 ms-2"></i>
                             <span className ="ms-2 d-none d-sm-inline">Payment Dashboard</span>
                         </Link>
                     </li>
-                    <li className ="w-100">
+                    {/* <li className ="w-100">
                         <Link 
                             to = "/smdashboard/employee"
                             className ="nav-link px-0 align-middle "style={{color:'#416D19'}}
@@ -46,7 +46,7 @@ const KApaymentdashboard = () => {
                             <span className ="ms-2 d-none d-sm-inline">
                                 Manage Employee</span>
                         </Link>
-                    </li>
+                    </li> */}
                     <li className="w-100">
                         <Link 
                             to = "/smdashboard/category"
@@ -67,7 +67,7 @@ const KApaymentdashboard = () => {
                     </li>
                     <li className="w-100">
                         <Link 
-                            to = "/"
+                            to = "#"
                             className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-power ms-2"></i>
@@ -82,9 +82,27 @@ const KApaymentdashboard = () => {
 
             <p>Payment Manager</p>
         </div>
+        <div>
+            <table style={{ marginLeft:'1%', width:'95%'}}>
+                <thead><tr style={{backgroundColor:'#BFEA7C'}}>
+                    <th style={{ border: '1px solid #BFEA7C', padding: '10px',textAlign:'center',justifyItems:'center' }}></th>
+                    <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Description</th>
+                    <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Income</th>
+                    <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Expenses</th>
+                    </tr></thead>
+                    <tbody>
+                        <td></td>
+                        <td>Inventory Sells income</td>
+                        <td>
+
+                        </td>
+                        <td></td>
+                    </tbody>
+                </table>
+        </div>
             <Outlet />
         </div>
-      </div>-
+      </div>
     </div>
     </Layout1>
   );

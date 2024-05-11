@@ -47,6 +47,20 @@ function KAcardpayment() {
   const [productId,setProductId] = useState("");
 
 
+  //get cart items 
+  useEffect(() => {
+    
+    const fetchCartDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/Cart/get-cart/${email}`);
+        setCart(response.data.cart);
+      } catch (error) {
+        console.error('Error fetching cart details:', error);
+      }
+    };
+    fetchCartDetails();
+  }, [email]);
+
     //get all Address
     const getAllAddress = async() =>{
         try {
