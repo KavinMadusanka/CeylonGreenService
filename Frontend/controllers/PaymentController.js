@@ -1,4 +1,5 @@
 import paymentModel from "../models/PaymentModel.js";
+import InventoryModel from "../models/InventoryModel.js";
 import slugify from "slugify";
 
 import fs from 'fs';
@@ -155,3 +156,112 @@ export const bankpaymentController =async (req,res) => {
     });
   }
 }
+
+
+
+///////////////////////////////////////////////
+//after done payment cart quantity update part
+// export const updateProductQuantityController = async (req, res) => {
+//   try {
+//       const { name, slug, price, quantity, category, supplier, reorderLevel } = req.fields;
+//       const { photo } = req.files;
+
+//       // Validation
+//       switch (true) {
+//           case !name:
+//               return res.status(400).send({ error: "Name is required" });
+//           case !price:
+//               return res.status(400).send({ error: "Price is required" });
+//           case !quantity:
+//               return res.status(400).send({ error: "Quantity is required" });
+//           case !category:
+//               return res.status(400).send({ error: "Category is required" });
+//           case !supplier:
+//               return res.status(400).send({ error: "Supplier is required" });
+//           case !reorderLevel:
+//               return res.status(400).send({ error: "Reorder level is required" });
+//           case photo && photo.size > 1000000:
+//               return res.status(400).send({ error: "Photo is required and should be less than 1MB" });
+//       }
+
+//       // Find the product by ID and update its details
+//       let product = await InventoryModel.findById(req.params.pid);
+//       if (!product) {
+//           return res.status(404).send({ error: "Product not found" });
+//       }
+
+//       // Update the product details
+//       product.name = name;
+//       product.slug = slugify(name);
+//       product.price = price;
+//       product.quantity = quantity;
+//       product.category = category;
+//       product.supplier = supplier;
+//       product.reorderLevel = reorderLevel;
+
+//       // Update the photo if provided
+//       if (photo) {
+//           product.photo.data = fs.readFileSync(photo.path);
+//           product.photo.contentType = photo.type;
+//       }
+
+//       // Save the updated product
+//       await product.save();
+
+//       res.status(200).send({
+//           success: true,
+//           message: "Product updated successfully",
+//           product,
+//       });
+
+//   } catch (error) {
+//       console.error("Error in updating product:", error);
+//       res.status(500).send({
+//           success: false,
+//           error: error.message || "Internal server error",
+//           message: "Error in updating product",
+//       });
+//   }
+// };
+
+
+// Update product quantity controller
+export const updateProductQuantityController = async (req, res) => {
+  try {
+    const { cart } = req.body;
+
+    // Iterate through each item in the cart
+    for (const item of cart) {
+      const { productId, quantity, operation } = item;
+
+      // Find the product by ID
+      const product = await InventoryModel.findById(productId);
+
+      if (!product) {
+        return res.status(404).send({ error: `Product with ID ${productId} not found` });
+      }
+
+      // Update the product quantity based on the operation
+      if (operation === "increase") {
+        product.quantity += quantity;
+      } else if (operation === "decrease") {
+        product.quantity -= quantity;
+      }
+
+      // Save the updated product
+      await product.save();
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "Product quantities updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating product quantities:", error);
+    res.status(500).send({
+      success: false,
+      error: error.message || "Internal server error",
+      message: "Error updating product quantities",
+    });
+  }
+};

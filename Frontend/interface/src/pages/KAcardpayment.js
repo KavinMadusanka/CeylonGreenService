@@ -44,6 +44,8 @@ function KAcardpayment() {
   const [cvv,setCvv] = useState("");
   const [month,setMonth] = useState("");
   const [year,setYear] = useState("");
+  const [productId,setProductId] = useState("");
+
 
     //get all Address
     const getAllAddress = async() =>{
@@ -208,8 +210,10 @@ const handleCardsChange = async (value) => {
       if (data?.success) {
         toast.error(data?.message);
       } else {
+        // await removeQuantitiesFromInventory();
+        await axios.delete(`http://localhost:8000/api/v1/payment/clear-cart/${email}`);
         toast.success("Payment Successfully");
-        navigate("/");
+        navigate("/shoppingcart");
       }
 
     } catch (error) {
@@ -264,7 +268,44 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
     // console.log(formattedNumber);
     return formattedNumber;
   };
-  
+
+
+  //get cart items 
+  useEffect(() => {
+    
+    const fetchCartDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/Cart/get-cart/${email}`);
+        setCart(response.data.cart);
+        setProductId(response.data.cart.product)
+      } catch (error) {
+        console.error('Error fetching cart details:', error);
+      }
+    };
+    fetchCartDetails();
+  }, [email]);
+
+
+  // Function to remove quantities from inventory
+  const removeQuantitiesFromInventory = async () => {
+    try {
+      // Iterate through each item in the cart
+      for (let item of cart) {
+        // Make API call to update inventory quantity
+        await axios.patch(`/api/v1/inventory/${item.productId}`, {
+          quantity: item.quantity,
+          operation: "decrease" // Decrease inventory quantity
+        });
+      }
+    } catch (error) {
+      console.error('Error removing quantities from inventory:', error);
+      toast.error('Error removing quantities from inventory');
+    }
+  };
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div>
       <Layout1>

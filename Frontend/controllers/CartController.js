@@ -133,3 +133,23 @@ export const deleteCartItem = async (req, res) =>{
 };
 
 
+//delete cart details after success the payment, this part belongs to kavin
+export const deleteAllCartItem = async (req, res) =>{
+    try {
+        const { email } = req.params;
+        await Cart.deleteMany({ email });
+        res.status(200).send({
+            success: true,
+            message: "Cart Details Deleted Successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "error while deleting Card Details",
+            error,
+        });
+    }
+};
+
+
