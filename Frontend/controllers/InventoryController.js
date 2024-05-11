@@ -243,3 +243,41 @@ const transporter = nodemailer.createTransport({
       res.status(500).json({ success: false, message: 'Failed to send reorder email' });
     }
   };
+
+
+
+ //update product quantity this part belongs to nethmi 
+export const updateProductQuantity = async (req, res) => {
+    try {
+        const { quantity } = req.body;
+        const { pid } = req.params;
+
+        const product = await InventoryModel.findByIdAndUpdate(
+            pid,
+            { quantity },
+            { new: true }
+        );
+
+        if (!product) {
+            return res.status(404).send({
+                success: false,
+                message: "Product not found",
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            message: "Quantity Updated Successfully",
+            product, 
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            error,
+            message: "Error while updating quantity",
+        });
+    }
+};
+
+

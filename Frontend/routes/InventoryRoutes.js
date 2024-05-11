@@ -8,6 +8,7 @@ import {
     productPhotoController,
     getReorderAlertsController,
     handleReorderEmail,
+    updateProductQuantity,
 } from '../controllers/InventoryController.js';
 import formidable from "express-formidable";
 
@@ -36,5 +37,8 @@ router.get('/reorder-alerts', getReorderAlertsController);
 
 // Route to handle sending reorder emails
 router.post("/reorder-email", handleReorderEmail);
+
+//update product quantity
+router.put('/update-product-quantity/:pid',updateProductQuantity)
 
 export default router;
