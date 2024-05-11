@@ -67,12 +67,15 @@ const AppointmentDashboard = () => {
         }
     };
 
-    // Function to generate PDF report
+   // Function to generate PDF report
   const generatePDF = () => {
     const doc = new jsPDF();
-    doc.text("Categories Report", 10, 10);
-    doc.autoTable({ html: '#category-table' });
-    doc.save("categories_report.pdf");
+    doc.text("Appointment Details", 10, 10);
+    doc.autoTable({
+      head: [['Name', 'Address', 'Contact No', 'Email', 'Service Package', 'Date', 'Time']],
+      body: filteredAppointments.map(c => [c.fullName, c.address, c.phoneNumber, c.email, c.servicePackage, c.selectedDate, c.selectedTime])
+    });
+    doc.save("appointment_details.pdf");
   };
 
     return (
@@ -128,7 +131,7 @@ const AppointmentDashboard = () => {
                     </li>
                     <li className="w-100">
                         <Link 
-                            to = "/"
+                            to = "#"
                             className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-power ms-2"></i>
@@ -163,36 +166,38 @@ const AppointmentDashboard = () => {
                     </div>
                     
                     
-                    <div className="table-container" id='apdashboardTable'>
+                    <div className='navitr' style={{marginTop:'20px'}}>
                     <div >
-        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-        <thead>
-                    <tr>
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Name</th>
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Address</th>
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Contact No:</th>
+        <table style={{ borderCollapse: 'collapse', width: '100%',}}>
+        <thead style={{backgroundcolor:'#BFEA7C'}}>
+                    <tr style={{backgroundColor:'#f5f5f5'}}>
+                        <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C' }}>Name</th>
+                        <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C' }}>Address</th>
+                        <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Contact No:</th>
                         {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Email</th> */}
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>servicePackage</th>
+                        <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>servicePackage</th>
                         {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>comments</th> */}
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Date</th>
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>Time</th>
+                        <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Date</th>
+                        <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Time</th>
                         {/* <th scope='col' style={{ border: '1px solid white', padding: '10px' }}>selectedTime</th> */}
-                        <th scope='col' style={{ border: '1px solid white', padding: '10px', textAlign: 'center' }} colSpan={2}>Status</th>
+                        <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}} colSpan={2}>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                   {filteredAppointments.map((c) => (
-                    <tr key={c._id}>
-                        <td >{c.fullName}</td>
-                        <td >{c.address}</td>
-                        <td >{c.phoneNumber}</td>
-                        {/* <td >{c.email}</td> */}
-                        <td >{c.servicePackage}</td>
-                        {/* <td >{c.comments}</td> */}
-                        <td >{c.selectedDate}</td>
-                        <td>{c.selectedTime}</td>
-                        {/* <td >{c.selectedTime}</td> */}
-                        <td>
+                    <tr key={c._id} style={{backgroundColor:'#d6f6a3', cursor: 'pointer'}} 
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFF67E'} 
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d6f6a3'}>
+                        <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.fullName}</td>
+                        <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.address}</td>
+                        <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.phoneNumber}</td>
+                        {/* <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.email}</td> */}
+                        <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.servicePackage}</td>
+                        {/* <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.comments}</td> */}
+                        <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.selectedDate}</td>
+                        <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.selectedTime}</td>
+                        {/* <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{c.selectedTime}</td> */}
+                        <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>
                             {c.status === 'Pending' ? (
                                 <select
                                 value={c.status}
