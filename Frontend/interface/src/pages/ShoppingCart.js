@@ -257,36 +257,13 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
 
   <hr className="my-4" />
 
- 
-</div>
-
-                </div>
-                <div className="card mb-4 mb-lg-0">
-                  {/* <div className="card-body">
-                    <p><strong>We accept</strong></p>
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa" />
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express" />
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard" />
-                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp" alt="PayPal acceptance mark" />
-                  </div> */}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4">
-          <div className="card mb-4">
-            
-          <div className="card-body">
-          <form onSubmit={handleSubmit}>
+  {/* <form onSubmit={handleSubmit}>
         <div >
             
             <div className='item2'>
               <div className='KAbar'>  
                     <ul className="KAbarInn">
-                      <li className="KAbarIn">
-                        
-                      </li>
+                      
                       <li className="KAbarIn">
                         Add a New Delivery Address
                       </li>
@@ -376,41 +353,168 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
               <button className='btnsub'>Save personal Details</button>
             </div>
         </div>
-        </form>
-        </div>
-        </div>
+        </form> */}
+
+ 
+</div>
+
+                </div>
+                <div className="card mb-4 mb-lg-0">
+                  {/* <div className="card-body">
+                    <p><strong>We accept</strong></p>
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa" />
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express" />
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard" />
+                    <img className="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp" alt="PayPal acceptance mark" />
+                  </div> */}
+                </div>
+              </div>
+            </div>
           </div>
 
-
-         
-   
-
-
-          <div className="col-md-4" id='summary'>
-            <div className="card mb-4">
-              <div className="card-header py-3">
-                <h5 className="mb-0" id='summary_topic'>Summary</h5>
+          <div className="col-md-4">
+          <div className="card mb-4">
+            
+          <div className="card-body">
+          <form onSubmit={handleSubmit}>
+        <div >
+            
+            <div className='item2'>
+              <div className='KAbar'>  
+                    <ul className="KAbarInn">
+                      <li className="KAbarIn">
+                        
+                      </li>
+                      <li className="KAbarIn">
+                       <b> Add a New Delivery Address</b>
+                      </li>
+                    </ul>
               </div>
-              <div className="card-body">
-                <ul className="list-group list-group-flush">
+            </div>
+            <div className="item3">
+                <table id="table">
+                  <tbody>
+                  <tr><td className='texting'>Contact Name :</td>
+                  <td className='texting'>Contact Number :</td></tr>
+                      <tr></tr>
+                    <tr><td>
+                      <input 
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder='perera p.l.'
+                      onKeyPress={handleKeyPress}
+                      required 
+                      /></td>
+                      <td>
+                        <input 
+                        type="text" 
+                        value={cNumber}
+                        onChange={(e) => setNumber(e.target.value)}
+                        placeholder='07x xxxxxxx'
+                        onKeyPress={handleKeyNumber}
+                        required 
+                        /></td></tr>
+                      <tr></tr>
+                </tbody></table>
+            </div>
+            <div id="item4">
+                <table id="table">
+                  <tbody>
+                  <tr><td className='texting'>Address :</td></tr>
+                      <tr></tr>
+                    <tr><td>
+                      <input 
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      required  
+                      /></td></tr>
+                      <tr><br/></tr>
+                </tbody></table>
+            </div>
+            <div className="item5">
+                <table id="table">
+                  <tbody>
+                  <tr>
+                      <td className='texting'>Province</td>
+                      <td className='texting'>District</td>
+                      <td className='texting'>Postal Code</td></tr>
+                    <tr>
+                      <td>
+                        <input 
+                        type="text" 
+                        value={province}
+                        onChange={(e) => setProvince(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        required 
+                        /></td>
+                      <td>
+                        <input 
+                        type="text" 
+                        value={district}
+                        onChange={(e) => setDistrict(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        required 
+                        /></td>
+                      <td>
+                      <td>
+                        <input 
+                        type="text" 
+                        value={postalcode}
+                        onChange={(e) => setPostalcode(e.target.value)}
+                        onKeyPress={handleKeyNumber}
+                        required 
+                        /></td>
+                       </td></tr>
+                      <tr><br/></tr>
+                </tbody></table>
+            </div>
+            <div className='item9'>
+              <button className='btnsub'>Save personal Details</button>
+            </div>
+
+
+            
+        </div>
+        </form>
+        
+        </div>
+
+        {/* <div className="card-header py-3">
+                <h5 className="mb-0" id='summary_topic'>Summary</h5>
+                
+              </div> */}
+              
+        <div className="card-body">
+        <div className='KAbar'>  
+                    <ul className="KAbarInn">
+                      
+                      <li className="KAbarIn" id='summary'>
+                        <b>ShoppingCart summary</b>
+                      </li>
+                    </ul>
+              </div>
+          
+                <ul className="list-group list-group-flush" >
                   <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                     subtotal
                     <span>Rs.{subtotal.toFixed(2)}</span>
                   </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center px-0">
+                  <li className="list-group-item d-flex justify-content-between align-items-center px-0" >
                     Shipping<br/>
                      
                     <span>Rs. {deliveryCharge.toFixed(2)}</span>
                   </li>
                  {/* <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">(Shipping charege may relese up to 3 or more items )</li></h8> */}
-                  <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                    <div>
+                  <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3" >
+                    <div >
                       <strong>Total amount</strong>
                       <strong>
                         <p className="mb-0">(including VAT +50.00)</p>
                       </strong>
                     </div>
-                    <span><strong>Rs. {(subtotal + deliveryCharge+tax).toFixed(2)}</strong></span>
+                    <span><strong >Rs. {(subtotal + deliveryCharge+tax).toFixed(2)}</strong></span>
                   </li>
                 </ul>
                 <div className='item9'>
@@ -419,10 +523,17 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                    
               </div>
               
-            </div>
-            
-              <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charege may relese up to 3 or more items </li></h8>
+        
+        </div>
+        <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charege may relese up to 3 or more items </li></h8>
           </div>
+
+
+         
+   
+
+
+         
           
         </div>
       </div>
