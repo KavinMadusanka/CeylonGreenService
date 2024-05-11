@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Layout1 from '../components/Layout/Layout1';
 import '../components/Appointment.css';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
@@ -81,7 +80,7 @@ const Appointment1 = () => {
 
 
   return (
-    <Layout1 title={'Make Appointment - Ceylon Green'}>
+    //<Layout1 title={'Make Appointment - Ceylon Green'}>
       <div className='border'>
         <form onSubmit={handleSubmit} className="appointment-form">
           <h2>Appointment Form</h2>
@@ -98,12 +97,13 @@ const Appointment1 = () => {
 
           <div className="form-group">
             <label htmlFor="address">Address:</label>
-            <textarea
+            <input
+            type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Enter your address"
               required
-            ></textarea>
+            ></input>
           </div>
 
           <div className="form-group">
@@ -180,12 +180,11 @@ const Appointment1 = () => {
           </div>
 
           <div className="form-buttons">
-            <button type="button">Cancel</button>
-            <button type="submit">Next</button>
+            <button type="submit">Submit</button>
           </div>
         </form>
       </div>
-    </Layout1>
+    //</Layout1>
   );
 };
 
