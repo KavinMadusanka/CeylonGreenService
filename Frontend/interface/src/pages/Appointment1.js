@@ -154,7 +154,7 @@ const Appointment1 = () => {
             <input
               type="date"
               value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
+              onChange={(e) => setSelectedDate(e.target.value.split('T')[0])} // Extracting only date part
               min={getTodayDate()}
               required
             />

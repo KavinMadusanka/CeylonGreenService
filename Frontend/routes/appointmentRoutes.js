@@ -4,6 +4,7 @@ import {appointmentController,
     getAppointmentController, 
     singleAppointmentController, 
     updateAppointmentController,
+    getAdminAppointmentController,
     downloadPDFController} from '../controllers/appointmentController.js';
 
 //router object
@@ -18,6 +19,7 @@ router.put('/update-appointment/:id', updateAppointmentController);
 
 // get all appointment
 router.get('/get-appointment/:id', getAppointmentController);
+router.get('/get-admin-appointment', getAdminAppointmentController);
 
 // single appointment
 router.get('/single-appointment/:id', singleAppointmentController);

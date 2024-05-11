@@ -3,6 +3,7 @@ import PrAdminMenu from "../../components/Layout/PrAdminMenu";
 import axios from "axios";
 import "../../components/PrAdminDashboard.css";
 import ReorderForm from "../../components/Form/ReorderForm"; // Import ReorderForm component
+import Layout1 from "../../components/Layout/Layout1";
 
 
 const PrAdminDashboard = () => {
@@ -31,6 +32,7 @@ const PrAdminDashboard = () => {
   };
 
   return (
+    <Layout1 >
     <div className="container-fluid m-3 p-3">
       <div className="row">
         <div className="col-md-3">
@@ -71,7 +73,9 @@ const PrAdminDashboard = () => {
         </div>
       )}
     </div>
+    </Layout1>
   );
+  
 };
 
 export default PrAdminDashboard;

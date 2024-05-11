@@ -81,9 +81,15 @@ useEffect(() => {
         quantity: 1, // Set the quantity as needed
         email: email // Pass the user's email
       });
-      console.log('Item added to cart:', response.data);
+      // console.log('Item added to cart:', response.data);
       // Optionally, you can update the UI to reflect that the item has been added to the cart
-      toast.success("Item added successfully");
+      // toast.success("Item added successfully");
+      if(response && response.data.success){
+        toast.success(response.data.message);
+        // navigate('/payment');
+      }else{
+        toast.error(response.data.message);
+      }
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }

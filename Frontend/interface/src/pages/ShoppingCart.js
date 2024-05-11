@@ -182,8 +182,13 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
 
   // Function to handle modal visibility and content
   const handleModal = (content) => {
-    setVisible(true);
-    setModalContent(<KApaymentOptions subtotal={subtotal+deliveryCharge+tax} />);
+    if(subtotal+deliveryCharge+tax>0){
+      setVisible(true);
+      setModalContent(<KApaymentOptions subtotal={subtotal+deliveryCharge+tax} />);
+    } else {
+      toast.error("There is no item in your cart...");
+      // navigate('/')
+    }
   };
   return (
     <div>

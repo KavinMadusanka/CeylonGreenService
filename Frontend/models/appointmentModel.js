@@ -27,7 +27,7 @@ const appointmentSchema = new mongoose.Schema({
         trim: true
     },
     selectedDate: {
-        type: Date,
+        type: String,
         required: true
     },
     selectedTime: {
@@ -37,7 +37,12 @@ const appointmentSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
-    }
+    },
+    status: {
+        type: String,
+        default: "Pending",
+        enum: ["Pending", "Accepted", "Rejected"],
+      },
 },{timestamps:true})
 
 export default mongoose.model('appointments',appointmentSchema)

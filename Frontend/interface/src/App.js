@@ -46,6 +46,7 @@ import ProductDisplayPage from "./pages/productDisplay";
 import ShoppingCart from "./pages/ShoppingCart";
 import KAcardpayment from "./pages/KAcardpayment";
 import KApaymentdashboard from "./pages/Admin/KApaymentdashboard";
+import AppointmentDashboard2 from "./pages/AppointmentDashboard2";
 
 import EPDashboard from './pages/EmployeeDashboard';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -69,6 +70,7 @@ function App() {
         <Route path='/appointment3ii' element={<Appointment3ii />} />
         <Route path='/appointment4' element={<Appointment4 />} />
         <Route path='/AppointmentDashboard' element={<AppointmentDashboard />} />
+        <Route path='/AppointmentDashboard2' element={<AppointmentDashboard2 />} />
         <Route path='/updateAppointment/:id' element={<UpdateAppointment />} />
         <Route path="/myAppointments" element={<MyAppointments />} />
         <Route path="/userRegister" element={<Register />} />

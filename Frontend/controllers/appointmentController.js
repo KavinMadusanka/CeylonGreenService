@@ -124,6 +124,24 @@ export const getAppointmentController = async (req,res) => {
         });
     };
 };
+//get all apointment for admin
+export const getAdminAppointmentController = async (req,res) => {
+    try{
+        const appointments = await appointmentModel.find();
+        res.status(200).send({
+            success:true,
+            message:'All appointments',
+            appointments,
+        });
+    }catch(error){
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            error,
+            message: 'Error while getting all appointments'
+        });
+    };
+};
 
 
 // single appointment
