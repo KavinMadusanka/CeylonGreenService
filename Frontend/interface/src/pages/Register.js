@@ -41,7 +41,6 @@ function Register() {
         seImgView(URL.createObjectURL(e.target.files[0]));
         setIsImageUpload(true);
     }
-    console.log('userData::> ', userData)
 
     function SubmitForm() {
         if (userData.password === userData.conPassowrd) {
@@ -74,7 +73,18 @@ function Register() {
         } else {
             toast.error("Please check the Password!!")
         }
+    }
 
+    function ClearForm() {
+        setUserData({
+            ...userData,
+            name: '',
+            address: '',
+            pNumber: '',
+            email: '',
+            password: '',
+            conPassowrd: ''
+        })
     }
 
 
@@ -99,11 +109,9 @@ function Register() {
 
                                 validationSchema={
                                     Yup.object().shape({
-                                        name: Yup.string().required('Name is required'),
+                                        name: Yup.string().matches(/^[A-Za-z]+$/, 'Name must contain only alphabet letters').required('Name is required'),
                                         address: Yup.string().required('Address is required'),
-                                        pNumber: Yup.string()
-                                            .matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits')
-                                            .required('Phone number is required'),
+                                        pNumber: Yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits').required('Phone number is required'),
                                         email: Yup.string()
                                             .email('Invalid email address')
                                             .matches(
@@ -257,10 +265,10 @@ function Register() {
                                             <Grid item md={12} xs={12}>
                                                 <Button
                                                     variant='contained'
-                                                    // type='submit'
                                                     color='success'
                                                     size='small'
                                                     sx={{ width: '10vw' }}
+                                                    onClick={ClearForm}
                                                 >
                                                     Clear
                                                 </Button>
