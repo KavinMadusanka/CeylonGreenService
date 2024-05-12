@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import '../components/Appointment.css';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { Select } from "antd";
 import { toast } from "react-toastify";
+import Layout1 from '../components/Layout/Layout1';
 import { useAuth } from '../context/auth';
+
+const { Option } = Select;
 
 // Function to get today's date in the format YYYY-MM-DD
 const getTodayDate = () => {
@@ -23,9 +27,13 @@ const Appointment1 = () => {
   const [comments, setComments] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [Pname, setPname] = useState("");
+  const [Pprice, setPprice] = useState(0);
   const [userId, setUserId] = useState("");
   const [auth,setAuth] = useAuth()
   const navigate = useNavigate();
+  const [packages, setPackages] = useState([]);
+  const [filteredPackages, setFilteredPackages] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,6 +66,25 @@ const Appointment1 = () => {
     }
   };
 
+
+
+  const handlePkgChange = async (value) => {
+    // setAddress(value);
+    try {
+      const { data } = await axios.get(`/api/v1/appointment/getsingle-sp/${value}`);
+      if (data?.success) {
+        setPname(data.spackage.Pname);
+        setPprice(parseFloat(data.spackage.price));
+        
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong in fetching address details');
+    }
+  };
+
+
+
   const handleFullNameChange = (e) => {
     const input = e.target.value;
     // Regular expression to allow only letters (both uppercase and lowercase) and spaces
@@ -78,9 +105,168 @@ const Appointment1 = () => {
   ///////////////////////////////
 
 
+  const getAllPackages = async () => {
+    try {
+        const { data } = await axios.get('/api/v1/appointment/read-sp');
+        setPackages(data.spackages);
+        setFilteredPackages(data.spackages);
+        getAllPackages();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+useEffect(() => {
+    getAllPackages();
+}, []);
+
+
 
   return (
-    //<Layout1 title={'Make Appointment - Ceylon Green'}>
+    <Layout1 title={'Make Appointment - Ceylon Green'}>
+
+
+      {/* Kavin - Start */}
+      <section className="h-100 gradient-custom">
+    <form onSubmit={handleSubmit}>
+      <div className="container py-0">
+        <div className="row d-flex justify-content-center my-4">
+          <div className="col-md-8">
+            <div className="card mb-4">
+              <div className="card-header py-3">
+                <h5 className="mb-0">Fill Appointment details</h5>
+              </div>
+              <div className="card-body">
+              <div >
+            
+            <div>
+            <div className="form-group">
+            <label htmlFor="fullName">Full Name:</label>
+            <input
+              type="text"
+              value={fullName}
+              onChange={handleFullNameChange}
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+            </div>
+
+
+            <div className="item3">
+            <div className="form-group">
+            <label htmlFor="address">Address:</label>
+            <input
+            type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Enter your address"
+              required
+            ></input>
+          </div>
+            </div>
+
+
+            <div className="item5">
+            <div className="form-group">
+            <label htmlFor="phoneNumber">Phone Number:</label>
+            <input
+              type="tel"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Enter your phone number"
+              required
+            />
+          </div>
+            </div>
+            
+        </div>
+               
+                <hr className="my-2" />
+                <div>
+                <div>
+            <div className="item3">
+            <div className="form-group">
+            <label htmlFor="email">E-mail Address:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email address"
+              required
+            />
+          </div>
+            </div>
+            <div className="item5">
+            <div className="form-group">
+            <label htmlFor="selectedDate">Select Date:</label>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value.split('T')[0])} // Extracting only date part
+              min={getTodayDate()}
+              required
+            />
+          </div>
+            </div>
+        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+   
+
+
+          <div className="col-md-4">
+            <div className="card mb-4">
+              <div className="card-header py-3" >
+                <h5 className="mb-0">Select Service Package</h5>
+              </div>
+              <div className="card-body">
+              <div className="form-group">
+            <label htmlFor="servicePackage">Service Package:</label>
+            <Select
+                bordered={false}
+                placeholder="Select a Address"
+                size="large"
+                // showSearch
+                className="form-select mb-3"
+                // onChange={(value) => {
+                //     setAddress(value);
+                // }}
+                onChange={handlePkgChange}
+              >
+                {packages?.map((c) => (
+                  <Option key={c._id} value={c._id}>
+                    {c.Pname}
+                  </Option>
+                ))}
+              </Select>
+          </div>
+
+
+            Appointment Charge(Rs.) : <span>{Pprice.toFixed(2)}</span>
+               
+          </div>{/* body - end */}
+            </div>
+            
+            
+              <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charege may relese up to 3 or more items </li></h8>
+            </div>
+          
+        </div>
+        {/* <div className='item9'>
+              <button type='submit' className='btnsub'>Pay</button>
+            </div> */}
+      </div>
+    </form>
+    </section>
+
+      {/* Kavin - end */}
+
+
       <div className='border'>
         <form onSubmit={handleSubmit} className="appointment-form">
           <h2>Appointment Form</h2>
@@ -184,7 +370,7 @@ const Appointment1 = () => {
           </div>
         </form>
       </div>
-    //</Layout1>
+    </Layout1>
   );
 };
 

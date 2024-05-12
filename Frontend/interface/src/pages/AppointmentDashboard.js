@@ -183,7 +183,7 @@ const AppointmentDashboard = () => {
                         <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}} colSpan={2}>Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody> 
                   {filteredAppointments.map((c) => (
                     <tr key={c._id} style={{backgroundColor:'#d6f6a3', cursor: 'pointer'}} 
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFF67E'} 

@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { useAuth } from '../context/auth';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { Modal } from "antd";
 import Appointment1 from './Appointment1';
 
 
@@ -18,8 +17,9 @@ const MyAppointments = () => {
     const [auth,setAuth] = useAuth();
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedServicePackage, setSelectedServicePackage] = useState(""); // Define selectedServicePackage state
-    const [modalContent, setModalContent] = useState(null);
     const [visible, setVisible] = useState(false);
+    const [packages, setPackages] = useState([]);
+    const [filteredPackages, setFilteredPackages] = useState([]);
     //const [servicePackageOptions, setServicePackageOptions] = useState([]); // Define servicePackageOptions state
 
         // Handler to update selected service package
@@ -89,6 +89,16 @@ const MyAppointments = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
 const generateAppointmentPDF = (appointment) => {
     const doc = new jsPDF();
     doc.text("Appointment Details", 10, 10);
@@ -105,11 +115,7 @@ const generateAppointmentPDF = (appointment) => {
   };
 
 
-  // Function to handle modal visibility and content
-  const handleModal = (content) => {
-    setVisible(true);
-    setModalContent(content);
-  };
+ 
 
 
 
@@ -145,9 +151,9 @@ const handleDownloadPDF = (appointment) => {
                         ))}
                     </select>
                 </div>
-                    {/* <Link to="/appointment1"> */}
-                    <button className="book-appointment-btn" onClick={() => { handleModal(<Appointment1 />);}}>Book Appointment</button>
-                    {/* </Link> */}
+                    <Link to="/appointment1">
+                    <button className="book-appointment-btn">Book Appointment</button>
+                    </Link>
                 </div>
                     {filteredAddresses.map(a => (
                         <div className="card m-2" style={{width: '100%'}} key={a._id}>
@@ -167,12 +173,6 @@ const handleDownloadPDF = (appointment) => {
                         </div>
                     ))}
             </div>
-            <Modal
-              onCancel={() => setVisible(false)}
-              footer={null}
-              visible={visible}>
-                {modalContent}
-              </Modal> 
         </Layout1>
     );
 };
