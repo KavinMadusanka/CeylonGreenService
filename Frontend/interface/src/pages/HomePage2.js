@@ -50,7 +50,7 @@ return (
                 <section className="cta-section">
                     <h2>Ready to Transform Your Cleaning Business?</h2>
                     <p>Contact us today to learn more about our innovative cleaning management system and request a demo.</p>
-                    <button className="cta-button">Contact Us</button>
+                    {/* <button className="cta-button">Contact Us</button> */}
                 </section>
             </div>
     </Layout1>

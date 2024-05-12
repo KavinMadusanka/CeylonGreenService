@@ -22,11 +22,9 @@ import SMDashboard from "./pages/SMDashboard";
 import EmployeeProfile from "./pages/EmployeeProfile";
 import EmployeeSalary from "./pages/EmployeeSalary";
 import Paymentpage from './pages/Paymentpage';
-import Appointment2 from './pages/Appointment2';
-import Appointment3i from './pages/Appointment3i';
-import Appointment3ii from './pages/Appointment3ii';
 import Appointment4 from './pages/Appointment4';
 import AppointmentDashboard from './pages/AppointmentDashboard';
+import AServicePackages from './pages/AServicePackages'
 import KAddressUpdate from "./components/Form/KAddressUpdate";
 import KAcardUpdate from "./components/Form/KAcardUpdate";
 
@@ -56,6 +54,7 @@ import ViewPrograms from './pages/ViewPrograms';
 import AddProgram from './pages/AddProgram';
 import Dashboard from './pages/Dashboard';
 import Enrollments from './pages/Enrollments';
+import BookAppointment from './pages/BookAppointment';
 
 
 function App() {
@@ -70,14 +69,15 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/kaddcard" element={<KAddcard />} />
         <Route path="/kAddaddress" element={<KAddaddress />} />
+
+        {/* Navishka */}
         <Route path='/appointment1' element={<Appointment1 />} />
-        <Route path='/appointment2' element={<Appointment2 />} />
-        <Route path='/appointment3i' element={<Appointment3i />} />
-        <Route path='/appointment3ii' element={<Appointment3ii />} />
+        <Route path='/servicepackages' element={<AServicePackages />} />
         <Route path='/appointment4' element={<Appointment4 />} />
         <Route path='/AppointmentDashboard' element={<AppointmentDashboard />} />
         <Route path='/AppointmentDashboard2' element={<AppointmentDashboard2 />} />
         <Route path='/updateAppointment/:id' element={<UpdateAppointment />} />
+
         <Route path="/myAppointments" element={<MyAppointments />} />
         <Route path="/userRegister" element={<Register />} />
         <Route path="/userLogin" element={<UserLogin />} />
