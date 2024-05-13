@@ -103,6 +103,11 @@ const Header = () => {
                           </li>
                         </ul>
                       </li>
+                      <li className="nav-item">
+                      <NavLink to="/" className="nav-link" href="#" onClick={LogOut}>
+                        Log Out
+                      </NavLink >
+                    </li>
                     </>
                   ) : (<>
                     <li className="nav-item">
