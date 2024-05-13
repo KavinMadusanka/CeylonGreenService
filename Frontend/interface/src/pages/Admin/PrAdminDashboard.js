@@ -18,6 +18,7 @@ const PrAdminDashboard = () => {
     try {
       const response = await axios.get("http://localhost:8000/api/v1/product/reorder-alerts");
       setReorderAlerts(response.data); // Assuming the response contains an array of reorder alerts
+      fetchReorderAlerts();
     } catch (error) {
       console.error("Error fetching reorder alerts:", error);
     }

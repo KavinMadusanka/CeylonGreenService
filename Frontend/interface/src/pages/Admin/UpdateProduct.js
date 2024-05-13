@@ -64,15 +64,13 @@ const UpdateProduct = () => {
     // Function to get all suppliers
     const getAllSuppliers = async () => {
         try {
-            const { data } = await axios.get("http://localhost:8000/api/v1/supplier/get-supplier");
-            if (data?.success) {
-                setSuppliers(data?.suppliers);
-            }
+          const { data } = await axios.get("http://localhost:8000/api/v1/supplier/get-supplier");
+          setSuppliers(data.suppliers);
         } catch (error) {
-            console.log(error);
-            toast.error("Error fetching suppliers");
+          console.log(error);
+          toast.error("Something went wrong");
         }
-    };
+      };
 
     // Function to handle product update
     const handleUpdate = async (e) => {
