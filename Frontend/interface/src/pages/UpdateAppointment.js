@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useAuth } from '../context/auth';
+import { Select } from "antd";
 
 // Function to get today's date in the format YYYY-MM-DD
 const getTodayDate = () => {
@@ -21,13 +22,50 @@ const UpdateAppointment = () => {
     const [address, setAddress] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
-    const [servicePackage, setServicePackage] = useState("homeBasic");
+    const [servicePackage, setServicePackage] = useState("");
     const [comments, setComments] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
     const [userId, setUserId] = useState("");
+    const [Pname, setPname] = useState("");
+   const [Pprice, setPprice] = useState(0);
+   const [packages, setPackages] = useState([]);
+   const [filteredPackages, setFilteredPackages] = useState([]);
     const [auth,setAuth] = useAuth()
     const navigate = useNavigate();
+
+    
+
+    const { Option } = Select;
+
+
+    const getAllPackages = async () => {
+      try {
+          const { data } = await axios.get('/api/v1/appointment/read-sp');
+          console.log("Package data:", data);
+          setPackages(data.spackages);
+          setFilteredPackages(data.spackages);
+          //getAllPackages();
+      } catch (error) {
+          console.log(error);
+      }
+  };
+
+
+    const handlePkgChange = async (value) => {
+      // setAddress(value);
+      try {
+        const { data } = await axios.get(`/api/v1/appointment/getsingle-sp/${value}`);
+        if (data?.success) {
+          setServicePackage(data.spackage.Pname);
+          setPname(data.spackage.Pname);
+          setPprice(parseFloat(data.spackage.price));
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error('Something went wrong in fetching address details');
+      }
+    };
     
 
   //get single appointment
@@ -43,6 +81,7 @@ const UpdateAppointment = () => {
           setSelectedDate(data.appointment.selectedDate);
           setSelectedTime(data.appointment.selectedTime);
           setUserId(data.appointment.userId);
+          setPprice(data.appointment.Pprice)
       } catch (error) {
         console.log(error);
       }
@@ -51,6 +90,11 @@ const UpdateAppointment = () => {
 
   useEffect(() => {
     getSingleAppointment();
+    //eslint-disable-next-Line
+  }, []);
+
+  useEffect(() => {
+    getAllPackages();
     //eslint-disable-next-Line
   }, []);
 
@@ -71,7 +115,9 @@ const UpdateAppointment = () => {
         comments,
         selectedDate,
         selectedTime,
-        userId
+        userId,
+        Pname,
+        Pname
       });
       console.log(res.data);  // Log the response
       if (res && res.data.success) {
@@ -107,10 +153,21 @@ useEffect(() => {
 
   return (
     <Layout1 title={'Edit Appointment - Ceylon Green'}>
-      <div className='border'>
-        <form onSubmit={handleUpdate} className="appointment-form">
-          <h2>Update Appointment</h2>
-          <div className="form-group">
+      {/* Kavin - Start */}
+      <section className="h-100 gradient-custom">
+      <form onSubmit={handleUpdate}>
+      <div className="container py-0">
+        <div className="row d-flex justify-content-center my-4">
+          <div className="col-md-8">
+            <div className="card mb-4">
+              <div className="card-header py-3">
+                <h5 className="mb-0">Update Appointment details</h5>
+              </div>
+              <div className="card-body">
+              <div >
+            
+            <div>
+            <div className="form-group">
             <label htmlFor="fullName">Full Name:</label>
             <input
               type="text"
@@ -120,8 +177,11 @@ useEffect(() => {
               required
             />
           </div>
+            </div>
 
-          <div className="form-group">
+
+            <div className="item3">
+            <div className="form-group">
             <label htmlFor="address">Address:</label>
             <textarea
               value={address}
@@ -130,19 +190,33 @@ useEffect(() => {
               required
             ></textarea>
           </div>
+            </div>
 
-          <div className="form-group">
+
+            <div className="item5">
+            <div className="form-group">
             <label htmlFor="phoneNumber">Phone Number:</label>
             <input
               type="tel"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={(e) => {
+                // Remove non-numeric characters from the input value
+                const newValue = e.target.value.replace(/[^\d]/g, '');
+                setPhoneNumber(newValue);
+            }}
               placeholder="Enter your phone number"
               required
             />
           </div>
-
-          <div className="form-group">
+            </div>
+            
+        </div>
+               
+                
+                <div>
+                <div>
+            <div className="item3">
+            <div className="form-group">
             <label htmlFor="email">E-mail Address:</label>
             <input
               type="email"
@@ -152,40 +226,26 @@ useEffect(() => {
               required
             />
           </div>
+            </div>
+            <div className="item5">
+            
 
-          <div className="form-group">
-            <label htmlFor="servicePackage">Service Package:</label>
-            <select
-              id="servicePackage"
-              name="servicePackage"
-              value={servicePackage}
-              onChange={(e) => setServicePackage(e.target.value)}
-            >
-              <optgroup label="Home Services">
-                <option value="homeBasic">Home Basic - Includes vacuuming and dusting</option>
-                <option value="homeStandard">Home Standard - Basic + kitchen and bathroom cleaning</option>
-                <option value="homePremium">Home Premium - Standard + deep cleaning and sanitization</option>
-              </optgroup>
-              <optgroup label="Company Services">
-                <option value="companyBasic">Company Basic - Includes vacuuming and trash removal</option>
-                <option value="companyStandard">Company Standard - Basic + office area cleaning</option>
-                <option value="companyPremium">Company Premium - Standard + meeting room cleaning</option>
-              </optgroup>
-            </select>
-          </div>
-
-          <div className="form-group">
+          <table style={{width:'100%'}}>
+            <tr>
+              <td style={{paddingRight:'2%'}}>
+              <div className="form-group">
             <label htmlFor="selectedDate">Select Date:</label>
             <input
               type="date"
               value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
+              onChange={(e) => setSelectedDate(e.target.value.split('T')[0])} // Extracting only date part
               min={getTodayDate()}
               required
             />
           </div>
-
-          <div className="form-group">
+              </td>
+              <td>
+              <div className="form-group">
             <label htmlFor="selectedTime">Select Time:</label>
             <input
               type="time"
@@ -194,6 +254,48 @@ useEffect(() => {
               required
             />
           </div>
+              </td>
+            </tr>
+          </table>
+            </div>
+        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+   
+
+
+          <div className="col-md-4">
+            <div className="card mb-4">
+              <div className="card-header py-3" >
+                <h5 className="mb-0">Service Package</h5>
+              </div>
+              <div className="card-body">
+              <div className="form-group">
+            <label htmlFor="servicePackage">Service Package:</label>
+            <Select
+                bordered={false}
+                placeholder="Select a Address"
+                size="large"
+                // showSearch
+                className="form-select mb-3"
+                // onChange={(value) => {
+                //     setAddress(value);
+                // }}
+                value={servicePackage}
+                onChange={handlePkgChange}
+              >
+                {packages?.map((c) => (
+                  <Option key={c._id} value={c._id}>
+                    {c.Pname}
+                  </Option>
+                ))}
+              </Select>
+          </div>
+
 
           <div className="form-group">
             <label htmlFor="comments">Additional Comments:</label>
@@ -204,12 +306,52 @@ useEffect(() => {
             ></textarea>
           </div>
 
-          <div className="form-buttons">
-            {/* <button type="button">Cancel</button> */}
-            <button>Save Changes</button>
+                
+            <hr className="my-2" />
+
+            <table style={{width:'100%'}}>
+            <tr>
+              <td style={{width:'60%'}}>
+              Appointment Charge(Rs.) : 
+              </td>
+              <td>
+              <div className="form-group">
+            <input
+            type="Number"
+            value={Pprice}
+            readOnly/>
           </div>
-        </form>
+              </td>
+            </tr>
+          </table>
+
+
+            
+
+
+            {/* Appointment Charge(Rs.) : <span>{Pprice.toFixed(2)}</span> */}
+
+            
+               
+          </div>{/* body - end */}
+            </div>
+            <br></br>
+            <div className="form-buttons">
+                                <button type="submit">Save Changes</button>
+                            </div>
+            
+            </div>
+          
+        </div>
+        
       </div>
+    </form>
+    </section>
+
+      {/* Kavin - end */}
+      
+        
+          
     </Layout1>
   )
 }

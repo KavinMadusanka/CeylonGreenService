@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Layout1 from '../components/Layout/Layout1'
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import toast from 'react-hot-toast';
 import { Modal } from "antd";
 
 
 const AServicePackages = () => {
+    //const {id} = useParams();
     const [packages, setPackages] = useState([]);
     const [Pname, setPname] = useState("");
     const [price, setPrice] = useState("");
     const navigate = useNavigate();
+    const [id, setId] = useState(null);
     const [filteredPackages, setFilteredPackages] = useState([]);
+
+    const [mode, setMode] = useState('add');
 
 
     const getAllPackages = async () => {
@@ -29,32 +33,54 @@ const AServicePackages = () => {
         getAllPackages();
 }, []);
 
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // console.log(price)
-        try {
-          const res = await axios.post('/api/v1/appointment/create-sp', {
-            Pname,
-            price
-          });
-          console.log(res.data);  // Log the response
-          if (res.data.success) {
-            toast.success(res.data.message);
-            setPname("");
-            setPrice("");
-            navigate('/servicepackages');
-            getAllPackages();
-          } else {
-            toast.error(res.data.message);
-          }
-        } catch (error) {
-          console.log(error.response.data);
-            setPname("");
-            setPrice("");  // Log the error
-          toast.error('Something went wrong');
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (mode === 'add') {
+        // Handle add mode
+        const res = await axios.post('/api/v1/appointment/create-sp', {
+          Pname,
+          price
+        });
+        if (res.data.success) {
+          toast.success(res.data.message);
+          setPname('');
+          setPrice('');
+          getAllPackages();
+        } else {
+          toast.error(res.data.message);
         }
-      };
+      } else if (mode === 'edit') {
+        // Handle edit mode
+        const res = await axios.put(`/api/v1/appointment/update-sp/${id}`, {
+          Pname,
+          price
+        });
+        if (res.data.success) {
+          toast.success(res.data.message);
+          setPname('');
+          setPrice('');
+          getAllPackages();
+          setMode('add');
+        } else {
+          toast.error(res.data.message);
+        }
+      }
+    } catch (error) {
+      console.log(error.response.data);
+      toast.error('Something went wrong');
+    }
+  };
+
+  const handleEdit = (pkg) => {
+    // Set the package data to input fields
+    setPname(pkg.Pname);
+    setPrice(pkg.price);
+    setId(pkg._id);
+    // Change mode to 'edit'
+    setMode('edit');
+  };
+
 
 
       //handel delete address
@@ -94,32 +120,24 @@ const AServicePackages = () => {
                     className ="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                     id="Menu"
                     >
+                    
                     <li className ="w-100">
                         <Link 
-                        to = "/smdashboard/employee"
-                        className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
-                        >
-                            <i className ="fs-4 bi-speedometer2 ms-2"></i>
-                            <span className ="ms-2 d-none d-sm-inline">Payment Dashboard</span>
-                        </Link>
-                    </li>
-                    <li className ="w-100">
-                        <Link 
-                            to = "/smdashboard/employee"
+                            to = "/appointmentdashboard"
                             className ="nav-link px-0 align-middle "style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-speedometer2 ms-2"></i>
                             <span className ="ms-2 d-none d-sm-inline">
-                                Manage Employee</span>
+                                Manage Appointments</span>
                         </Link>
                     </li>
                     <li className="w-100">
                         <Link 
-                            to = "/smdashboard/category"
+                            to = "/servicepackages"
                             className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-columns ms-2"></i>
-                            <span className ="ms-2 d-none d-sm-inline">Category</span>
+                            <span className ="ms-2 d-none d-sm-inline">Service Packages</span>
                         </Link>
                     </li>
                     <li className="w-100">
@@ -174,7 +192,7 @@ const AServicePackages = () => {
                                                 <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'right'}}>{p.price}.00</td>
                                                 <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>
                                                 <div className="buttonset">
-                                                        <button className="edit-btn"><a href={`/updateAppointment/${p._id}`}>Edit</a></button>
+                                                        <button className="edit-btn" onClick={() => handleEdit(p)}><a>Edit</a></button>
                                                         <button className="delete-btn"
                                                         onClick={() => {
                                                             handleDelete(p._id);
@@ -197,7 +215,7 @@ const AServicePackages = () => {
                         <div className="col-md-4">
                             <div className="card mb-4">
                             <div className="card-header py-3">
-                            <h5 className="mb-0">Add Service Package</h5>
+                            <h5 className="mb-0">{mode === 'add' ? 'Add Service Package' : 'Update Service Package'}</h5>
                             </div>
                             <div className="card-body">
                             <form onSubmit={handleSubmit}>
@@ -227,10 +245,50 @@ const AServicePackages = () => {
                             </div>
 
                             <div className="form-buttons">
-                                <button type="submit">Add</button>
+                                <button type="submit">{mode === 'add' ? 'Add' : 'Update'}</button>
                             </div>
                             </form>
                             </div>
+
+
+
+                            {/*  */}
+                            {/* <div className="card-header py-3">
+                            <h5 className="mb-0">Add Service Package</h5>
+                            </div>
+                            <div className="card-body">
+                            <form onSubmit={handleUpdate}>
+                            <div className="form-group">
+                                <label>Name:</label>
+                                <input
+                                type="text"
+                                value={Pname}
+                                onChange={(e) => setPname(e.target.value)}
+                                placeholder="Enter package name"
+                                required
+                                ></input>
+                            </div>
+                            <div className="form-group">
+                                <label>Price:</label>
+                                <input
+                                type="text"
+                                value={price}
+                                onChange={(e) => {
+                                    // Remove non-numeric characters from the input value
+                                    const newValue = e.target.value.replace(/[^\d]/g, '');
+                                    setPrice(newValue);
+                                }}
+                                placeholder="Enter price"
+                                required
+                                ></input>
+                            </div>
+
+                            <div className="form-buttons">
+                                <button type="submit">Add</button>
+                            </div>
+                            </form>
+                            </div> */}
+                            {/*  */}
                             
                             </div>
                             <div className="card mb-4">

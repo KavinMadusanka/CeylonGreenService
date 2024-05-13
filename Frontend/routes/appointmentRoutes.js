@@ -9,7 +9,8 @@ import {appointmentController,
 import { ASPController,
     getASPController,
     deleteASPController,
-    getSingleASPSController} from '../controllers/ASPController.js';
+    getSingleASPSController,
+    updateASPController} from '../controllers/ASPController.js';
 
 //router object
 const router = express.Router();
@@ -48,6 +49,9 @@ router.get('/read-sp', getASPController);
 
 //get single package
 router.get('/getsingle-sp/:id', getSingleASPSController)
+
+// update package
+router.put('/update-sp/:id', updateASPController);
 
 //delete service package
 router.delete('/delete-sp/:id', deleteASPController);

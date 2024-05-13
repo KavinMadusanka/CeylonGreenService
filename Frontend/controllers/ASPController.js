@@ -82,6 +82,33 @@ export const getSingleASPSController = async (req,res) => {
 };
 
 
+// update package
+export const updateASPController = async (req,res) => {
+    try {
+        const {Pname} = req.body;
+        const {price} = req.body;
+        
+        const {id} = req.params;
+        const spackage = await ASPModel.findByIdAndUpdate(id,{
+            Pname,
+            price
+            }, { new: true });
+        res.status(200).send({
+            success:true,
+            message: "Appointment Updated Successfully",
+            spackage,
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            error,
+            message:'Error while updating appointment'
+        })
+    }
+};
+
+
 // delete package
 
 export const deleteASPController = async (req,res) => {

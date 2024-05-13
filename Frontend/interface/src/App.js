@@ -54,7 +54,6 @@ import ViewPrograms from './pages/ViewPrograms';
 import AddProgram from './pages/AddProgram';
 import Dashboard from './pages/Dashboard';
 import Enrollments from './pages/Enrollments';
-import BookAppointment from './pages/BookAppointment';
 
 
 function App() {
