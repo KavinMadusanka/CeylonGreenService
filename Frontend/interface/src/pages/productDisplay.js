@@ -97,6 +97,15 @@ useEffect(() => {
      
       if(response && response.data.success){
         toast.success(response.data.message);
+        const res = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${productId}`, {
+        quantity: quantity -1,
+      })
+      if(res && res.data.success){
+           // toast.success(res.data.message);
+            
+          }else{
+            toast.error(res.data.message);
+          }
         
       }else{   
 
@@ -107,24 +116,24 @@ useEffect(() => {
     }
 
 //decrease quantity by one when adding to cart
-    try {
+    // try {
      
-      const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${productId}`, {
+    //   const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${productId}`, {
         
-        quantity: quantity -1,
+    //     quantity: quantity -1,
         
-      });
-      if(response && response.data.success){
-        toast.success(response.data.message);
+    //   });
+    //   if(response && response.data.success){
+    //     toast.success(response.data.message);
         
-      }else{
-        toast.error(response.data.message);
-      }
+    //   }else{
+    //     toast.error(response.data.message);
+    //   }
       
-    } catch (error) {
+    // } catch (error) {
       
-      console.error('Error updating  product quantity to cart:', error);
-    }
+    //   console.error('Error updating  product quantity to cart:', error);
+    // }
 
    
 
