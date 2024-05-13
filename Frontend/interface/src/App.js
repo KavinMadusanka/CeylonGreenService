@@ -54,6 +54,7 @@ import ViewPrograms from './pages/ViewPrograms';
 import AddProgram from './pages/AddProgram';
 import Dashboard from './pages/Dashboard';
 import Enrollments from './pages/Enrollments';
+import Wishlist from "./pages/Wishlist";
 
 
 function App() {
@@ -93,6 +94,7 @@ function App() {
         {/* Nethmi  */}
         <Route path="/productDisplay" element={<ProductDisplayPage />} />
         <Route path="/ShoppingCart" element={<ShoppingCart />} />
+        <Route path="/wishlist" element={<Wishlist />} />
 
 {/* piyusha */}
 <Route path="/PrAdminDashboard" element={<PrAdminDashboard/>}/>
