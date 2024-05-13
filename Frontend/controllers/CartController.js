@@ -54,7 +54,7 @@ export const addToCart = async (req,res) => {
 export const getCart = async(req, res) =>{
     const{ email } =req.params;
     try {
-        const cart = await Cart.find({email}).populate("product","name price");
+        const cart = await Cart.find({email}).populate("product","name price quantity");
         if (!cart || cart.length === 0) {
             return res.status(404).send({
                 success: false,
