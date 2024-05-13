@@ -11,6 +11,10 @@ const KApaymentdashboard = () => {
     const [subtotal, setSubtotal] = useState(0);
     axios.defaults.withCredentials = true
 
+    const [appointments, setAppointments] = useState([]);
+    const [appointmentsPrice, setAppointmentsPrice] = useState([]);
+    const [AppointSubtotal, setAppointSubtotal] = useState(0);
+
     //getall payment details
     const getAllPayments = async() =>{
         try {
@@ -42,6 +46,35 @@ const KApaymentdashboard = () => {
             setSubtotal(total);
         }
       }, [payment]);
+
+          //useEffect(() => {
+            const getAllAppointments = async () => {
+                try {
+                    const { data } = await axios.get('/api/v1/appointment/get-admin-appointment');
+                    // setAppointments(data.appointments);                    
+                    setAppointmentsPrice(data.appointments);
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+        
+            useEffect(() => {
+            getAllAppointments();
+        }, []);
+
+        useEffect(() => {
+            if(appointmentsPrice.length > 0){
+                // Calculate subtotal
+                let total = 0;
+            
+                appointmentsPrice.forEach(item => {
+                    total += item.Pprice || 0 ;
+                });
+            
+                // Update subtotal and delivery charge states
+                setAppointSubtotal(total);
+            }
+          }, [appointmentsPrice]);
 
 
 
@@ -142,7 +175,7 @@ const KApaymentdashboard = () => {
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}>Service Booking Revenue</td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
-                        <span>{subtotal.toFixed(2)}</span>
+                        <span>{AppointSubtotal.toFixed(2)}</span>
                         </td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
                         </td>
