@@ -33,7 +33,7 @@ const MyAppointments = () => {
         try {
             if (auth && auth.user && auth.user._id) {
                 const {data} = await axios.get(`/api/v1/appointment/get-appointment/${id}`);
-                // toast.error('awaaaaa')
+                
                 setAppointments(data.appointments);
                 getAllAppointments();
             } else {
@@ -62,20 +62,20 @@ const MyAppointments = () => {
 
      //handel delete address
   const handleDelete = async (userId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this appointment?");
+  if (confirmed) {
     try {
-      const { data } = await axios.delete(
-        `/api/v1/appointment/delete-appointment/${userId}`
-      );
+      const { data } = await axios.delete(`/api/v1/appointment/delete-appointment/${userId}`);
       if (data.success) {
         toast.success('Appointment deleted successfully');
-
         getAllAppointments();
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Somtihing went wrong");
+      toast.error("Something went wrong");
     }
+  }
   };
 
   // Filter Address based on search term using addresses and names

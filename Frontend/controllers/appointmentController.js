@@ -214,3 +214,24 @@ export const downloadPDFController = async (req, res) => {
         });
     }
 };
+
+
+
+// Update the AppointmentStatusController to correctly update the status of the appointment
+export const AppointmentStatusController = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    try {
+        // Find the appointment by ID and update its status
+        const appointment = await appointmentModel.findByIdAndUpdate(id, { status }, { new: true });
+        if (!appointment) {
+            return res.status(404).json({ success: false, message: 'Appointment not found' });
+        }
+
+        res.status(200).json({ success: true, message: 'Appointment status updated successfully', appointment });
+    } catch (error) {
+        console.error('Error updating appointment status:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};

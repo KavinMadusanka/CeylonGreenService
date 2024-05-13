@@ -88,13 +88,12 @@ const Appointment1 = () => {
 
   const handleFullNameChange = (e) => {
     const input = e.target.value;
-    // Regular expression to allow only letters (both uppercase and lowercase) and spaces
-    const regex = /^[A-Za-z\s]+$/;
+    // Regular expression to allow only letters (both uppercase and lowercase), spaces, and a full stop
+    const regex = /^[A-Za-z.\s]*$/;
     if (regex.test(input)) {
-      setFullName(input);
+        setFullName(input);
     }
-  };
-
+};
 
   //////////////////////////
   useEffect(() => {
