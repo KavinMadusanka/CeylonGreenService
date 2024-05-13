@@ -148,21 +148,30 @@ const CreateProducts = () => {
               )}
             </div>
 
-            {/* Other Product Details */}
-            <div className="mb-3">
-              <input type="text" value={name} placeholder="Product Name" className="form-control" onChange={(e) => setName(e.target.value)} />
-            </div>
-            <div className="mb-3">
-              <input type="number" value={price} placeholder="Price" className="form-control" onChange={(e) => setPrice(e.target.value)} />
-            </div>
-            <div className="mb-3">
-              <input type="number" value={quantity} placeholder="Quantity" className="form-control" onChange={(e) => setQuantity(e.target.value)} />
-            </div>
+           {/* Other Product Details */}
+           <div className="mb-3">
+  <label htmlFor="productName" className="form-label">Product Name</label>
+  <input type="text" id="productName" value={name} className="form-control" onChange={(e) => setName(e.target.value)} />
+</div>
 
-            {/* Reorder Level Input */}
-            <div className="mb-3">
-              <input type="number" value={reorderLevel} placeholder="Reorder Level" className="form-control" onChange={(e) => setReorderLevel(e.target.value)} />
-            </div>
+<div className="mb-3">
+  <label htmlFor="productPrice" className="form-label">Price</label>
+  <div className="input-group">
+    <span className="input-group-text">Rs</span>
+    <input type="number" id="productPrice" value={price} className="form-control" onChange={(e) => setPrice(e.target.value)} />
+  </div>
+</div>
+
+<div className="mb-3">
+  <label htmlFor="productQuantity" className="form-label">Quantity</label>
+  <input type="number" id="productQuantity" value={quantity} className="form-control" onChange={(e) => setQuantity(e.target.value)} />
+</div>
+
+<div className="mb-3">
+  <label htmlFor="productReorderLevel" className="form-label">Reorder Level</label>
+  <input type="number" id="productReorderLevel" value={reorderLevel} className="form-control" onChange={(e) => setReorderLevel(e.target.value)} />
+</div>
+
 
             {/* Submit Button */}
             <div className="mb-3">

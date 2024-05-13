@@ -187,17 +187,48 @@ const UpdateProduct = () => {
                             )}
                         </div>
                         <div className="mb-3">
-                            <input type="text" value={name} placeholder="Enter product name" className="form-control" onChange={(e) => setName(e.target.value)} />
-                        </div>
-                        <div className="mb-3">
-                            <input type="number" value={price} placeholder="Enter price" className="form-control" onChange={(e) => setPrice(e.target.value)} />
-                        </div>
-                        <div className="mb-3">
-                            <input type="number" value={quantity} placeholder="Enter quantity" className="form-control" onChange={(e) => setQuantity(e.target.value)} />
-                        </div>
-                        <div className="mb-3">
-                            <input type="number" value={reorderLevel} placeholder="Enter reorder level" className="form-control" onChange={(e) => setReorderLevel(e.target.value)} />
-                        </div>
+  <label htmlFor="productName" className="form-label">Product Name</label>
+  <input 
+    type="text" 
+    id="productName" 
+    value={name} 
+    className="form-control" 
+    onChange={(e) => setName(e.target.value)} 
+  />
+</div>
+<div className="mb-3">
+  <label htmlFor="productPrice" className="form-label">Product Price</label>
+  <div className="input-group">
+    <span className="input-group-text">Rs</span>
+    <input 
+      type="number" 
+      id="productPrice" 
+      value={price} 
+      className="form-control" 
+      onChange={(e) => setPrice(e.target.value)} 
+    />
+  </div>
+</div>
+<div className="mb-3">
+  <label htmlFor="productQuantity" className="form-label">Product Quantity</label>
+  <input 
+    type="number" 
+    id="productQuantity" 
+    value={quantity} 
+    className="form-control" 
+    onChange={(e) => setQuantity(e.target.value)} 
+  />
+</div>
+<div className="mb-3">
+  <label htmlFor="reorderLevel" className="form-label">Reorder Level</label>
+  <input 
+    type="number" 
+    id="reorderLevel" 
+    value={reorderLevel} 
+    className="form-control" 
+    onChange={(e) => setReorderLevel(e.target.value)} 
+  />
+</div>
                         <div className="mb-3">
                             <button className="btn btn-primary me-2" onClick={handleUpdate}>UPDATE PRODUCT</button>
                             <button className="btn btn-danger" onClick={handleDelete}>DELETE PRODUCT</button>

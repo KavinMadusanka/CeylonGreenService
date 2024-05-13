@@ -17,7 +17,7 @@ const Products = () => {
     try {
       const { data } = await axios.get("http://localhost:8000/api/v1/product/get-products");
       setProducts(data.products);
-      getAllProducts()
+      getAllProducts();
     } catch (error) {
       console.log(error);
       toast.error("Failed to fetch products");
@@ -85,7 +85,7 @@ const Products = () => {
                   />
                   <div className="card-body">
                     <h5 className="card-title">{p.name}</h5>
-                    <p className="card-text">Price: ${p.price}</p>
+                    <p className="card-text">Price: Rs.{p.price}</p>
                     <p className="card-text">Quantity: {p.quantity}</p>
                     <p className="card-text">
                       Supplier: {p.supplier ? p.supplier.name : ''}
