@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Link ,useNavigate} from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
 const Header1 = () => {
@@ -124,11 +124,17 @@ const Header1 = () => {
                           </NavLink>
                         </li>
                         <li>
-                        <NavLink to="/dashboard" activeClassName="active" className='dropdown-item'
-                        >
-                          Training Management
-                        </NavLink>
-                      </li>
+                          <NavLink to="/dashboard" activeClassName="active" className='dropdown-item'
+                          >
+                            Training Management
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="/contactDetailsManagement" activeClassName="active" className='dropdown-item'
+                          >
+                            Contact Details Management
+                          </NavLink>
+                        </li>
                       </ul>
                     </li>
                     <li className="nav-item">
