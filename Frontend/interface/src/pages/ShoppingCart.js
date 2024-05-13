@@ -54,6 +54,7 @@ function ShoppingCart() {
         const response = await axios.get(`http://localhost:8000/api/v1/Cart/get-cart/${email}`);
         setCart(response.data.cart);
         setLoading(false);
+        fetchCartDetails();
       } catch (error) {
         console.error('Error fetching cart details:', error);
       }
@@ -66,24 +67,22 @@ function ShoppingCart() {
 
   
 // delete cart items 
-  const handleDeleteCartItem = async (id,quantity) => {
+  const handleDeleteCartItem = async (id,quantity,productID,cartQuantity) => {
     try {
+
+      console.log(cartQuantity)
       await axios.delete(`http://localhost:8000/api/v1/Cart/delete-cart-item/${id}`);
       // Update the cart state to reflect the deleted item
 
      // console.log("Cart:", cart);
       setCart(cart.filter(item =>  item && item._id !== id));
       toast.success("Item deletion successfully");
-    } catch (error) {
-      console.error('Error deleting cart item:', error);
-    }
 
-
-    try {
+        try {
      
-      const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${id}`, {
+      const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${productID}`, {
         
-        quantity: quantity +1,
+        quantity: quantity +cartQuantity,
         
       });
       if(response && response.data.success){
@@ -97,6 +96,32 @@ function ShoppingCart() {
       
       console.error('Error updating  product quantity to cart:', error);
     }
+
+
+
+    } catch (error) {
+      console.error('Error deleting cart item:', error);
+    }
+
+
+    // try {
+     
+    //   const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${id}`, {
+        
+    //     quantity: quantity +1,
+        
+    //   });
+    //   if(response && response.data.success){
+    //     toast.success(response.data.message);
+    //     // navigate('/payment');
+    //   }else{
+    //     toast.error(response.data.message);
+    //   }
+      
+    // } catch (error) {
+      
+    //   console.error('Error updating  product quantity to cart:', error);
+    // }
 
   };
 
@@ -356,7 +381,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                           <p ><strong> Available: {carts.product.quantity}</strong></p>
 
                           <div className='but'>
-                          <button type="button"className='btnsub' onClick={() => handleDeleteCartItem(carts._id,carts.product.quantity)}>Remove</button>
+                          <button type="button"className='btnsub' onClick={() => handleDeleteCartItem(carts._id,carts.product.quantity,carts.product._id,carts.quantity)}>Remove</button>
                           <span className="mx-2"></span> {/* Adding space */}
                           
                           <button type="button" className='btnsub'  onClick={ handleUpdateButton}>Update</button>
@@ -365,17 +390,17 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                         <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
                           <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
                             <div className='but'>
-                            <button className='btnsub' onClick={() => handleUpdateCartItemQuantity(carts._id, carts.quantity - 1)}>
+                            <button className='btnsub' onClick={() => handleUpdateCartItemQuantity(carts._id,carts.quantity, carts.quantity - 1,carts.product.quantity,carts.product._id)}>
                               <i className="fas fa-minus"></i>-
                             </button>
-                            </div>
+                            </div>    
                             <span className="mx-2"></span> {/* Adding space */}
                             <div className="form-outline">
                               <input type="number" min="1" name="quantity" value={carts.quantity} className="form-control" readOnly />
                             </div>
                             <span className="mx-2"></span> {/* Adding space */}
                             <div className='but'>
-                            <button className='btnsub' onClick={() => handleUpdateCartItemQuantity(carts._id, carts.quantity + 1)}>
+                            <button className='btnsub' onClick={() => handleUpdateCartItemQuantity(carts._id, carts.quantity,carts.quantity + 1,carts.product.quantity,carts.product._id)}>
                               <i className="fas fa-plus"></i>+
                             </button>
                             </div>
