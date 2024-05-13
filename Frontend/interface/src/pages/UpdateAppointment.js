@@ -3,7 +3,7 @@ import Layout1 from '../components/Layout/Layout1';
 import '../components/Appointment.css';
 import axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/auth';
 import { Select } from "antd";
 
@@ -135,7 +135,7 @@ const UpdateAppointment = () => {
   const handleFullNameChange = (e) => {
     const input = e.target.value;
     // Regular expression to allow only letters (both uppercase and lowercase) and spaces
-    const regex = /^[A-Za-z\s]+$/;
+    const regex = /^[A-Za-z.\s]*$/;
     if (regex.test(input)) {
       setFullName(input);
     }

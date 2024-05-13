@@ -85,22 +85,20 @@ const handleSubmit = async (e) => {
 
       //handel delete address
   const handleDelete = async (pkgId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this service package?");
+  if (confirmed) {
     try {
-        
-      const { data } = await axios.delete(
-        `/api/v1/appointment/delete-sp/${pkgId}`
-      );
-    //   console.log(pkgId)
+      const { data } = await axios.delete(`/api/v1/appointment/delete-sp/${pkgId}`);
       if (data.success) {
-        toast.success('Appointment deleted successfully');
-
+        toast.success('Service Package deleted successfully');
         getAllPackages();
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Somtihing went wrong");
+      toast.error("Something went wrong");
     }
+  }
   };
   
 

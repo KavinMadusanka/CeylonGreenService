@@ -53,6 +53,11 @@ const KAddcard = () => {
       if(res && res.data.success){
         toast.success(res.data.message);
         navigate('/payment');
+        setNumber('');
+        setName('');
+        setCvv('');
+        setMonth('');
+        setYear('');
       }else{
         toast.error(res.data.message);
       }
