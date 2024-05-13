@@ -22,17 +22,22 @@ const KApaymentdashboard = () => {
       }
 
     //getall payment details
-    const getAllPayments = async() =>{
+    const getAllPayments = async () => {
         try {
-          const {data} = await axios.get('/api/v1/payment/get-paymentdetails');
-          if(data.success){
-            setPayment(data.payments);
-          }
+            const today = new Date();
+            const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const { data } = await axios.get('/api/v1/payment/get-paymentdetails');
+            const filteredPayments = data.payments.filter(payment => {
+                const createdAtDate = new Date(payment.createdAt);
+                return createdAtDate >= firstDayOfMonth && createdAtDate <= today;
+            });
+            setPayment(filteredPayments);
+            getAllPayments();
         } catch (error) {
-          console.log(error);
-          // toast.error('Somthing went wrong in getting Address');
+            console.log(error);
+            // Handle error
         }
-      };
+    };
 
       useEffect(()=> {
         getAllPayments();
@@ -55,23 +60,44 @@ const KApaymentdashboard = () => {
 
       
     // Function to get all appointments with a selected date up to today
-    const getAppointmentsByDate = async () => {
+    // const getAppointmentsByDate = async () => {
+    //     try {
+    //         const today = new Date();
+    //         today.setHours(0, 0, 0, 0); // Set hours to start of the day
+    //         const { data } = await axios.get('/api/v1/appointment/get-admin-appointment');
+    //         const filteredAppointments = data.appointments.filter(appointment => {
+    //             const appointmentDate = new Date(appointment.selectedDate);
+    //             return appointmentDate <= today;
+    //         });
+    //         setAppointmentsPrice(filteredAppointments);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     getAppointmentsByDate();
+    // }, []);
+
+       // Function to get all appointments with a selected date range (this month) and status 'Accepted'
+    const getAppointmentsByDateRange = async () => {
         try {
             const today = new Date();
-            today.setHours(0, 0, 0, 0); // Set hours to start of the day
+            const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
             const { data } = await axios.get('/api/v1/appointment/get-admin-appointment');
             const filteredAppointments = data.appointments.filter(appointment => {
                 const appointmentDate = new Date(appointment.selectedDate);
-                return appointmentDate <= today;
+                return appointmentDate >= firstDayOfMonth && appointmentDate <= today && appointment.status === 'Accepted';
             });
             setAppointmentsPrice(filteredAppointments);
+            getAppointmentsByDateRange()
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        getAppointmentsByDate();
+        getAppointmentsByDateRange();
     }, []);
 
         //   //useEffect(() => {
@@ -178,7 +204,7 @@ const KApaymentdashboard = () => {
             </div>
         </div>
         <div className="col p-0 m-0">
-        <div className="p-2 d-flex justify-content-center ">
+        <div className="p-2 d-flex" style={{marginLeft:'2%'}}>
 
             <h1>Payment Manager</h1>
         </div>
