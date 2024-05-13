@@ -5,7 +5,8 @@ import {appointmentController,
     singleAppointmentController, 
     updateAppointmentController,
     getAdminAppointmentController,
-    downloadPDFController} from '../controllers/appointmentController.js';
+    downloadPDFController,
+    AppointmentStatusController} from '../controllers/appointmentController.js';
 import { ASPController,
     getASPController,
     deleteASPController,
@@ -34,6 +35,13 @@ router.delete('/delete-appointment/:id',deleteAppointmentController);
 
 // Get appointment PDF
 router.get('/download-pdf/:id', downloadPDFController);
+
+
+
+
+//==================================
+//
+router.put('/update-appointment-status/:id',AppointmentStatusController);
 
 
 

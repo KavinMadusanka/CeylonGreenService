@@ -38,6 +38,9 @@ const KAddaddress = () => {
       if(res && res.data.success){
         toast.success(res.data.message);
         navigate('/payment');
+        setPostalcode('');
+        setDistrict('');
+        setProvince('');
       }else{
         toast.error(res.data.message );
       }
