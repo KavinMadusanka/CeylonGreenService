@@ -17,6 +17,7 @@ const Products = () => {
     try {
       const { data } = await axios.get("http://localhost:8000/api/v1/product/get-products");
       setProducts(data.products);
+      getAllProducts()
     } catch (error) {
       console.log(error);
       toast.error("Failed to fetch products");
