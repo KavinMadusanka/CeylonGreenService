@@ -2,7 +2,7 @@ import appointmentModel from "../models/appointmentModel.js";
 
 export const appointmentController = async (req,res) => {
     try {
-        const {fullName,address,phoneNumber,email,comments,servicePackage,selectedDate,selectedTime,userId} = req.body;
+        const {fullName,address,phoneNumber,email,comments,servicePackage,selectedDate,selectedTime,userId, Pprice} = req.body;
         
         // console.log(req.body); // Log the request body for debugging
         
@@ -46,6 +46,7 @@ export const appointmentController = async (req,res) => {
             selectedDate,
             selectedTime,
             userId,
+            Pprice,
         }).save();
 
         res.status(201).send({

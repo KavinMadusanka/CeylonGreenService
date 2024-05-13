@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const appointmentSchema = new mongoose.Schema({
     fullName: {
@@ -37,6 +38,9 @@ const appointmentSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
+    },
+    Pprice: {
+        type: Number,
     },
     status: {
         type: String,

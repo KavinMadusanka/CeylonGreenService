@@ -83,7 +83,7 @@ const AppointmentDashboard = () => {
             <div className ="row flex-nowrap">
                 {/* // add dash board part in there */}
                 
-                <div className ="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style={{backgroundColor:"#BFEA7C"}}>
+        <div className ="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style={{backgroundColor:"#BFEA7C"}}>
             <div className ="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <span className ="fs-5 fw-bolder d-none d-sm-inline" style={{color:'#416D19'}}>
                         Appointment Manager
@@ -92,32 +92,24 @@ const AppointmentDashboard = () => {
                     className ="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                     id="Menu"
                     >
+                    
                     <li className ="w-100">
                         <Link 
-                        to = "/smdashboard/employee"
-                        className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
-                        >
-                            <i className ="fs-4 bi-speedometer2 ms-2"></i>
-                            <span className ="ms-2 d-none d-sm-inline">Payment Dashboard</span>
-                        </Link>
-                    </li>
-                    <li className ="w-100">
-                        <Link 
-                            to = "/smdashboard/employee"
+                            to = "/appointmentdashboard"
                             className ="nav-link px-0 align-middle "style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-speedometer2 ms-2"></i>
                             <span className ="ms-2 d-none d-sm-inline">
-                                Manage Employee</span>
+                                Manage Appointments</span>
                         </Link>
                     </li>
                     <li className="w-100">
                         <Link 
-                            to = "/smdashboard/category"
+                            to = "/servicepackages"
                             className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-columns ms-2"></i>
-                            <span className ="ms-2 d-none d-sm-inline">Category</span>
+                            <span className ="ms-2 d-none d-sm-inline">Service Packages</span>
                         </Link>
                     </li>
                     <li className="w-100">

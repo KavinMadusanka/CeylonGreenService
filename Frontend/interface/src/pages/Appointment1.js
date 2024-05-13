@@ -42,7 +42,7 @@ const Appointment1 = () => {
         toast.error("Contact number must be 10 characters long");
         return;
       }
-      const res = await axios.post('/api/v1/appointment/appointment1', {
+      const res = await axios.post("/api/v1/appointment/appointment1", {
         fullName,
         address,
         phoneNumber,
@@ -51,10 +51,11 @@ const Appointment1 = () => {
         comments,
         selectedDate,
         selectedTime,
-        userId
+        userId,
+        Pprice
       });
       console.log(res.data);  // Log the response
-      if (res.data.success) {
+      if (res && res.data.success) {
         toast.success(res.data.message);
         navigate('/myappointments');
       } else {
@@ -73,9 +74,9 @@ const Appointment1 = () => {
     try {
       const { data } = await axios.get(`/api/v1/appointment/getsingle-sp/${value}`);
       if (data?.success) {
+        setServicePackage(data.spackage.Pname);
         setPname(data.spackage.Pname);
         setPprice(parseFloat(data.spackage.price));
-        
       }
     } catch (error) {
       console.log(error);
@@ -128,7 +129,7 @@ useEffect(() => {
 
       {/* Kavin - Start */}
       <section className="h-100 gradient-custom">
-    <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
       <div className="container py-0">
         <div className="row d-flex justify-content-center my-4">
           <div className="col-md-8">
@@ -173,7 +174,11 @@ useEffect(() => {
             <input
               type="tel"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={(e) => {
+                // Remove non-numeric characters from the input value
+                const newValue = e.target.value.replace(/[^\d]/g, '');
+                setPhoneNumber(newValue);
+            }}
               placeholder="Enter your phone number"
               required
             />
@@ -182,7 +187,7 @@ useEffect(() => {
             
         </div>
                
-                <hr className="my-2" />
+                
                 <div>
                 <div>
             <div className="item3">
@@ -198,7 +203,12 @@ useEffect(() => {
           </div>
             </div>
             <div className="item5">
-            <div className="form-group">
+            
+
+          <table style={{width:'100%'}}>
+            <tr>
+              <td style={{paddingRight:'2%'}}>
+              <div className="form-group">
             <label htmlFor="selectedDate">Select Date:</label>
             <input
               type="date"
@@ -208,6 +218,20 @@ useEffect(() => {
               required
             />
           </div>
+              </td>
+              <td>
+              <div className="form-group">
+            <label htmlFor="selectedTime">Select Time:</label>
+            <input
+              type="time"
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+              required
+            />
+          </div>
+              </td>
+            </tr>
+          </table>
             </div>
         </div>
                 </div>
@@ -247,115 +271,6 @@ useEffect(() => {
           </div>
 
 
-            Appointment Charge(Rs.) : <span>{Pprice.toFixed(2)}</span>
-               
-          </div>{/* body - end */}
-            </div>
-            
-            
-              <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charege may relese up to 3 or more items </li></h8>
-            </div>
-          
-        </div>
-        {/* <div className='item9'>
-              <button type='submit' className='btnsub'>Pay</button>
-            </div> */}
-      </div>
-    </form>
-    </section>
-
-      {/* Kavin - end */}
-
-
-      <div className='border'>
-        <form onSubmit={handleSubmit} className="appointment-form">
-          <h2>Appointment Form</h2>
-          <div className="form-group">
-            <label htmlFor="fullName">Full Name:</label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={handleFullNameChange}
-              placeholder="Enter your full name"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="address">Address:</label>
-            <input
-            type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Enter your address"
-              required
-            ></input>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="phoneNumber">Phone Number:</label>
-            <input
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="Enter your phone number"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email">E-mail Address:</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="servicePackage">Service Package:</label>
-            <select
-              id="servicePackage"
-              name="servicePackage"
-              value={servicePackage}
-              onChange={(e) => setServicePackage(e.target.value)}
-            >
-              <optgroup label="Home Services">
-                <option value="homeBasic">Home Basic - Includes vacuuming and dusting</option>
-                <option value="homeStandard">Home Standard - Basic + kitchen and bathroom cleaning</option>
-                <option value="homePremium">Home Premium - Standard + deep cleaning and sanitization</option>
-              </optgroup>
-              <optgroup label="Company Services">
-                <option value="companyBasic">Company Basic - Includes vacuuming and trash removal</option>
-                <option value="companyStandard">Company Standard - Basic + office area cleaning</option>
-                <option value="companyPremium">Company Premium - Standard + meeting room cleaning</option>
-              </optgroup>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="selectedDate">Select Date:</label>
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value.split('T')[0])} // Extracting only date part
-              min={getTodayDate()}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="selectedTime">Select Time:</label>
-            <input
-              type="time"
-              value={selectedTime}
-              onChange={(e) => setSelectedTime(e.target.value)}
-              required
-            />
-          </div>
-
           <div className="form-group">
             <label htmlFor="comments">Additional Comments:</label>
             <textarea
@@ -365,11 +280,52 @@ useEffect(() => {
             ></textarea>
           </div>
 
-          <div className="form-buttons">
-            <button type="submit">Submit</button>
+                
+            <hr className="my-2" />
+
+            <table style={{width:'100%'}}>
+            <tr>
+              <td style={{width:'60%'}}>
+              Appointment Charge(Rs.) : 
+              </td>
+              <td>
+              <div className="form-group">
+            <input
+            type="Number"
+            value={Pprice}
+            readOnly/>
           </div>
-        </form>
+              </td>
+            </tr>
+          </table>
+
+
+            
+
+
+            {/* Appointment Charge(Rs.) : <span>{Pprice.toFixed(2)}</span> */}
+
+            
+               
+          </div>{/* body - end */}
+            </div>
+            <br></br>
+            <div className="form-buttons">
+                                <button type="submit">Send Appointment</button>
+                            </div>
+            
+            </div>
+          
+        </div>
+        
       </div>
+    </form>
+    </section>
+
+      {/* Kavin - end */}
+
+
+      
     </Layout1>
   );
 };

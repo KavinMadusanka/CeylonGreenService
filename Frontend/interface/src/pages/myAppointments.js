@@ -101,18 +101,46 @@ const MyAppointments = () => {
 
 const generateAppointmentPDF = (appointment) => {
     const doc = new jsPDF();
-    doc.text("Appointment Details", 10, 10);
-    // Add appointment details to the PDF
-    doc.text(`Name: ${appointment.fullName}`, 10, 20);
-    doc.text(`Address: ${appointment.address}`, 10, 30);
-    doc.text(`Phone No: ${appointment.phoneNumber}`, 10, 40);
-    doc.text(`Email: ${appointment.email}`, 10, 50);
-    doc.text(`Service Package: ${appointment.servicePackage}`, 10, 60);
-    doc.text(`Date: ${appointment.selectedDate}`, 10, 70);
-    doc.text(`Time: ${appointment.selectedTime}`, 10, 80);
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    // Add border around content
+    doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
+
+    // Add title
+    doc.setFontSize(18);
+    const titleText = "Appointment Details";
+    const titleWidth = doc.getStringUnitWidth(titleText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const titleX = (pageWidth - titleWidth) / 2;
+    doc.text(titleText, titleX, 20);
+
+    // Add appointment details
+    doc.setFontSize(12);
+    doc.text(`Name: ${appointment.fullName}`, 20, 40);
+    doc.text(`Address: ${appointment.address}`, 20, 50);
+    doc.text(`Phone No: ${appointment.phoneNumber}`, 20, 60);
+    doc.text(`Email: ${appointment.email}`, 20, 70);
+    doc.text(`Date: ${appointment.selectedDate}`, 20, 80);
+    doc.text(`Time: ${appointment.selectedTime}`, 20, 90);
+    doc.text(`Service Package: ${appointment.servicePackage}`, 20, 100);
+    doc.text(`Service Charge: ${appointment.Pprice}.00`, 20, 110);
+
+    // Add separator line
+    doc.line(10, 120, pageWidth - 10, 120);
+
+    // Add footer
+    doc.setFontSize(10);
+    const footerText = "Thank you for choosing our service! - CEYLON GREEN SOLUTIONS";
+    const footerWidth = doc.getStringUnitWidth(footerText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const footerX = (pageWidth - footerWidth) / 2;
+    const footerY = pageHeight - 30; // Adjust the Y position as needed
+    doc.text(footerText, footerX, footerY);
+
     // Save the PDF with a unique name (e.g., based on appointment ID)
     doc.save(`appointment_${appointment._id}.pdf`);
-  };
+};
+
+
 
 
  
@@ -155,10 +183,57 @@ const handleDownloadPDF = (appointment) => {
                     <button className="book-appointment-btn">Book Appointment</button>
                     </Link>
                 </div>
-                    {filteredAddresses.map(a => (
+
+
+
+                <table style={{ borderCollapse: 'collapse', width: '100%',}}>
+                                <thead style={{backgroundcolor:'#BFEA7C'}}>
+                                            <tr style={{backgroundColor:'#f5f5f5'}}>
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C' }}>Name</th>
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C' }}>Adress</th>
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Phone No.</th>
+                                                {/* <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>E mail</th> */}
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Date</th>
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Time</th>
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Service Package</th>
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}>Charge(Rs.)</th>
+                                                <th scope='col' style={{ border: '1px solid #dddddd', padding: '10px' ,backgroundColor:'#BFEA7C'}}></th>
+            
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {filteredAddresses.map((p) => (
+                                            <tr key={p._id} style={{backgroundColor:'#d6f6a3', cursor: 'pointer'}} 
+                                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FFF67E'} 
+                                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d6f6a3'}>
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{p.fullName}</td>
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{p.address}</td>
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{p.phoneNumber}</td>
+                                                {/* <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{p.email}</td> */}
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{p.selectedDate}</td>
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{p.selectedTime}</td>
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>{p.servicePackage}</td>
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'right'}}>{p.Pprice}.00</td>
+                                                <td style={{ border: '1px solid #dddddd', padding: '8px' ,textAlign:'left'}}>
+                                                <div className="buttonset">
+                                                <button className="view-btn"  onClick={() => handleDownloadPDF(p)}><a href="">Download</a></button>
+                                    <button className="edit-btn"><a href={`/updateAppointment/${p._id}`}>Edit</a></button>
+                                                        <button className="delete-btn"
+                                                        onClick={() => {
+                                                            handleDelete(p._id);
+                                                            }}> Delete</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                </table>
+                    
+
+                    {/* card view */}
+                    {/* {filteredAddresses.map(a => (
                         <div className="card m-2" style={{width: '100%'}} key={a._id}>
                         <div className="card-body">
-                            {/* <h5 className="card-title">{a.fullName}</h5> */}
                                 <p className="card-text"><b>Name:</b> {a.fullName} | <b>Address:</b> {a.address} | <b>Phone No:</b> {a.phoneNumber} | <b>E mail:</b> {a.email}</p>
                                 <p className="card-text"><b>Service Package:</b> {a.servicePackage} | <b>Date:</b> {a.selectedDate} | <b>Time:</b> {a.selectedTime}</p>
                                 <div className="buttonset">
@@ -171,7 +246,7 @@ const handleDownloadPDF = (appointment) => {
                                 </div>
                         </div>
                         </div>
-                    ))}
+                    ))} */}
             </div>
         </Layout1>
     );
