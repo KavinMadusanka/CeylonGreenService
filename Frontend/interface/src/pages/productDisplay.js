@@ -8,6 +8,7 @@ import {ShoppingCartcss} from '../components/ShoppingCart.css';
 import { Link, useNavigate } from 'react-router-dom';
 import '../components/Appointment.css';
 import Item from 'antd/es/list/Item';
+import Wishlist from './Wishlist';
 
 
 
@@ -25,6 +26,31 @@ function ProductDisplay() {
   const[selectedCategory,setSelectedCategory]=useState("");
   const [selectedServicePackage, setSelectedServicePackage] = useState("");
   const [cart, setCart] = useState([]);
+
+//add to wishlist 
+
+  const addToWishlist = async (productId) => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/wishlist/add-to-wishlist', {
+        product: productId,
+        email: email, // Get email from user context
+      });
+
+      if (response && response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error adding item to wishlist:', error);
+      toast.error('Error adding to wishlist');
+    }
+  };
+
+
+
+
+
 
 
 
@@ -142,19 +168,7 @@ function ProductDisplay() {
   };
 
 
-  // const addTowishlist = async (productId) => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/v1/Cart/add-to-cart', {
-  //       product: productId,
-  //        // Set the quantity as needed
-  //       email: email // Pass the user's email
-  //     });
-  //     console.log('Item added to cart:', response.data);
-  //     // Optionally, you can update the UI to reflect that the item has been added to the cart
-  //   } catch (error) {
-  //     console.error('Error adding item to cart:', error);
-  //   }
-  // };
+  
 
 
   return (
@@ -163,6 +177,11 @@ function ProductDisplay() {
       <div className='but' id='shoppingCartbtn'>
       <Link to="/ShoppingCart">
                     <button className='btnsub'>Shopping cart</button>
+                    </Link>
+                    </div> 
+                    <div className='but' id='wishlistbtn'>
+      <Link to="/wishlist">
+                    <button className='btnsub'>Wish  list</button>      
                     </Link>
                     </div>              
       <div className='username'><b>Hello.. {name} welcome to Ceylon Green Shop</b></div>   
@@ -220,7 +239,7 @@ function ProductDisplay() {
       
       <button id='addtocart' onClick={() => addToCart(product._id,product.quantity)} className='btnsub'>Add to cart</button>
       
-      <button className='btnsub' id='wishlist'>Wishlist</button>
+      <button className='btnsub' id='wishlist' onClick={() => addToWishlist(product._id)}>Wishlist</button>
       
       
     </div>

@@ -51,7 +51,7 @@ export const addToWishlist = async (req,res) => {
 export const getWishlist = async(req, res) =>{
     const{ email } =req.params;
     try {
-        const wishlist = await Wishlist.find({email}).populate("product","name price");
+        const wishlist = await Wishlist.find({email}).populate("product","_id  email name price quantity");
         if (!wishlist || wishlist.length === 0) {
             return res.status(404).send({
                 success: false,
@@ -72,5 +72,24 @@ export const getWishlist = async(req, res) =>{
             message: "Error while retrieving cart details",
         });
         
+    }
+};
+
+// Delete from wishlist
+export const deleteWishlistItem = async (req, res) =>{
+    try {
+        const { id } = req.params;
+        await Wishlist.findByIdAndDelete(id);
+        res.status(200).send({
+            success: true,
+            message: "wishlist Details Deleted Successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "error while deleting wishlist Details",
+            error,
+        });
     }
 };
