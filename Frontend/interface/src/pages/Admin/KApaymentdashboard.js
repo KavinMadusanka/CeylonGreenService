@@ -15,6 +15,12 @@ const KApaymentdashboard = () => {
     const [appointmentsPrice, setAppointmentsPrice] = useState([]);
     const [AppointSubtotal, setAppointSubtotal] = useState(0);
 
+    function LogOut() {
+        localStorage.removeItem('auth');
+        navigate('/userLogin')
+        window.location.reload()
+      }
+
     //getall payment details
     const getAllPayments = async() =>{
         try {
@@ -161,7 +167,7 @@ const KApaymentdashboard = () => {
                     </li>
                     <li className="w-100">
                         <Link 
-                            to = "#"
+                            to = "/" onClick={LogOut}
                             className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-power ms-2"></i>
