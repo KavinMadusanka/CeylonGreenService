@@ -25,6 +25,7 @@ import programRoutes from "./routes/programRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
 import ContactRoutes from "./routes/ContactRoute.js"
+import WishlistRoutes from "./routes/WishlistRoutes.js"
 
 
 //configure env
@@ -64,6 +65,8 @@ app.use(morgan("dev"));
 app.use("/api/user", UserRoutes);
 app.use("/api/v1/employees", empRoutes);
 app.use("/api/v1/Cart", CartRoutes);
+app.use("/api/v1/wishlist", WishlistRoutes);
+
 // app.use("/api/v1/Inventory", InventoryRoutes);
 
 app.use("/api/v1/category", categoryRoutes);
