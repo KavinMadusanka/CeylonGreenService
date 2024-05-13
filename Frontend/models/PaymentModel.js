@@ -44,7 +44,7 @@ const paymentSchema = new mongoose.Schema(
       type: String
     },
     price: {
-      type: String
+      type: Number,
     },
     photo: {
       data: Buffer,

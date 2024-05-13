@@ -1,7 +1,8 @@
 import express from 'express';
 import {paymentController,
     bankpaymentController,
-    updateProductQuantityController
+    updateProductQuantityController,
+    PaymentPriceController
 } from '../controllers/PaymentController.js'
 import { deleteAllCartItem } from '../controllers/CartController.js';
 
@@ -11,6 +12,9 @@ const router = express.Router();
 //Post method
 router.post("/KAcardpayment", paymentController);
 router.post("/KApaymentForm", bankpaymentController);
+
+//get all payment details
+router.get("/get-paymentdetails",PaymentPriceController) 
 
 //delete part
 router.delete("/clear-cart/:email",deleteAllCartItem);

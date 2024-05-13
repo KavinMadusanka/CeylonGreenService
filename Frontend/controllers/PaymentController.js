@@ -265,3 +265,24 @@ export const updateProductQuantityController = async (req, res) => {
     });
   }
 };
+
+
+//get single address 
+export const PaymentPriceController = async (req,res) => {
+  try {
+      // console.log(id)
+      const payments = await paymentModel.find()
+      res.status(200).send({
+          success: true,
+          message: "get payment details success",
+          payments,
+      });
+  } catch (error) {
+      console.log(error);
+      res.status(500).send({
+          success: false,
+          error,
+          message: "Error while getting payment details ",
+      });
+  }
+};

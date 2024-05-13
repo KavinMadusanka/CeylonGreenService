@@ -37,12 +37,7 @@ function ProductDisplay() {
     );
     setFilteredName(filtered);
 }, [searchTerm, products]);
-
   
-useEffect(() => {
-    // Fetch products from backend API
-    fetchProducts();
-  }, []);  
 
 
   useEffect(() => {
@@ -74,6 +69,7 @@ useEffect(() => {
       const data = await response.json();
       if (data.success) {
         setProducts(data.products);
+        fetchProducts();
       } else {
         console.error('Failed to fetch products:', data.message);
       }
@@ -82,6 +78,10 @@ useEffect(() => {
     }
   };
 
+  useEffect(() => {
+    // Fetch products from backend API
+    fetchProducts();
+  }, []);
 
   //add to cart
 

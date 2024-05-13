@@ -1,12 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { useAuth } from '../../context/auth';
 import axios from 'axios';
 import Layout1 from '../../components/Layout/Layout1';
 
 const KApaymentdashboard = () => {
     const navigate = useNavigate()
+    const [payment, setPayment] = useState([]);
+    const [subtotal, setSubtotal] = useState(0);
     axios.defaults.withCredentials = true
+
+    //getall payment details
+    const getAllPayments = async() =>{
+        try {
+          const {data} = await axios.get('/api/v1/payment/get-paymentdetails');
+          if(data.success){
+            setPayment(data.payments);
+          }
+        } catch (error) {
+          console.log(error);
+          // toast.error('Somthing went wrong in getting Address');
+        }
+      };
+
+      useEffect(()=> {
+        getAllPayments();
+      },[])
+
+
+    useEffect(() => {
+        if(payment.length > 0){
+            // Calculate subtotal
+            let total = 0;
+        
+            payment.forEach(item => {
+                total += item.price || 0 ;
+            });
+        
+            // Update subtotal and delivery charge states
+            setSubtotal(total);
+        }
+      }, [payment]);
+
+
+
+
   return (
     <Layout1>
 
@@ -80,23 +119,78 @@ const KApaymentdashboard = () => {
         <div className="col p-0 m-0">
         <div className="p-2 d-flex justify-content-center ">
 
-            <p>Payment Manager</p>
+            <h1>Payment Manager</h1>
         </div>
         <div>
-            <table style={{ marginLeft:'1%', width:'95%'}}>
+            <table style={{ marginLeft:'2%', width:'95%'}}>
                 <thead><tr style={{backgroundColor:'#BFEA7C'}}>
                     <th style={{ border: '1px solid #BFEA7C', padding: '10px',textAlign:'center',justifyItems:'center' }}></th>
                     <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Description</th>
-                    <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Income</th>
-                    <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Expenses</th>
+                    <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Income(Rs.)</th>
+                    <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Expenses(Rs.)</th>
                     </tr></thead>
                     <tbody>
-                        <td></td>
-                        <td>Inventory Sells income</td>
-                        <td>
-
+                        <tr>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}>Product Sales Revenue</td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        <span>{subtotal.toFixed(2)}</span>
                         </td>
-                        <td></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        </tr>
+                        <tr>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}>Service Booking Revenue</td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        <span>{subtotal.toFixed(2)}</span>
+                        </td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}>Staff Salary Expenditure</td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        </td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        <span>{subtotal.toFixed(2)}</span>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}>Training Program Revenue</td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        <span>{subtotal.toFixed(2)}</span>
+                        </td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}><b>Total Revenue</b></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        <b><span>{(subtotal+subtotal+subtotal).toFixed(2)}</span></b>
+                        </td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}><b>Total Expenses</b></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        </td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
+                        <b><span>{(subtotal).toFixed(2)}</span></b>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}><b>Net. Income</b></td>
+                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}} colSpan={2}>
+                        <b><span>{((subtotal+subtotal+subtotal)-(subtotal)).toFixed(2)}</span></b>
+                        </td>
+                        </tr>
+
                     </tbody>
                 </table>
         </div>
