@@ -61,11 +61,11 @@ export const CheckUserDetails = async (req, res) => {
         if (loginDetails.length === 0) {
             // Login failed - user not found or incorrect password
             return res.status(401).json({ message: 'Invalid username or password' });
-          }
-          // Login successful - generate JWT token
-            const token = await JWT.sign({ _id: loginDetails[0]._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+        }
+        // Login successful - generate JWT token
+        const token = await JWT.sign({ _id: loginDetails[0]._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-            const user = {
+        const user = {
             _id: loginDetails[0]._id,
             name: loginDetails[0].name,
             email: loginDetails[0].email,
@@ -73,19 +73,19 @@ export const CheckUserDetails = async (req, res) => {
             pNumber: loginDetails[0].pNumber,
             role: loginDetails[0].role,
             // Include other user details as needed
-            };
+        };
 
-            return res.status(200).json({
+        return res.status(200).json({
             loginDetails,
             success: true,
             message: 'Login successful',
             user,
             token,
-            });
+        });
         return res.status(200).json({ loginDetails });
     } catch (err) {
         return res.status(500).json({
-            success:false,
+            success: false,
             message: 'login Failed',
             err,
         });
@@ -102,6 +102,7 @@ export const GetUsers = async (req, res) => {
     }
 }
 
+//deleetUser
 export const DeleteUser = async (req, res) => {
     const id = req.params.deleteID;
     await UserModel.findByIdAndDelete(id).then(() => {
@@ -109,4 +110,41 @@ export const DeleteUser = async (req, res) => {
     }).catch((err) => {
         res.status(400).send({ message: err.message });
     })
+}
+
+//update user
+export const UpdateUser = async (req, res) => {
+    const {
+        name,
+        address,
+        pNumber
+    } = req.body;
+    const updateID = req.body.updateUserID;
+
+    try {
+        const userDetails = {
+            name,
+            address,
+            pNumber
+        }
+
+        await UserModel.findByIdAndUpdate(updateID, userDetails).then(() => {
+            res.status(200).send({ status: 'Success', data: userDetails })
+        }).catch((err) => {
+            res.status(400).send({ status: err });
+        })
+    } catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+}
+
+//get User deatails by ID
+export const GetUserDetailsByID = async (req, res) => {
+    try {
+        const id = req.params.userID;
+        const UserDetails = await UserModel.find({ _id: id });
+        res.status(200).send({ UserDetails });
+    } catch (error) {
+        res.status(500).send("Server Error");
+    }
 }

@@ -72,6 +72,7 @@ app.use("/api/v1/supplier", SupplierRoutes);
 app.use('/api/v1/programs', programRoutes);
 app.use('/api/v1/employees', employeeRoutes);
 app.use('/api/v1/enrollments', enrollmentRoutes);
+app.use('/api/contact', ContactRoutes)
 
 
 //rest api

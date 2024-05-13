@@ -16,7 +16,7 @@ function UserLogin() {
         userName: '',
         password: ''
     });
-    const [auth,setAuth] = useAuth();
+    const [auth, setAuth] = useAuth();
 
     function handleChange(e) {
         const target = e.target;
@@ -37,10 +37,10 @@ function UserLogin() {
                 if (formData.userName === res.data.loginDetails[0].email && formData.password === res.data.loginDetails[0].password) {
                     setAuth({
                         ...auth,
-                        user:res.data.user,
+                        user: res.data.user,
                         token: res.data.token,
-                      });
-                      localStorage.setItem('auth',JSON.stringify(res.data));
+                    });
+                    localStorage.setItem('auth', JSON.stringify(res.data));
                     navigate('/homepage2')
                 }
             })
@@ -61,90 +61,92 @@ function UserLogin() {
                                     style={{ height: 'auto', width: '100%', objectFit: 'cover', borderRadius: '8px', aspectRatio: '3/2', }}
                                 />
                             </Grid>
-                            <Grid item md={6} xs={12}>
-                                <Typography sx={{ fontSize: '28px', fontFamily: 'Platypi, serif', fontWeight: 'bold' }}>Welcome to the Ceylon Green Cleaning Service. </Typography>
-                                <br /><br />
-                                <Container maxWidth={false}>
-                                    <Formik
-                                        initialValues={{
-                                            userName: formData.userName,
-                                            password: formData.password
-                                        }}
+                            <Grid item md={6} xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <div>
+                                    <Typography sx={{ fontSize: '28px', fontFamily: 'Platypi, serif', fontWeight: 'bold' }}>Welcome to the Ceylon Green Cleaning Service. </Typography>
+                                    <br /><br />
+                                    <Container maxWidth={false}>
+                                        <Formik
+                                            initialValues={{
+                                                userName: formData.userName,
+                                                password: formData.password
+                                            }}
 
-                                        validationSchema={
-                                            Yup.object().shape({
-                                                userName: Yup.string().required('User Name is required'),
-                                                password: Yup.string().required('Password is required')
-                                            })
-                                        }
+                                            validationSchema={
+                                                Yup.object().shape({
+                                                    userName: Yup.string().required('User Name is required'),
+                                                    password: Yup.string().required('Password is required')
+                                                })
+                                            }
 
-                                        onSubmit={() => LoginUser()}
-                                        enableReinitialize
-                                    >
-                                        {({ errors,
-                                            handleBlur,
-                                            handleSubmit,
-                                            touched
-                                        }) => (
-                                            <form onSubmit={handleSubmit}>
-                                                <Box mt={0}>
-                                                    <Grid container spacing={2}>
-                                                        <Grid item md={12} xs={12}>
-                                                            <TextField
-                                                                fullWidth
-                                                                error={Boolean(touched.userName && errors.userName)}
-                                                                helperText={touched.userName && errors.userName}
-                                                                name='userName'
-                                                                value={formData.userName}
-                                                                placeholder='User Name'
-                                                                variant="standard"
-                                                                color='success'
-                                                                size='small'
-                                                                type='text'
-                                                                onChange={(e) => handleChange(e)}
-                                                            />
+                                            onSubmit={() => LoginUser()}
+                                            enableReinitialize
+                                        >
+                                            {({ errors,
+                                                handleBlur,
+                                                handleSubmit,
+                                                touched
+                                            }) => (
+                                                <form onSubmit={handleSubmit}>
+                                                    <Box mt={0}>
+                                                        <Grid container spacing={2}>
+                                                            <Grid item md={12} xs={12}>
+                                                                <TextField
+                                                                    fullWidth
+                                                                    error={Boolean(touched.userName && errors.userName)}
+                                                                    helperText={touched.userName && errors.userName}
+                                                                    name='userName'
+                                                                    value={formData.userName}
+                                                                    placeholder='User Name'
+                                                                    variant="standard"
+                                                                    color='success'
+                                                                    size='small'
+                                                                    type='text'
+                                                                    onChange={(e) => handleChange(e)}
+                                                                />
+                                                            </Grid>
+                                                            <br /><br /><br />
+                                                            <Grid item md={12} xs={12}>
+                                                                <TextField
+                                                                    fullWidth
+                                                                    error={Boolean(touched.password && errors.password)}
+                                                                    helperText={touched.password && errors.password}
+                                                                    name='password'
+                                                                    value={formData.password}
+                                                                    id="standard-basic"
+                                                                    placeholder='Password'
+                                                                    variant="standard"
+                                                                    color='success'
+                                                                    size='small'
+                                                                    onChange={(e) => handleChange(e)}
+                                                                />
+                                                            </Grid>
+                                                            <Grid item md={12} xs={12}>
+                                                                <Button
+                                                                    variant='contained'
+                                                                    type='submit'
+                                                                    color='success'
+                                                                    size='small'
+                                                                >
+                                                                    Login
+                                                                </Button>
+                                                            </Grid>
+                                                            <Grid item md={12} xs={12}>
+                                                                <Typography>Don't you have any Account?&nbsp;<a href='/userRegister' style={{ textDecoration: 'none', color: 'black', fontWeight: 'bold' }}>Click here</a> </Typography>
+                                                            </Grid>
                                                         </Grid>
-                                                        <br /><br /><br />
-                                                        <Grid item md={12} xs={12}>
-                                                            <TextField
-                                                                fullWidth
-                                                                error={Boolean(touched.password && errors.password)}
-                                                                helperText={touched.password && errors.password}
-                                                                name='password'
-                                                                value={formData.password}
-                                                                id="standard-basic"
-                                                                placeholder='Password'
-                                                                variant="standard"
-                                                                color='success'
-                                                                size='small'
-                                                                onChange={(e) => handleChange(e)}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item md={12} xs={12}>
-                                                            <Button
-                                                                variant='contained'
-                                                                type='submit'
-                                                                color='success'
-                                                                size='small'
-                                                            >
-                                                                Login
-                                                            </Button>
-                                                        </Grid>
-                                                        <Grid item md={12} xs={12}>
-                                                            <Typography>Don't you have any Account?&nbsp;<a href='/userRegister' style={{ textDecoration: 'none', color: 'black', fontWeight: 'bold' }}>Click here</a> </Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Box>
-                                            </form>
-                                        )}
-
-                                    </Formik>
-                                </Container>
+                                                    </Box>
+                                                </form>
+                                            )}
+                                        </Formik>
+                                    </Container>
+                                </div>
                             </Grid>
                         </Grid>
                     </Card>
                 </center>
             </Box>
+            <br />
         </Layout >
     )
 }

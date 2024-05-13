@@ -102,12 +102,113 @@ function ShoppingCart() {
 
 
  //update quantity  
-  const handleUpdateCartItemQuantity = async (id, newQuantity) => {
-    try {
-      await axios.put(`http://localhost:8000/api/v1/Cart/update-item/${id}`, { quantity: newQuantity });
-      // Update the cart state to reflect the updated quantity
-      setCart(cart.map(item => (item._id === id ? { ...item, quantity: newQuantity } : item)));
-      //toast.success("Item quantity update successfully");
+  const handleUpdateCartItemQuantity = async (id,existingQuantity, newQuantity,quantity,productID) => {
+   
+   
+    try {  
+
+      
+
+              if (newQuantity==existingQuantity+1){
+
+               
+                    
+                  await axios.put(`http://localhost:8000/api/v1/Cart/update-item/${id}`, { quantity: newQuantity });
+                  // Update the cart state to reflect the updated quantity
+                  setCart(cart.map(item => (item._id === id ? { ...item, quantity: newQuantity } : item)));
+                  toast.success("Item quantity update successfully");
+               
+
+                 try {   
+                  console.log(productID)
+     
+                          const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${productID}`, {
+                            
+                            quantity: quantity-1,
+                            
+                          });
+                          if(response && response.data.success){
+                            toast.success(response.data.message);
+                            // navigate('/payment');
+                            
+                          }else{
+                            toast.error(response.data.message);
+                          }
+                          
+                        } catch (error) {
+                          
+                          console.error('Error updating  product quantity to cart:', error);
+                        }
+                        
+
+
+              }
+              else{
+                
+                if (newQuantity < 0) {
+                  // Prevent decreasing quantity below 0
+                  const confirmed = window.confirm("Quantity cannot be less than 0. Do you want to remove the item?");
+                  if (confirmed) {
+                             
+                    return;
+
+                    
+                    
+                  } else {
+                    // User clicked "Cancel" to keep the item
+                    return;
+                  }
+                }
+                
+                
+
+                await axios.put(`http://localhost:8000/api/v1/Cart/update-item/${id}`, { quantity: newQuantity });
+                // Update the cart state to reflect the updated quantity
+                setCart(cart.map(item => (item._id === id ? { ...item, quantity: newQuantity } : item)));
+                toast.success("Item quantity update successfully");
+              //  console.log(existingQuantity)
+              //  console.log(newQuantity)
+
+
+              try {   
+                console.log(productID)
+   
+                        const response = await axios.put(`http://localhost:8000/api/v1/product/update-product-quantity/${productID}`, {
+                          
+                          quantity: quantity+1,
+                          
+                        });
+                        if(response && response.data.success){
+                          toast.success(response.data.message);
+                          // navigate('/payment');
+                          
+                        }else{
+                          toast.error(response.data.message);
+                        }
+                        
+                      } catch (error) {
+                        
+                        console.error('Error updating  product quantity to cart:', error);
+                      }
+
+
+              }
+
+
+
+
+
+
+
+
+
+    //   await axios.put(`http://localhost:8000/api/v1/Cart/update-item/${id}`, { quantity: newQuantity });
+    //   // Update the cart state to reflect the updated quantity
+    //   setCart(cart.map(item => (item._id === id ? { ...item, quantity: newQuantity } : item)));
+    //   toast.success("Item quantity update successfully");
+    //  console.log(existingQuantity)
+    //  console.log(newQuantity)
+
     } catch (error) {
       console.error('Error updating cart item quantity:', error);
     }

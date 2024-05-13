@@ -1,5 +1,5 @@
 import express from 'express';
-import { AddUser, CheckUserDetails, GetUsers, DeleteUser } from '../controllers/UserRegisterController.js';
+import { AddUser, CheckUserDetails, GetUsers, DeleteUser, UpdateUser, GetUserDetailsByID } from '../controllers/UserRegisterController.js';
 
 const UserRouter = express.Router();
 
@@ -14,5 +14,12 @@ UserRouter.get('/getUserDeatails', GetUsers);
 
 //delete user
 UserRouter.delete('/deleteUser/:deleteID', DeleteUser);
+
+//updateUser
+UserRouter.put('/UpdateUser', UpdateUser);
+
+//get user details by ID
+UserRouter.get('/getUserDetailsByID/:userID', GetUserDetailsByID);
+
 
 export default UserRouter;
