@@ -87,7 +87,7 @@ const UpdateProduct = () => {
             productData.append("supplier", supplier);
             productData.append("reorderLevel", reorderLevel);
 
-            const { data } = await axios.put(`/api/v1/product/update-product/${id}`, productData);
+            const { data } = await axios.put(`http://localhost:8000/api/v1/product/update-product/${id}`, productData);
 
             if (data?.success) {
                 toast.success("Product updated successfully");

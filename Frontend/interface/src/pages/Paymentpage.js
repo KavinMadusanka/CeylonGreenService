@@ -93,23 +93,23 @@ const Paymentpage = () => {
   //   }
   // };
 
-  //handel delete address
-  const handleDelete = async (AId) => {
+// Handle delete address
+const handleDelete = async (AId) => {
+  const confirmed = window.confirm("Are you sure you want to delete this address?");
+  if (confirmed) {
     try {
-      const { data } = await axios.delete(
-        `/api/v1/auth/delete-Address/${AId}`
-      );
+      const { data } = await axios.delete(`/api/v1/auth/delete-Address/${AId}`);
       if (data.success) {
         toast.success('Address deleted successfully');
-
         getAllAddress();
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Somtihing went wrong");
+      toast.error("Something went wrong");
     }
-  };
+  }
+};
 
   // Function to handle modal visibility and content
   const handleModal = (content) => {
@@ -158,20 +158,20 @@ useEffect(() => {
   getAllCard();
 },[email])
 
+// Handle delete card details
 const handleDeleteCard = async (CId) => {
-  try {
-    const { data } = await axios.delete(
-      `/api/v1/auth/delete-card/${CId}`
-    );
-    if (data.success) {
-      toast.success('Card Details deleted successfully');
-
-      getAllAddress();
-    } else {
-      toast.error(data.message);
+  const confirmed = window.confirm("Are you sure you want to delete this card details?");
+  if (confirmed) {
+    try {
+      const { data } = await axios.delete(`/api/v1/auth/delete-card/${CId}`);
+      if (data.success) {
+        toast.success('Card Details deleted successfully');
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
     }
-  } catch (error) {
-    toast.error("Somtihing went wrong");
   }
 };
 
