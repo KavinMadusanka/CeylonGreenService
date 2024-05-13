@@ -6,6 +6,10 @@ import {appointmentController,
     updateAppointmentController,
     getAdminAppointmentController,
     downloadPDFController} from '../controllers/appointmentController.js';
+import { ASPController,
+    getASPController,
+    deleteASPController,
+    getSingleASPSController} from '../controllers/ASPController.js';
 
 //router object
 const router = express.Router();
@@ -29,6 +33,27 @@ router.delete('/delete-appointment/:id',deleteAppointmentController);
 
 // Get appointment PDF
 router.get('/download-pdf/:id', downloadPDFController);
+
+
+
+
+//==================================
+// Service Packages
+
+//create service package
+router.post('/create-sp', ASPController);
+
+//read service packages
+router.get('/read-sp', getASPController);
+
+//get single package
+router.get('/getsingle-sp/:id', getSingleASPSController)
+
+//delete service package
+router.delete('/delete-sp/:id', deleteASPController);
+
+
+
 
 
 export default router;
