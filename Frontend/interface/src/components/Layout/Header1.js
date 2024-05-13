@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link ,useNavigate} from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
 const Header1 = () => {
+  const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
 
+  function LogOut() {
+    localStorage.removeItem('auth');
+    navigate('/userLogin')
+    window.location.reload()
+  }
   return (
     <>
       <div className="header">
@@ -125,6 +131,11 @@ const Header1 = () => {
                       </li>
                       </ul>
                     </li>
+                    <li className="nav-item">
+                      <NavLink to="/" className="nav-link" href="#" onClick={LogOut}>
+                        Log Out
+                      </NavLink >
+                    </li>
                   </>
                 ) : (
                   <>
@@ -194,6 +205,11 @@ const Header1 = () => {
                       <NavLink to="/profile" className="nav-link" href="#">
                         Profile
                       </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink to="/" className="nav-link" href="#" onClick={LogOut}>
+                        Log Out
+                      </NavLink >
                     </li>
                   </>
                 )}

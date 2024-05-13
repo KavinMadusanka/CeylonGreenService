@@ -15,6 +15,12 @@ const KApaymentdashboard = () => {
     const [appointmentsPrice, setAppointmentsPrice] = useState([]);
     const [AppointSubtotal, setAppointSubtotal] = useState(0);
 
+    function LogOut() {
+        localStorage.removeItem('auth');
+        navigate('/userLogin')
+        window.location.reload()
+      }
+
     //getall payment details
     const getAllPayments = async() =>{
         try {
@@ -47,20 +53,42 @@ const KApaymentdashboard = () => {
         }
       }, [payment]);
 
-          //useEffect(() => {
-            const getAllAppointments = async () => {
-                try {
-                    const { data } = await axios.get('/api/v1/appointment/get-admin-appointment');
-                    // setAppointments(data.appointments);                    
-                    setAppointmentsPrice(data.appointments);
-                } catch (error) {
-                    console.log(error);
-                }
-            };
+      
+    // Function to get all appointments with a selected date up to today
+    const getAppointmentsByDate = async () => {
+        try {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Set hours to start of the day
+            const { data } = await axios.get('/api/v1/appointment/get-admin-appointment');
+            const filteredAppointments = data.appointments.filter(appointment => {
+                const appointmentDate = new Date(appointment.selectedDate);
+                return appointmentDate <= today;
+            });
+            setAppointmentsPrice(filteredAppointments);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getAppointmentsByDate();
+    }, []);
+
+        //   //useEffect(() => {
+        //     const getAllAppointments = async () => {
+        //         try {
+        //             const { data } = await axios.get('/api/v1/appointment/get-admin-appointment');
+        //             // setAppointments(data.appointments);                    
+        //             setAppointmentsPrice(data.appointments);
+        //             getAllAppointments();
+        //         } catch (error) {
+        //             console.log(error);
+        //         }
+        //     };
         
-            useEffect(() => {
-            getAllAppointments();
-        }, []);
+        //     useEffect(() => {
+        //     getAllAppointments();
+        // }, []);
 
         useEffect(() => {
             if(appointmentsPrice.length > 0){
@@ -139,7 +167,7 @@ const KApaymentdashboard = () => {
                     </li>
                     <li className="w-100">
                         <Link 
-                            to = "#"
+                            to = "/" onClick={LogOut}
                             className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-power ms-2"></i>
