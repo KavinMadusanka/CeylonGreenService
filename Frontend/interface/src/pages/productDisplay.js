@@ -232,22 +232,45 @@ function ProductDisplay() {
    // Filter products based on category
    (selectedCategory === "" || product.category.name.toLowerCase() === selectedCategory.toLowerCase()) &&
 
-    <div key={product._id} className="product">
-      <img className='product_picture' src={`http://localhost:8000/api/v1/product/product-photo/${product._id}`} alt={product.name} />
-      <h2><b>{product.name}</b></h2>
-      <p> {product.category.name}</p>
-      {/* <p>Description: {product.description}</p> */}
-      <p> Rs.{product.price}</p>
-      <p>Quantity: {product.quantity}</p>
-      {/* Render other product details as needed */}
+//     <div key={product._id} className="product">
+//       <div  >
+//       <img className='product_picture' src={`http://localhost:8000/api/v1/product/product-photo/${product._id}`} alt={product.name} /></div>
+//       <h2><b>{product.name}</b></h2>
+//       <p> {product.category.name}</p>
+//       {/* <p>Description: {product.description}</p> */}
+//       <p> Rs.{product.price}</p>
+//       <p>
+//   Quantity: {product.quantity <= 0 ? "Out of Stock" : product.quantity}
+// </p>
+//       {/* Render other product details as needed */}
       
       
-      <button id='addtocart' onClick={() => addToCart(product._id,product.quantity)} className='btnsub'>Add to cart</button>
+//       <button id='addtocart' onClick={() => addToCart(product._id,product.quantity)} className='btnsub'>Add to cart</button>
       
-      <button className='btnsub' id='wishlist' onClick={() => addToWishlist(product._id)}>Wishlist</button>
+//       <button className='btnsub' id='wishlist' onClick={() => addToWishlist(product._id)}>Wishlist</button>
       
       
-    </div>
+//     </div>
+<div key={product._id} className="product">
+  <div style={{ height: "200px", width: "auto" }}>  <img className='product_picture' src={`http://localhost:8000/api/v1/product/product-photo/${product._id}`} alt={product.name} />
+  </div>
+
+  <div style={{ height: "200px", width: "auto" }}>
+  <h2><b>{product.name}</b></h2>
+  <p> {product.category.name}</p>
+  {/* <p>Description: {product.description}</p> */}
+  <p> Rs.{product.price}</p>
+  <p>
+    Quantity: {product.quantity <= 0 ? "Out of Stock" : product.quantity}
+  </p>
+  {/* Render other product details as needed */}
+  </div>
+  <button id='addtocart' onClick={() => addToCart(product._id,product.quantity)} className='btnsub'>Add to cart</button>
+  
+  <button className='btnsub' id='wishlist' onClick={() => addToWishlist(product._id)}>Wishlist</button>
+  
+</div>
+
   ))}
 </div>
 

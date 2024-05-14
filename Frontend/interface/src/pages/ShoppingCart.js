@@ -386,7 +386,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                           {/* <p>Color: {carts.product.color}</p>
                           <p>Size: {carts.product.size}</p> */}
                           <p ><strong> Price :  Rs. {carts.product.price}</strong></p>
-                          <p ><strong> Available: {carts.product.quantity}</strong></p>
+                          <p ><strong> Available: {carts.product.quantity<= 0 ? "Out of Stock" :carts.product.quantity}</strong></p>
 
                           <div className='but'>
                           <button type="button"className='btnsub' onClick={() => handleDeleteCartItem(carts._id,carts.product.quantity,carts.product._id,carts.quantity)}>Remove</button>
@@ -603,7 +603,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
               
         
         </div>
-        <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charege may relese up to 3 or more items </li></h8>
+        <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charge may relese up to 3 or more items </li></h8>
           </div>
 
 
