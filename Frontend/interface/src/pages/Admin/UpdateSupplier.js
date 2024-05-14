@@ -34,7 +34,12 @@ const UpdateSupplier = () => {
   
     const handleUpdate = async (e) => {
       e.preventDefault();
+          
       try {
+        if (contactNo.length !== 10) {
+          toast.error("Contact number must be 10 characters long");
+          return;
+        }
         const response = await axios.put(`http://localhost:8000/api/v1/supplier/update-supplier/${params.id}`, {
           name,
           address,

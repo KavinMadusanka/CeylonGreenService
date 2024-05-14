@@ -52,4 +52,44 @@
 .card-text {
     color: #416d19;
     margin-bottom: 5px;
-} */
+} 
+*/
+.card {
+    width: 18rem;
+    margin: 10px;
+    background-color: #bfea7c;
+    border: 1px solid #416d19;
+    border-radius: 5px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #416d19;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: #416d19;
+    margin-bottom: 5px;
+}
+
+.out-of-stock-label {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 1; /* Ensure the label is above the image */
+  }
