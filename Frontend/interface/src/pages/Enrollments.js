@@ -52,7 +52,7 @@ const Enrollments = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/api/v1/enrollments/enrollments`);
+        const response = await fetch(`http://localhost:8000/api/v1/enrollments/enrollments`);
         const data = await response.json();
         setEnrolls(data.enrollments);
         console.log(data);
@@ -67,7 +67,7 @@ const Enrollments = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/api/v1/programs/get-programs`);
+        const response = await fetch(`http://localhost:8000/api/v1/programs/get-programs`);
         const data = await response.json();
         setPrograms(data.programs);
         console.log(data);
@@ -82,7 +82,7 @@ const Enrollments = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/api/v1/employees/get-employees`);
+        const response = await fetch(`http://localhost:8000/api/v1/employees/get-employees`);
         const data = await response.json();
         setEmployees(data.employees);
         console.log(data);
@@ -101,7 +101,7 @@ const Enrollments = () => {
   const empEnroll = async () => {
     console.log(newEnroll)
     try {
-      const result = await fetch(`http://localhost:9000/api/v1/enrollments/enroll`, {
+      const result = await fetch(`http://localhost:8000/api/v1/enrollments/enroll`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ const Enrollments = () => {
 
   const handleDeleteEnroll = async (id) => {
     try {
-      const result = await axios.delete(`http://localhost:9000/api/v1/enrollments/enrollment/${id}`);
+      const result = await axios.delete(`http://localhost:8000/api/v1/enrollments/enrollment/${id}`);
 
       if (result) {
         toast.warning('Enrollent Removed');
