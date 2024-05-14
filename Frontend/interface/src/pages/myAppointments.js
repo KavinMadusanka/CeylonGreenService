@@ -103,37 +103,40 @@ const generateAppointmentPDF = (appointment) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20; // Adjust the margin as needed
 
     // Add border around content
-    doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
+    doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
+
+    // Add main title
+    doc.setFontSize(20);
+    doc.text("CEYLON GREEN CLEANING SERVICE", pageWidth / 2, margin + 10, { align: 'center' });
 
     // Add title
     doc.setFontSize(18);
     const titleText = "Appointment Details";
-    const titleWidth = doc.getStringUnitWidth(titleText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-    const titleX = (pageWidth - titleWidth) / 2;
-    doc.text(titleText, titleX, 20);
+    doc.text(titleText, pageWidth / 2, margin + 20, { align: 'center' });
 
     // Add appointment details
     doc.setFontSize(12);
-    doc.text(`Name: ${appointment.fullName}`, 20, 40);
-    doc.text(`Address: ${appointment.address}`, 20, 50);
-    doc.text(`Phone No: ${appointment.phoneNumber}`, 20, 60);
-    doc.text(`Email: ${appointment.email}`, 20, 70);
-    doc.text(`Date: ${appointment.selectedDate}`, 20, 80);
-    doc.text(`Time: ${appointment.selectedTime}`, 20, 90);
-    doc.text(`Service Package: ${appointment.servicePackage}`, 20, 100);
-    doc.text(`Service Charge: ${appointment.Pprice}.00`, 20, 110);
+    doc.text(`Name: ${appointment.fullName}`, margin + 10, margin + 40);
+    doc.text(`Address: ${appointment.address}`, margin + 10, margin + 50);
+    doc.text(`Phone No: ${appointment.phoneNumber}`, margin + 10, margin + 60);
+    doc.text(`Email: ${appointment.email}`, margin + 10, margin + 70);
+    doc.text(`Date: ${appointment.selectedDate}`, margin + 10, margin + 80);
+    doc.text(`Time: ${appointment.selectedTime}`, margin + 10, margin + 90);
+    doc.text(`Service Package: ${appointment.servicePackage}`, margin + 10, margin + 100);
+    doc.text(`Service Charge: ${appointment.Pprice}.00`, margin + 10, margin + 110);
 
     // Add separator line
-    doc.line(10, 120, pageWidth - 10, 120);
+    doc.line(margin, margin + 120, pageWidth - margin, margin + 120);
 
     // Add footer
     doc.setFontSize(10);
     const footerText = "Thank you for choosing our service! - CEYLON GREEN SOLUTIONS";
     const footerWidth = doc.getStringUnitWidth(footerText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
     const footerX = (pageWidth - footerWidth) / 2;
-    const footerY = pageHeight - 30; // Adjust the Y position as needed
+    const footerY = pageHeight - margin - 10; // Adjust the Y position as needed
     doc.text(footerText, footerX, footerY);
 
     // Save the PDF with a unique name (e.g., based on appointment ID)
