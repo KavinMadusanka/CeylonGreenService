@@ -114,7 +114,10 @@ function ProductDisplay() {
   const addToCart = async (productId,quantity) => {
     try {
 
-      
+      if (quantity <= 0) {
+        toast.error("Product is out of stock");
+        return; // Exit the function if quantity is out of stock
+      }
       const response = await axios.post('http://localhost:8000/api/v1/Cart/add-to-cart', {
         product: productId,
         quantity: 1, 
