@@ -100,15 +100,15 @@ function App() {
         <Route path="/ShoppingCart" element={<ShoppingCart />} />
         <Route path="/wishlist" element={<Wishlist />} />
 
-{/* piyusha */}
-<Route path="/PrAdminDashboard" element={<PrAdminDashboard/>}/>
-        <Route path="/dashboard/admin/create-category" element={<CreateCategory/>}/>
-        <Route path="/dashboard/admin/create-product" element={<CreateProducts/>}/>
-        <Route path="/dashboard/admin/product/:slug" element={<UpdateProduct/>}/>
-        <Route path="/dashboard/admin/product" element={<Products/>}/>
-        <Route path="/dashboard/admin/create-supplier" element={<CreateSupplier/>}/>
-        <Route path="/dashboard/admin/suppliers" element={<Suppliers/>}/>
-        <Route path="/dashboard/admin/update-supplier/:id" element={<UpdateSupplier/>}/> {/* Add :id parameter */}
+        {/* piyusha */}
+        <Route path="/PrAdminDashboard" element={<PrAdminDashboard />} />
+        <Route path="/dashboard/admin/create-category" element={<CreateCategory />} />
+        <Route path="/dashboard/admin/create-product" element={<CreateProducts />} />
+        <Route path="/dashboard/admin/product/:slug" element={<UpdateProduct />} />
+        <Route path="/dashboard/admin/product" element={<Products />} />
+        <Route path="/dashboard/admin/create-supplier" element={<CreateSupplier />} />
+        <Route path="/dashboard/admin/suppliers" element={<Suppliers />} />
+        <Route path="/dashboard/admin/update-supplier/:id" element={<UpdateSupplier />} /> {/* Add :id parameter */}
 
 
         <Route path="*" element={<Pagenotfound />} />
@@ -127,17 +127,18 @@ function App() {
           element={<EmployeeProfile />}
         />
         <Route path="/SMDashboard" element={<SMDashboard />} />
-        <Route path="/EmployeeSalary" element={<EmployeeSalary/>} />
-        <Route path="/EPDashboard" element={<EPDashboard/>} />
+        <Route path="/EmployeeSalary" element={<EmployeeSalary />} />
+        <Route path="/EPDashboard" element={<EPDashboard />} />
 
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/ContactUs" element={<ContactUs />} />
-{/* Lakshan */}
+        {/* Lakshan */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/addPrograms" element={<AddProgram />} />
         <Route path="/viewPrograms" element={<ViewPrograms />} />
         <Route path="/enrollments" element={<Enrollments />} />
-        
+        <Route path="/contactDetailsManagement" element={<ContactUsView />} />
+
 
 
       </Routes>

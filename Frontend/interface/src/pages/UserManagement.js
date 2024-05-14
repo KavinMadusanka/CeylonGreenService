@@ -151,15 +151,20 @@ function UserManagement() {
                     <Card sx={{ display: 'flex', justifyContent: 'center', width: '80vw',/*  height: '80vh', *//* width: { md: '80vw', xs: '40vw' } */ }}>
                         <br />
                         <TableContainer>
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '10px' }}>
-                                <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                <TextField
-                                    id="input-with-sx"
-                                    variant="standard"
-                                    value={searchDevice}
-                                    placeholder='Search user details'
-                                    onChange={(e) => { setSearchDevice(e.target.value) }}
-                                />
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', paddingRight: '10px' }}>
+                                <div style={{ paddingLeft: '10px', paddingTop: '10px' }}>
+                                    <Typography sx={{ fontWeight: 'bold', color: 'red' }}>No of registerd users: {allUSers.length}</Typography>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'center', paddingRight: '10px' }}>
+                                    <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                    <TextField
+                                        id="input-with-sx"
+                                        variant="standard"
+                                        value={searchDevice}
+                                        placeholder='Search user details'
+                                        onChange={(e) => { setSearchDevice(e.target.value) }}
+                                    />
+                                </div>
                             </Box>
                             <br />
                             <Table>
@@ -199,10 +204,6 @@ function UserManagement() {
                                                 </IconButton>
                                             </TableCell>
                                             <TableCell align='center'>
-                                                <IconButton>
-                                                    <EditIcon sx={{ color: 'black' }} />
-                                                </IconButton>
-                                                &nbsp;
                                                 <IconButton >
                                                     <DeleteIcon sx={{ color: 'black' }} onClick={() => DeleteUser(row._id)} />
                                                 </IconButton>

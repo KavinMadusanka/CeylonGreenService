@@ -64,7 +64,8 @@ function Register() {
                             password: '',
                             conPassowrd: ''
                         })
-                        navigate('/userLogin')
+                        navigate('/userLogin');
+                        toast.success("User registration successfull!!");
                     }
                 })
             } else {
@@ -109,7 +110,8 @@ function Register() {
 
                                 validationSchema={
                                     Yup.object().shape({
-                                        name: Yup.string().matches(/^[A-Za-z]+$/, 'Name must contain only alphabet letters').required('Name is required'),
+                                        name: Yup.string().matches(/^[^!@#$%^&*()_+]*$/, 'Name cannot contain special characters like ! @ # $ % ^ & * ( ) _ +')
+                                            .matches(/^[A-Za-z ]*$/, 'Name must contain only alphabet letters and spaces').required('Name is required'),
                                         address: Yup.string().required('Address is required'),
                                         pNumber: Yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits').required('Phone number is required'),
                                         email: Yup.string()

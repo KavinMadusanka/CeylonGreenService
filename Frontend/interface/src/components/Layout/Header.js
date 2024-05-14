@@ -101,13 +101,19 @@ const Header = () => {
                               Training Management
                             </NavLink>
                           </li>
+                          <li>
+                            <NavLink to="/contactDetailsManagement" activeClassName="active" className='dropdown-item'
+                            >
+                              Contact Details Management
+                            </NavLink>
+                          </li>
                         </ul>
                       </li>
                       <li className="nav-item">
-                      <NavLink to="/" className="nav-link" href="#" onClick={LogOut}>
-                        Log Out
-                      </NavLink >
-                    </li>
+                        <NavLink to="/" className="nav-link" href="#" onClick={LogOut}>
+                          Log Out
+                        </NavLink >
+                      </li>
                     </>
                   ) : (<>
                     <li className="nav-item">

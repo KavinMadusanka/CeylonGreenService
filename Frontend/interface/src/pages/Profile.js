@@ -5,6 +5,7 @@ import { Formik } from 'formik'
 import * as Yup from "yup";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import axios from 'axios';
+import { toast } from 'react-toastify'
 
 const Profile = () => {
   const [userID, setUserID] = useState();
@@ -67,6 +68,7 @@ const Profile = () => {
       if (res.data.status == "Success") {
         getUserDetailsByID();
         setIsUpdate(false);
+        toast.success("User update successful!!")
       }
     })
   }
