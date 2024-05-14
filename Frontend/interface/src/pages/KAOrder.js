@@ -347,17 +347,31 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
               </div>
               <div className="card-body">
               <div >
-                <table style={{ marginLeft:'2%', width:'95%'}}>
+                <table style={{ marginLeft:'2%', width:'95%', border: '1px solid black'}}>
                     <thead>
                         <tr style={{backgroundColor:'#BFEA7C'}}>
-                            <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>item names</th>
-                            <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Items quantity</th>
-                            <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>total price</th>
-                            <th style={{ border: '1px solid #BFEA7C', padding: '10px' }}>Status</th>
+                            <th style={{ border: '1px solid black', padding: '10px' }}>Order ID</th>
+                            <th style={{ border: '1px solid black', padding: '10px' }}>Item Names & Purticuler Quantoty</th>
+                            <th style={{ border: '1px solid black', padding: '10px' }}>total price</th>
+                            <th style={{ border: '1px solid black', padding: '10px' }}>Status</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {orders.map((c) => 
+                        <tr key={c._id}>
+                          <td style={{ border: '1px solid black', padding: '10px' }}>{c._id}</td>
+                          <td style={{ border: '1px solid black', padding: '10px' }}>
+                          <ul>
+                            {c.cart.map(item => (
+                              <li key={item.product._id} style={{ listStyleType: 'none'}}>{item.product.name}  -  {item.quantity}</li>
+                            ))}
+                          </ul>
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '10px' }}>{c.price}</td>
+                          <td style={{ border: '1px solid black', padding: '10px' }}>{c.status}</td>
+                        </tr>
                         
+                        )}
                     </tbody>
                 </table>
             
@@ -401,7 +415,9 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
           <div className="col-md-4">
             <div className="card mb-4">
               <div className="card-header py-3">
-                <h5 className="mb-0">Need to pay</h5>
+                <h5 className="mb-0">
+                  {/* Need to pay */}
+                  </h5>
               </div>
               
               
@@ -416,7 +432,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                 </div>
                 </div>
             
-              <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charege may relese up to 3 or more items </li></h8>
+              {/* <h8> <li className="list-group-item d-flex justify-content-between align-items-center px-0">Shipping charege may relese up to 3 or more items </li></h8> */}
             </div>
           
         </div>
