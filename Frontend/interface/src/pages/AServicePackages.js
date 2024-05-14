@@ -17,6 +17,12 @@ const AServicePackages = () => {
 
     const [mode, setMode] = useState('add');
 
+    function LogOut() {
+        localStorage.removeItem('auth');
+        navigate('/userLogin')
+        window.location.reload()
+      }
+
 
     const getAllPackages = async () => {
         try {
@@ -149,7 +155,7 @@ const handleSubmit = async (e) => {
                     </li>
                     <li className="w-100">
                         <Link 
-                            to = "#"
+                            to = "/" onClick={LogOut}
                             className ="nav-link px-0 align-middle" style={{color:'#416D19'}}
                         >
                             <i className ="fs-4 bi-power ms-2"></i>
