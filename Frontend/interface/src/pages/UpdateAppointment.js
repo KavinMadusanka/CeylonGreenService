@@ -183,12 +183,13 @@ useEffect(() => {
             <div className="item3">
             <div className="form-group">
             <label htmlFor="address">Address:</label>
-            <textarea
+            <input
+            type="text"a
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Enter your address"
               required
-            ></textarea>
+            ></input>
           </div>
             </div>
 
