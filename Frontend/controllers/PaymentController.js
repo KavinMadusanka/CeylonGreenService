@@ -311,3 +311,39 @@ export const orderController = async (req, res) => {
       res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
+
+export const getOrderController = async (req, res) => {
+  const{ email } =req.params;
+  try {
+    // Retrieve orders from the database
+    const orders = await Order.find({email});
+
+    // Respond with success and the retrieved orders
+    res.status(200).send({ success: true, orders: orders });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).send({ success: false, message: 'Internal server error' });
+  }
+};
+
+
+
+export const getOrderByIdController = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+
+    // Retrieve order from the database by ID
+    const order = await Order.findById(orderId);
+
+    // Check if the order exists
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    // Respond with success and the retrieved order
+    res.status(200).send({ success: true, order: order });
+  } catch (error) {
+    console.error('Error fetching order:', error);
+    res.status(500).send({ success: false, message: 'Internal server error' });
+  }
+};

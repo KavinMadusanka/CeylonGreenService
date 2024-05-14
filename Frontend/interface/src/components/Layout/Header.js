@@ -162,6 +162,12 @@ const Header = () => {
                           </NavLink>
                         </li>
                         <li>
+                          <NavLink to="/order" className="dropdown-item"
+                          >
+                            Orders
+                          </NavLink>
+                        </li>
+                        <li>
                           <NavLink to="/" className="dropdown-item"
                           >
                             Hired Employees

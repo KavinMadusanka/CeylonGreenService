@@ -56,6 +56,7 @@ import Dashboard from './pages/Dashboard';
 import Enrollments from './pages/Enrollments';
 import Wishlist from "./pages/Wishlist";
 import ContactUsView from "./pages/ContactUsView";
+import KAOrder from "./pages/KAOrder";
 
 
 function App() {
@@ -90,6 +91,8 @@ function App() {
         <Route path="/KApaymentOption" element={<KApaymentOptions />} />
         <Route path="/KAcardpayment" element={<KAcardpayment />} />
         <Route path="/KApaymentdashboard" element={<KApaymentdashboard />} />
+        <Route path="/order" element={<KAOrder />} />
+
 
 
         {/* Nethmi  */}
