@@ -3,7 +3,9 @@ import {paymentController,
     bankpaymentController,
     updateProductQuantityController,
     PaymentPriceController,
-    orderController
+    orderController,
+    getOrderController,
+    getOrderByIdController
 } from '../controllers/PaymentController.js'
 import { deleteAllCartItem } from '../controllers/CartController.js';
 
@@ -25,5 +27,10 @@ router.patch("/update-quantity/:productId", updateProductQuantityController);
 
 //create order
 router.post('/submit-cart', orderController);
+
+//get all orders for single user
+router.get("/get-single-userorder/:email",getOrderController)
+
+router.get("/get-userorder/:id",getOrderByIdController)
 
 export default router;
