@@ -19,3 +19,24 @@
 #table1 td input {
   width: 100%;
 }
+
+.exportReBtn {
+  float: right;
+  margin-right: 5%;
+  margin-bottom: 2%;
+}
+
+.exportReBtn button {
+  background-color: #BFEA7C;
+  color: #416D19;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.exportReBtn button:hover {
+  background-color: #416D19;
+  color: #fff;
+}

@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useAuth } from '../../context/auth';
+import {} from '../../components/KApaymentForm.css';
+
 import axios from 'axios';
+import jsPDF from 'jspdf';
 import Layout1 from '../../components/Layout/Layout1';
+import KApaymentForm from './../KApaymentForm';
 
 const KApaymentdashboard = () => {
     const navigate = useNavigate()
     const [payment, setPayment] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
+    const [exTotal, setExTotal] = useState(0);
     axios.defaults.withCredentials = true
 
     const [appointments, setAppointments] = useState([]);
@@ -131,6 +136,35 @@ const KApaymentdashboard = () => {
           }, [appointmentsPrice]);
 
 
+    // Function to generate PDF report
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        const title = "CeylonGreenService Financial Statement";
+        const textWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        const pageWidth = doc.internal.pageSize.width;
+        const x = (pageWidth - textWidth) / 2;
+        // Add title
+        doc.text(title, x, 10);
+        // Add image
+        // Replace 'imageURL' with the actual URL of your image
+        // doc.addImage('/logo192.png', 'PNG', 10, 20, 30, 30); // adjust position and size as needed
+        // Add table
+        doc.autoTable({
+            head: [['Description', 'Income(Rs.)', 'Expenses(Rs.)']],
+            body: [
+                ['Product Sales Revenue', subtotal.toFixed(2), ''],
+                ['Service Booking Revenue', AppointSubtotal.toFixed(2), ''],
+                ['Staff Salary Expenditure', '', exTotal.toFixed(2)],
+                ['Training Program Revenue', exTotal.toFixed(2), ''],
+                [],
+                // Bold specific rows
+                ['Total Revenue', (subtotal+exTotal+AppointSubtotal).toFixed(2), ''],
+                ['Total Expenses', '', exTotal.toFixed(2)],
+                ['Net. Income', '', ((subtotal+exTotal+AppointSubtotal) - exTotal).toFixed(2)],
+            ]
+        });
+        doc.save("payment_details.pdf");
+    };
 
 
   return (
@@ -204,9 +238,12 @@ const KApaymentdashboard = () => {
             </div>
         </div>
         <div className="col p-0 m-0">
-        <div className="p-2 d-flex" style={{marginLeft:'2%'}}>
+        <div className="p-2 m-2 d-flex justify-content-between" style={{ marginLeft: '2%' }}>
 
             <h1>Payment Manager</h1>
+            <div className='exportReBtn'>
+                <button onClick={generatePDF}>Export Report</button>
+            </div>
         </div>
         <div>
             <table style={{ marginLeft:'2%', width:'95%'}}>
@@ -240,14 +277,14 @@ const KApaymentdashboard = () => {
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
                         </td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
-                        <span>{subtotal.toFixed(2)}</span>
+                        <span>{exTotal.toFixed(2)}</span>
                         </td>
                         </tr>
                         <tr>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}>Training Program Revenue</td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
-                        <span>{subtotal.toFixed(2)}</span>
+                        <span>{exTotal.toFixed(2)}</span>
                         </td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
                         </td>
@@ -256,7 +293,7 @@ const KApaymentdashboard = () => {
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}><b>Total Revenue</b></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
-                        <b><span>{(subtotal+subtotal+subtotal).toFixed(2)}</span></b>
+                        <b><span>{(subtotal+AppointSubtotal+exTotal).toFixed(2)}</span></b>
                         </td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
                         </td>
@@ -267,14 +304,14 @@ const KApaymentdashboard = () => {
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
                         </td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
-                        <b><span>{(subtotal).toFixed(2)}</span></b>
+                        <b><span>{(exTotal).toFixed(2)}</span></b>
                         </td>
                         </tr>
                         <tr>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}><b>Net. Income</b></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}} colSpan={2}>
-                        <b><span>{((subtotal+subtotal+subtotal)-(subtotal)).toFixed(2)}</span></b>
+                        <b><span>{((subtotal+exTotal+AppointSubtotal)-(exTotal)).toFixed(2)}</span></b>
                         </td>
                         </tr>
 
