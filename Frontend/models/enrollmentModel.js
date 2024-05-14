@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const EnrollmentSchema = new mongoose.Schema({
   employeeId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'employees',
+    ref: 'employee',
     required: true,
   },
   programId: {
