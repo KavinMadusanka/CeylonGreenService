@@ -178,12 +178,17 @@ function ProductDisplay() {
       <Link to="/ShoppingCart">
                     <button className='btnsub'>Shopping cart</button>
                     </Link>
-                    </div> 
-                    <div className='but' id='wishlistbtn'>
-      <Link to="/wishlist">
+                    <span className="mx-2"></span> {/* Adding space */}
+                    <span className="mx-2"></span> {/* Adding space */}
+                    <Link to="/wishlist">
                     <button className='btnsub'>Wish  list</button>      
                     </Link>
-                    </div>              
+                    </div> 
+                     <div className='but' id='buttonWishlist'>
+      {/* <Link to="/wishlist">
+                    <button className='btnsub'>Wish  list</button>      
+                    </Link> */}
+                    </div>               
       <div className='username'><b>Hello.. {name} welcome to Ceylon Green Shop</b></div>   
 
       <div className='searchbar w-25' id='search'>

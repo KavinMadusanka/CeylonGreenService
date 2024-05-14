@@ -15,27 +15,37 @@ function Wishlist() {
   const [loading, setLoading] = useState(true);
 
 
-  useEffect(() => {
+  useEffect(() => {       
     if (auth && auth.user) {
       setEmail(auth.user.email);
-      const fetchWishlist = async () => {
-        try {
-          const response = await axios.get(`http://localhost:8000/api/v1/wishlist/get-wishlist/${email}`);
-          setWishlist(response.data.wishlist);
-          fetchWishlist();   
-          console.log(response.data.wishlist)
-          
-        } catch (error) {
-          console.error(error);
-          toast.error("Error fetching wishlist details");
-        } finally {
-          setLoading(false);   
-        }
-      };
-      fetchWishlist();
-      fetchWishlist();
+      
     }
   }, [auth]);
+
+  //get cart items 
+  useEffect(() => {
+    
+
+    const fetchWishlist = async () => {
+        try {
+          console.log(email)
+          const response = await axios.get(`http://localhost:8000/api/v1/wishlist/get-wishlist/${email}`);
+          setWishlist(response.data.wishlist);
+          console.log(response.data.wishlist)
+          fetchWishlist();
+        } catch (error) {    
+          console.error(error);
+          //toast.error("Error fetching wishlist details");
+        } finally {
+        setLoading(false);   
+        }
+      };   
+      fetchWishlist();
+    
+  }, [email]);
+
+
+  
 
 
 
@@ -122,28 +132,28 @@ function Wishlist() {
             ) : (
               Wishlist.length > 0 ? (
                 <ul>
-                  {Wishlist.map((wishlistItem) => (
-                    <li key={wishlistItem._id} class="row mb-4">
+                  {Wishlist.map((W) => (
+                    <li key={W._id} class="row mb-4">
                       <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                         <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                          <img src={`http://localhost:8000/api/v1/product/product-photo/${wishlistItem.product._id}`} class="w-100" alt={wishlistItem.product.name} />
+                          <img src={`http://localhost:8000/api/v1/product/product-photo/${W.product._id}`} class="w-100" alt={W.product.name} />
                           <a href="#!">
                             <div class="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" }}></div>
                           </a>
                         </div>
                       </div>
                       <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                        <p><strong>{wishlistItem.product.name}</strong></p>
-                        <p><strong>Price: Rs. {wishlistItem.product.price}</strong></p>
-                        <p><strong> quantity {wishlistItem.product.quantity}</strong></p>
+                        <p><strong>{W.product.name}</strong></p>
+                        <p><strong>Price: Rs. {W.product.price}</strong></p>
+                        <p><strong> quantity {W.product.quantity}</strong></p>
 
                         {/* You can add other product details here, like description or size */}
                       </div>
                       <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                         {/* Wishlist doesn't typically have quantity or removal buttons. You can add a "Move to Cart" button if needed. */}
-                        <button type="button" class="btnsub"  onClick={() => deleteWishlistItem(wishlistItem._id)} >Remove </button>
+                        <button type="button" class="btnsub"  onClick={() => deleteWishlistItem(W._id)} >Remove </button>
                         <span className="mx-2"></span> {/* Adding space */}
-                        <button type="button" class="btnsub"   onClick={() => addToCart(wishlistItem.product._id,wishlistItem.product.quantity)} >Add to cart</button>
+                        <button type="button" class="btnsub"   onClick={() => addToCart(W.product._id,W.product.quantity)} >Add to cart</button>
                       </div>
                       <hr className="my-4" />
                     </li>     
@@ -165,4 +175,4 @@ function Wishlist() {
   )
 }
 
-export default Wishlist
+export default Wishlist 
