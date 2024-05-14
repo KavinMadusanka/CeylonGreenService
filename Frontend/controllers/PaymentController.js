@@ -1,5 +1,6 @@
 import paymentModel from "../models/PaymentModel.js";
 import InventoryModel from "../models/InventoryModel.js";
+import Order from "../models/KAorderModel.js";
 import slugify from "slugify";
 
 import fs from 'fs';
@@ -284,5 +285,29 @@ export const PaymentPriceController = async (req,res) => {
           error,
           message: "Error while getting payment details ",
       });
+  }
+};
+
+
+export const orderController = async (req, res) => {
+  try {
+      // Extract cart details and user email from request body
+      const { cart, email, price } = req.body;
+
+      // Create a new order with the cart details and user email
+      const order = new Order({
+          cart: cart,
+          email: email,
+          price: price
+      });
+
+      // Save the order to the database
+      const savedOrder = await order.save();
+
+      // Respond with success message
+      res.status(201).json({ success: true, message: 'Cart details submitted to orders successfully', order: savedOrder });
+  } catch (error) {
+      console.error('Error submitting cart to orders:', error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };

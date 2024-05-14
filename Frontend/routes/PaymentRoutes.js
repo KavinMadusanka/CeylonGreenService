@@ -2,7 +2,8 @@ import express from 'express';
 import {paymentController,
     bankpaymentController,
     updateProductQuantityController,
-    PaymentPriceController
+    PaymentPriceController,
+    orderController
 } from '../controllers/PaymentController.js'
 import { deleteAllCartItem } from '../controllers/CartController.js';
 
@@ -22,5 +23,7 @@ router.delete("/clear-cart/:email",deleteAllCartItem);
 //update quantity
 router.patch("/update-quantity/:productId", updateProductQuantityController);
 
+//create order
+router.post('/submit-cart', orderController);
 
 export default router;

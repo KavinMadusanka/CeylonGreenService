@@ -93,6 +93,8 @@ const KApaymentForm = () => {
       // );
       // console.log(email)
       if (data.success) {
+        await submitCartToOrders();
+        await axios.delete(`http://localhost:8000/api/v1/payment/clear-cart/${email}`);
         toast.success(data.message);
         navigate("/");
       } else {
@@ -103,6 +105,38 @@ const KApaymentForm = () => {
       toast.error("something went wrong");
     }
   };
+
+    //add all cart details in order page
+    const submitCartToOrders = async () => {
+      try {
+        console.log(email)
+        console.log(price)
+        console.log(cart)
+          const response = await axios.post(`http://localhost:8000/api/v1/payment/submit-cart`, {
+              cart: cart,
+              email: email,
+              price: price
+          });
+          console.log(email)
+          console.log(response.data); // Optional: Log the response for debugging
+      } catch (error) {
+          console.error('Error submitting cart to orders:', error);
+          toast.error('Error submitting cart to orders');
+      }
+  };
+
+  useEffect(() => {
+    
+    const fetchCartDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/Cart/get-cart/${email}`);
+        setCart(response.data.cart);
+      } catch (error) {
+        console.error('Error fetching cart details:', error);
+      }
+    };
+    fetchCartDetails();
+  }, [email]);
 
 
       //only gets alpherbatds

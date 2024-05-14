@@ -224,6 +224,7 @@ const handleCardsChange = async (value) => {
       if (data?.success) {
         toast.error(data?.message);
       } else {
+        await submitCartToOrders();
         // await removeQuantitiesFromInventory();
         await axios.delete(`http://localhost:8000/api/v1/payment/clear-cart/${email}`);
         toast.success("Payment Successfully");
@@ -235,6 +236,25 @@ const handleCardsChange = async (value) => {
       toast.error('Somthing went wrong!');
     }
   };
+
+  //add all cart details in order page
+  const submitCartToOrders = async () => {
+    try {
+      console.log(email)
+      console.log(price)
+      console.log(cart)
+        const response = await axios.post(`http://localhost:8000/api/v1/payment/submit-cart`, {
+            cart: cart,
+            email: email,
+            price: price
+        });
+        console.log(email)
+        console.log(response.data); // Optional: Log the response for debugging
+    } catch (error) {
+        console.error('Error submitting cart to orders:', error);
+        toast.error('Error submitting cart to orders');
+    }
+};
 
   //only gets alpherbatds
   const handleKeyPress = (event) => {
@@ -300,22 +320,22 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
   }, [email]);
 
 
-  // Function to remove quantities from inventory
-  const removeQuantitiesFromInventory = async () => {
-    try {
-      // Iterate through each item in the cart
-      for (let item of cart) {
-        // Make API call to update inventory quantity
-        await axios.patch(`/api/v1/inventory/${item.productId}`, {
-          quantity: item.quantity,
-          operation: "decrease" // Decrease inventory quantity
-        });
-      }
-    } catch (error) {
-      console.error('Error removing quantities from inventory:', error);
-      toast.error('Error removing quantities from inventory');
-    }
-  };
+  // // Function to remove quantities from inventory
+  // const removeQuantitiesFromInventory = async () => {
+  //   try {
+  //     // Iterate through each item in the cart
+  //     for (let item of cart) {
+  //       // Make API call to update inventory quantity
+  //       await axios.patch(`/api/v1/inventory/${item.productId}`, {
+  //         quantity: item.quantity,
+  //         operation: "decrease" // Decrease inventory quantity
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error removing quantities from inventory:', error);
+  //     toast.error('Error removing quantities from inventory');
+  //   }
+  // };
 
 
 
