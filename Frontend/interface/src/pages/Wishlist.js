@@ -3,6 +3,7 @@ import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import { useAuth } from '../context/auth';
 import { toast } from "react-toastify";
+import {ShoppingCartcss} from '../components/ShoppingCart.css';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -149,7 +150,7 @@ function Wishlist() {
 
                         {/* You can add other product details here, like description or size */}
                       </div>
-                      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0" id='Wbutton'>
                         {/* Wishlist doesn't typically have quantity or removal buttons. You can add a "Move to Cart" button if needed. */}
                         <button type="button" class="btnsub"  onClick={() => deleteWishlistItem(W._id)} >Remove </button>
                         <span className="mx-2"></span> {/* Adding space */}
@@ -170,7 +171,7 @@ function Wishlist() {
   </div>
 </section>
 
-    {/* <Footer /> */}
+    <Footer />
   </div>
   )
 }
