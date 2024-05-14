@@ -15,7 +15,7 @@ const SMHome = () => {
   }, []);
   const StaffManagerRecords = () => {
     axios
-      .get("http://localhost:3000/smdashboard/StaffManagerRecords")
+      .get("http://localhost:8000/api/v1/employees/get-employees")
       .then((result) => {
         if (result.data.Status) {
           setStaffManagers(result.data.Result);

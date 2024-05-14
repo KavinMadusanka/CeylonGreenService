@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import axios from "axios";
 
 function EmployeeSalary() {
   const [hours, setHours] = useState("");
@@ -12,21 +13,33 @@ function EmployeeSalary() {
   const [tallowance, setTallowance] = useState("");
   const [mbonus, setMbonus] = useState("");
   const [nsal, setNsal] = useState("");
-  const [emp, setEmp] = useState(null);
+  const [emp, setEmp] = useState([]);
+  console.log("emp::> ", emp);
   const [nameError, setNameError] = useState("");
   const [employeeName, setEmployeeName] = useState("");
+  console.log("employeeName:> ", employeeName);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAllEmployees = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8000/api/v1/employee/get-employee/663086aa94aaab421932bf32"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch employee data");
-        }
-        const json = await response.json();
-        setEmp(json);
+        // const response = await fetch(
+        //   "http://localhost:8000/api/v1/employees/get-employees"
+        // );
+        axios
+          .get("http://localhost:8000/api/v1/employees/get-employees")
+          .then((res) => {
+            if (res.data.employees.length > 0) {
+              setEmp(res.data.employees);
+            }
+          });
+
+        // if (!response.ok) {
+        //   throw new Error("Failed to fetch employee data");
+        // }
+        // const json = await response.json();
+        // setEmp(json);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching employee data:", error);
         // Handle error gracefully, e.g., show a message to the user
@@ -34,7 +47,6 @@ function EmployeeSalary() {
     };
     fetchAllEmployees();
   }, []);
-
   function handleCalculation() {
     const parsedHours = parseFloat(hours);
     const parsedRate = parseFloat(rate);
@@ -107,7 +119,7 @@ function EmployeeSalary() {
 
     doc.setFont("times", "bold");
     doc.setFontSize(25);
-    doc.text("Salary Details", 10, 10);
+    doc.text(`Salary Details : ${employeeName}`, 10, 10);
 
     doc.setFont("times", "normal");
     doc.setFontSize(12);
@@ -139,15 +151,23 @@ function EmployeeSalary() {
           <label htmlFor="employeeName" className="label">
             Employee Name
           </label>
-          <input
-            type="text"
+          <select
             id="employeeName"
             value={employeeName}
             onChange={(event) => setEmployeeName(event.target.value)}
             required
-          />
+          >
+            <option value="">Select Employee</option>
+            <option value="">Select Employee</option>
+            {emp.map((employee) => (
+              <option key={employee.id} value={employee.firstname}>
+                {employee.firstname}
+              </option>
+            ))}
+          </select>
           {nameError && <p className="error-message">{nameError}</p>}
         </div>
+
         <div className="form-group">
           <label htmlFor="hours" className="label">
             Working Hours
@@ -179,7 +199,7 @@ function EmployeeSalary() {
           </div>
         </div>
         <div className="form-group">
-          <button type="button" className="btn" onClick={handleCalculation}>
+          <button type="button" className="btn btn-success" onClick={handleCalculation}>
             Calculate Salary
           </button>
         </div>
@@ -212,7 +232,7 @@ function EmployeeSalary() {
           <input type="text" value={nsal} readOnly />
         </div>
         <div className="form-group">
-          <button type="button" onClick={handleGenerateReport}>
+          <button type="button" className="btn btn-success" onClick={handleGenerateReport}>
             Generate Salary Report
           </button>
         </div>
