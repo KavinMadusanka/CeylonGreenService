@@ -119,11 +119,15 @@
 }
 #shoppingCartbtn{
   position: relative;
-  top:245px;
-  left:390px;
+  top:207px;
+  left:280px;
+
+  
 }
-#wishlistbtn{
+#buttonWishlist{
+  /* position: relative;
+  top:180px;
+  left:270px; */
   position: relative;
-  top:205px;
-  left:270px;
+  top :180;
 }

@@ -153,7 +153,7 @@ function ShoppingCart() {
                             
                           });
                           if(response && response.data.success){
-                            toast.success(response.data.message);
+                            //toast.success(response.data.message);
                             // navigate('/payment');
                             
                           }else{
@@ -204,7 +204,7 @@ function ShoppingCart() {
                           
                         });
                         if(response && response.data.success){
-                          toast.success(response.data.message);
+                          //toast.success(response.data.message);
                           // navigate('/payment');
                           
                         }else{
@@ -290,8 +290,13 @@ function ShoppingCart() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (cNumber.length !== 10) {
+      if (cNumber.length < 10||cNumber.length>10) {
+
         toast.error("Contact number must be 10 characters long");
+        return;
+      }
+      if (!cNumber.startsWith('0')) {
+        toast.error("Contact number needs to start at '0' ");
         return;
       }
       const res = await axios.post('http://localhost:8000/api/v1/auth/KAddaddress',
@@ -300,6 +305,9 @@ function ShoppingCart() {
       if(res && res.data.success){
         toast.success(res.data.message);
         navigate('/shoppingcart');
+        setPostalcode('');
+        setDistrict('');
+        setProvince('');
       }else{
         toast.error(res.data.message );
       }
@@ -482,6 +490,7 @@ const todatDate =`${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear
                         onChange={(e) => setNumber(e.target.value)}
                         placeholder='07x xxxxxxx'
                         onKeyPress={handleKeyNumber}
+                        maxLength={10}
                         required 
                         /></td></tr>
                       <tr></tr>
