@@ -1,7 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../components/EmployeeProfile.css";
+import { useAuth } from "../context/auth";
+import axios from "axios";
+
+import { toast } from "react-toastify";
 
 const EmployeeProfile = () => {
+  const [auth, setAuth] = useAuth();
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("");
+  const [pronouns, setPronouns] = useState("");
+  const [salary, setSalary] = useState("");
+  const [leaves, setLeaves] = useState("");
+  const [status, setStatus] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [nic, setNIC] = useState("");
+  const [profileImageUrl, setProfileImageUrl] = useState("");
+
+  // useEffect(() => {
+  //   if (auth && auth.user) {
+  //     setEmail(auth.user.email);
+  //   }
+  // }, [auth]);
+  // const fetchEmployeeByEmail = async () => {
+  //   try {
+  //     const employee = await axios.get(
+  //       `http://localhost:8000/api/v1/employees/get-employee/${email}`
+  //     );
+  //     if (employee?.success) {
+  //       setFirstName(employee.employee.firstname);
+  //       setLastName(employee.employee.lastname);
+  //       setEmail(employee.employee.email);
+  //       setPhone(employee.employee.phone);
+  //       setAddress(employee.employee.address);
+  //       setGender(employee.employee.gender);
+  //       setNIC(employee.employee.nic);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching cart details:", error);
+  //   }
+  // };
+
   const employeeData = {
     firstName: "Imal",
     lastName: "Menuka",
@@ -13,8 +55,7 @@ const EmployeeProfile = () => {
     status: "Active",
     address: "Nattandiya, Sri Lanka",
     email: "imal@gmail.com",
-    profileImageUrl:
-      "https://img.icons8.com/?size=128&id=118243&format=png",
+    profileImageUrl: "https://img.icons8.com/?size=128&id=118243&format=png",
   };
 
   return (

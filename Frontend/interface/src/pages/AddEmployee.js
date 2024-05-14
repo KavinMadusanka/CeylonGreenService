@@ -18,11 +18,13 @@ const AddEmployee = () => {
   const navigate = useNavigate();
 
   const handleChange = (event) => {
-    const inputPhone = event.target.value;
+    let inputPhone = event.target.value;
+    // Trim any input longer than 10 digits
+    inputPhone = inputPhone.slice(0, 10);
     const isValidPhone = /^\d{10}$/.test(inputPhone); // Validate 10-digit phone number
-
+  
     setphone(inputPhone); // Update the phone state
-
+  
     // Update the valid state based on phone number validity
     setValid(isValidPhone);
   };

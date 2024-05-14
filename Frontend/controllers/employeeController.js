@@ -1,17 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import Employee from "../models/employeeModel.js";
 
 export const createEmployeeController = async (req, res) => {
   try {
-    const {
-      firstname,
-      lastname,
-      email,
-      phone,
-      address,
-      gender,
-      nic
-    } = req.body;
+    const { firstname, lastname, email, phone, address, gender, nic } =
+      req.body;
 
     const newEmployee = await new Employee({
       firstname,
@@ -20,7 +13,7 @@ export const createEmployeeController = async (req, res) => {
       phone,
       address,
       gender,
-      nic
+      nic,
     }).save();
     res.status(201).send({
       success: true,
@@ -46,13 +39,15 @@ export const getEmployeeController = async (req, res) => {
 };
 
 export const getEmployeeByIdController = async (req, res) => {
+  const email = req.params.id;
   try {
-    const { id } = req.params;
-    const employee = await Employee.findById(id);
+    const employee = await Employee.find({ _id: email });
     if (employee) {
-      res.status(200).send({ success: true, employee });
+      return res.status(200).send({ success: true, employee });
     } else {
-      res.status(404).send({ success: false, message: "Employee not found" });
+      return res
+        .status(404)
+        .send({ success: false, message: "Employee not found" });
     }
   } catch (error) {
     res
@@ -64,15 +59,8 @@ export const getEmployeeByIdController = async (req, res) => {
 export const updateEmployeeController = async (req, res) => {
   try {
     const { id } = req.params;
-    const {
-      firstname,
-      lastname,
-      email,
-      phone,
-      address,
-      gender,
-      nic
-    } = req.body;
+    const { firstname, lastname, email, phone, address, gender, nic } =
+      req.body;
     const updatedEmployee = await Employee.findByIdAndUpdate(
       id,
       {
@@ -82,7 +70,7 @@ export const updateEmployeeController = async (req, res) => {
         phone,
         address,
         gender,
-        nic
+        nic,
       },
       { new: true }
     );
@@ -108,18 +96,24 @@ export const deleteEmployeeByIdController = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).send({ success: false, message: "Invalid employee ID" });
+      return res
+        .status(400)
+        .send({ success: false, message: "Invalid employee ID" });
     }
 
     const deletedEmployee = await Employee.findByIdAndDelete(id);
 
     if (deletedEmployee) {
-      res.status(200).send({ success: true, message: "Employee deleted successfully" });
+      res
+        .status(200)
+        .send({ success: true, message: "Employee deleted successfully" });
     } else {
       res.status(404).send({ success: false, message: "Employee not found" });
     }
   } catch (error) {
-    res.status(500).send({ success: false, message: "Error deleting employee", error });
+    res
+      .status(500)
+      .send({ success: false, message: "Error deleting employee", error });
   }
 };
 

@@ -54,11 +54,11 @@ const SMDashboard = () => {
               </li>
               <li className="w-100">
                 <Link
-                  to="/smdashboard/Category"
+                  to="/smdashboard/EmployeeSalary"
                   className="nav-link px-0 align-middle" style={{color:'#416D19'}}
                 >
                   <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Category</span>
+                  <span className="ms-2 d-none d-sm-inline">Generate Salary</span>
                 </Link>
               </li>
               <li className="w-100">

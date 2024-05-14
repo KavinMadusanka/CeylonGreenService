@@ -117,10 +117,10 @@ function App() {
           element={<AddCategory />}
         />
         <Route path="/SMDashboard/Employee" element={<Employee />} />
-        <Route path="/Employeeprofile" element={<EmployeeProfile />} />
+        <Route path="/Employeeprofile/:id" element={<EmployeeProfile />} />
         <Route path="/Category" element={<Category />} />
         <Route path="/SMDashboard/AddEmployee" element={<AddEmployee />} />
-        <Route path="/EdditEmployee" element={<EditEmployee />}
+        <Route path="/EdditEmployee/:id" element={<EditEmployee />}
         />
         <Route
           path="/EmployeeProfile"
@@ -129,6 +129,8 @@ function App() {
         <Route path="/SMDashboard" element={<SMDashboard />} />
         <Route path="/EmployeeSalary" element={<EmployeeSalary />} />
         <Route path="/EPDashboard" element={<EPDashboard />} />
+        <Route path="/SMDashboard/EmployeeSalary" element={<EmployeeSalary/>} />
+        <Route path="/EPDashboard" element={<EPDashboard/>} />
 
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/ContactUs" element={<ContactUs />} />
