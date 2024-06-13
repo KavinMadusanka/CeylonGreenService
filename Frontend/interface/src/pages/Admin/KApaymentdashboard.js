@@ -280,15 +280,15 @@ const KApaymentdashboard = () => {
                         <span>{exTotal.toFixed(2)}</span>
                         </td>
                         </tr>
-                        <tr>
-                        <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
+                        {/* <tr> */}
+                        {/* <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}>Training Program Revenue</td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
-                        <span>{exTotal.toFixed(2)}</span>
+                        <span>{exTotal.toFixed(2)}</span> */}
+                        {/* </td> */}
+                        {/* <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
                         </td>
-                        <td style={{border: '1px solid #BFEA7C',padding: '10px',textAlign:'right'}}>
-                        </td>
-                        </tr>
+                        </tr> */}
                         <tr>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}></td>
                         <td style={{border: '1px solid #BFEA7C',padding: '10px'}}><b>Total Revenue</b></td>

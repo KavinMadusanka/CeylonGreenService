@@ -145,7 +145,6 @@ const generateAppointmentPDF = (appointment) => {
 
 
 
-
  
 
 
