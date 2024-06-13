@@ -1,10 +1,10 @@
 /* .container-fluid {
-    background-color: #416d19;
+    /* background-color: #416d19;
     color: white;
     padding: 20px;
-}
+} */
 
-.row {
+/* .row {
     margin: 0;
 }
 
@@ -53,7 +53,7 @@
     color: #416d19;
     margin-bottom: 5px;
 } 
-*/
+*/ /*
 .card {
     width: 18rem;
     margin: 10px;
@@ -91,5 +91,5 @@
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
-    z-index: 1; /* Ensure the label is above the image */
-  }
+    z-index: 1; Ensure the label is above the image 
+  }*/

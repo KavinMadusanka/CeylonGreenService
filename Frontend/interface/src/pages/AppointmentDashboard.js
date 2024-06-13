@@ -64,50 +64,39 @@ const AppointmentDashboard = () => {
         }
     };
 
-    // // Function to generate PDF report
-    // const generatePDF = () => {
-    //     const doc = new jsPDF();
-    //     doc.text("Appointment Details", 10, 10);
-    //     doc.autoTable({
-    //         head: [['Name', 'Address', 'Contact No', 'Email', 'Service Package', 'Date', 'Time']],
-    //         body: filteredAppointments.map(c => [c.fullName, c.address, c.phoneNumber, c.email, c.servicePackage, c.selectedDate, c.selectedTime])
-    //     });
-    //     doc.save("appointment_details.pdf");
-    // };
+   // Function to generate PDF report with header and footer
+   const generatePDF = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
 
-    // Function to generate PDF report with header and footer
-    const generatePDF = () => {
-        const doc = new jsPDF();
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
+    // Header
+    doc.setFontSize(20);
+    doc.text("CEYLON GREEN CLEANING SERVICE", pageWidth / 2, 15, { align: 'center' });
 
-        // Header
-        doc.setFontSize(20);
-        doc.text("CEYLON GREEN CLEANING SERVICE", pageWidth / 2, 15, { align: 'center' });
+    doc.setFontSize(16);
+    doc.text("Appointment Details", pageWidth / 2, 25, { align: 'center' });
 
-        doc.setFontSize(16);
-        doc.text("Appointment Details", pageWidth / 2, 25, { align: 'center' });
+    // Footer
+    const footerText = "Page " + doc.internal.getNumberOfPages();
+    doc.setFontSize(10);
+    doc.text(footerText, pageWidth / 2, pageHeight - 10, { align: 'center' });
 
-        // Footer
-        const footerText = "Page " + doc.internal.getNumberOfPages();
-        doc.setFontSize(10);
-        doc.text(footerText, pageWidth / 2, pageHeight - 10, { align: 'center' });
+    // Table
+    doc.autoTable({
+        startY: 30, // Start after the header
+        head: [['Name', 'Address', 'Contact No', 'Email', 'Service Package', 'Date', 'Time']],
+        body: filteredAppointments.map(c => [c.fullName, c.address, c.phoneNumber, c.email, c.servicePackage, c.selectedDate, c.selectedTime]),
+        didDrawPage: function (data) {
+            // Footer on each page
+            const footerText = "Page " + doc.internal.getNumberOfPages();
+            doc.setFontSize(10);
+            doc.text(footerText, pageWidth / 2, pageHeight - 10, { align: 'center' });
+        }
+    });
 
-        // Table
-        doc.autoTable({
-            startY: 30, // Start after the header
-            head: [['Name', 'Address', 'Contact No', 'Email', 'Service Package', 'Date', 'Time']],
-            body: filteredAppointments.map(c => [c.fullName, c.address, c.phoneNumber, c.email, c.servicePackage, c.selectedDate, c.selectedTime]),
-            didDrawPage: function (data) {
-                // Footer on each page
-                const footerText = "Page " + doc.internal.getNumberOfPages();
-                doc.setFontSize(10);
-                doc.text(footerText, pageWidth / 2, pageHeight - 10, { align: 'center' });
-            }
-        });
-
-        doc.save("appointment_details.pdf");
-    };
+    doc.save("appointment_details.pdf");
+};
 
     // Function to filter appointments by status
     const handleFilter = (status) => {
